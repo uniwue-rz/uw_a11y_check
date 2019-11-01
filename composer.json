@@ -1,0 +1,46 @@
+{
+  "name": "uniwue/uw_a11y_check",
+  "type": "typo3-cms-extension",
+  "description": "",
+  "authors": [
+    {
+      "name": "Torben Hansen",
+      "email": "torben@derhansen.com",
+      "homepage": "https://www.derhansen.com",
+      "role": "Developer"
+    }
+  ],
+  "keywords": ["TYPO3 CMS", "a11y", "Accessibility"],
+  "license": [
+    "GPL-2.0+"
+  ],
+  "require": {
+    "typo3/cms-core": "^8.7 || ^9.5"
+  },
+  "require-dev": {
+    "nimut/testing-framework": "4.x-dev"
+  },
+  "replace": {
+    "typo3-ter/uw-a11y-check": "self.version"
+  },
+  "autoload": {
+    "psr-4": {
+      "UniWue\\UwA11yCheck\\": "Classes"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "UniWue\\UwA11yCheck\\Tests\\": "Tests"
+    }
+  },
+  "config": {
+    "vendor-dir": ".Build/vendor",
+    "bin-dir": ".Build/bin"
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "uw_a11y_check",
+      "cms-package-dir": "{$vendor-dir}/typo3/cms"
+    }
+  }
+}

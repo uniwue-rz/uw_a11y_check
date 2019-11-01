@@ -1,0 +1,19 @@
+#==============================================
+# BE-module configuration for EXT:uw_a11y_check
+#==============================================
+module.tx_uwa11ycheck {
+    view {
+        templateRootPaths {
+            0 = EXT:uw_a11y_check/Resources/Private/Templates/
+            1 = {$module.tx_uwa11ycheck.view.templateRootPath}
+        }
+        partialRootPaths {
+            0 = EXT:uw_a11y_check/Resources/Private/Partials/
+            1 = {$module.tx_uwa11ycheck.view.partialRootPath}
+        }
+        layoutRootPaths {
+            0 = EXT:uw_a11y_check/Resources/Private/Layouts/
+            1 = {$module.tx_uwa11ycheck.view.layoutRootPath}
+        }
+    }
+}
