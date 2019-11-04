@@ -17,3 +17,11 @@ module.tx_uwa11ycheck {
         }
     }
 }
+
+# Rendering of content elements in Fluid views
+lib.tx_uwa11ycheck.contentElementRendering = RECORDS
+lib.tx_uwa11ycheck.contentElementRendering {
+    tables = tt_content
+    source.current = 1
+    dontCheckPid = 1
+}

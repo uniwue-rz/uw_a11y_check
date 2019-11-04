@@ -1,0 +1,54 @@
+analyzers:
+  internalA11yCheck:
+    className: "UniWue\\UwA11yCheck\\Analyzers\\Internal"
+
+checkUrlGenerators:
+  page:
+    className: "UniWue\\UwA11yCheck\\CheckUrlGenerators\\Page"
+    configuration: []
+  pageContent:
+    className: "UniWue\\UwA11yCheck\\CheckUrlGenerators\\PageContent"
+    configuration: []
+  newsDetail:
+    className: "UniWue\\UwA11yCheck\\CheckUrlGenerators\\NewsDetail"
+    configuration:
+      targetPid: 216468
+
+presets:
+  preset1:
+    name: "A name for preset 1"
+    configuration:
+      baseUrl: "http://uni-wuerzburg-87.typo3.local/"
+    analyzer:
+      id: "internalA11yCheck"
+      configuration: []
+    checkUrlGenerator:
+      id: "pageContent"
+      configuration:
+        targetPid: 216467
+    testSuite:
+      id: "testSuite1"
+      configuration: []
+  preset2:
+    name: "A name for preset 2"
+    configuration:
+      baseUrl: "http://uni-wuerzburg-87.typo3.local/"
+    analyzer:
+      id: "internalA11yCheck"
+      configuration: []
+    checkUrlGenerator:
+      id: "newsDetail"
+      configuration: []
+    testSuite:
+      id: "testSuite1"
+      configuration: []
+
+testSuites:
+  testSuite1:
+    tests:
+      - { name: "Image alt attributes", className: "UniWue\\UwA11yCheck\\Tests\\ImageAltAttributes", configuration: [] }
+      - { name: "Link title attributes ", className: "UniWue\\UwA11yCheck\\Tests\\LinkTitleAttributes", configuration: [] }
+  testSuite2:
+    tests:
+      - { name: "Test 1", className: "UniWue\\UwA11yCheck\\Tests\\Test1", configuration: [] }
+      - { name: "Test 2", className: "UniWue\\UwA11yCheck\\Tests\\Test2", configuration: [] }
