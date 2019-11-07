@@ -34,3 +34,26 @@ test:php72:typo3_87:
     TYPO3_VERSION: ^8.7
     TESTING_FRAMEWORK: ^1.3
 
+# Build in PHP 7.3 and TYPO3 8.7
+test:php73:typo3_87:
+  <<: *testing
+  variables:
+    DOCKER_TAG: 7.3-alpine
+    TYPO3_VERSION: ^8.7
+    TESTING_FRAMEWORK: ^1.3
+
+# Build in PHP 7.2 and TYPO3 9.5
+test:php72:typo3_95:
+  <<: *testing
+  variables:
+    DOCKER_TAG: 7.2-alpine
+    TYPO3_VERSION: ^9.5
+    TESTING_FRAMEWORK: ^4
+
+# Build in PHP 7.3 and TYPO3 9.5
+test:php73:typo3_95:
+  <<: *testing
+  variables:
+    DOCKER_TAG: 7.3-alpine
+    TYPO3_VERSION: ^9.5
+    TESTING_FRAMEWORK: ^4
