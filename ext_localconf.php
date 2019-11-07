@@ -13,4 +13,10 @@ call_user_func(function () {
             'ContentElements' => 'show',
         ]
     );
+
+    if (TYPO3_MODE === 'BE') {
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter(
+            \UniWue\UwA11yCheck\Property\TypeConverter\PresetTypeConverter::class
+        );
+    }
 });

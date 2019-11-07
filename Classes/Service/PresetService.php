@@ -7,7 +7,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use UniWue\UwA11yCheck\Analyzers\AbstractAnalyzer;
 use UniWue\UwA11yCheck\Check\Preset;
+use UniWue\UwA11yCheck\Check\TestSuite;
 use UniWue\UwA11yCheck\CheckUrlGenerators\AbstractCheckUrlGenerator;
+use UniWue\UwA11yCheck\Tests\TestInterface;
 
 /**
  * Class PresetService
@@ -62,9 +64,11 @@ class PresetService
                 $checkUrlGeneratorConfig
             );
 
+            $testSuite = $this->getTestSuiteById($presetData['testSuite']['id'], $yamlData, $presetData['testSuite']);
+
             $configuration = $presetData['configuration'];
 
-            $presets[] = new Preset($id, $name, $analyzer, $checkUrlGenerator, $configuration);
+            $presets[] = new Preset($id, $name, $analyzer, $checkUrlGenerator, $testSuite, $configuration);
         }
 
         return $presets;
@@ -140,6 +144,35 @@ class PresetService
         // @todo: if no analyzer, throw an exception
 
         return $checkUrlGenerator;
+    }
+
+    /**
+     * Returns a testsuite by the ID
+     *
+     * @param string $id
+     * @param array $yamlData
+     * @param array $configuration
+     * @return TestSuite
+     */
+    protected function getTestSuiteById(string $id, array $yamlData, array $configuration): TestSuite
+    {
+        $testSuite = $this->objectManager->get(TestSuite::class);
+        foreach ($yamlData['testSuites'] as $testSuiteId => $testSuiteTests) {
+            if ($testSuiteId === $id) {
+                foreach ($testSuiteTests['tests'] as $testId => $test) {
+                    $globalConfiguration = $test['configuration'] ?? [];
+                    $localConfiguration = $configuration['tests'][$testId]['configuration'] ?? [];
+                    ArrayUtility::mergeRecursiveWithOverrule($globalConfiguration, $localConfiguration);
+
+                    /** @var TestInterface $test */
+                    $test = $this->objectManager->get($test['className'], $globalConfiguration);
+                    $testSuite->addTest($test);
+                }
+                break;
+            }
+        }
+
+        return $testSuite;
     }
 
     /**

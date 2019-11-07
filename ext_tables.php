@@ -12,7 +12,7 @@ call_user_func(function () {
             'tx_uwa11ycheck_m1',
             '',
             [
-                'A11ycheck' => 'index,check',
+                'A11yCheck' => 'index,check',
             ],
             [
                 'access' => 'user,group',

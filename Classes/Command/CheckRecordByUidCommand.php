@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use UniWue\UwA11yCheck\Check\A11yCheck;
@@ -54,9 +55,9 @@ class CheckRecordByUidCommand extends Command
 
         $preset = $presetService->getPresetById($presetId);
         $a11yCheck = $objectManager->get(A11yCheck::class, $preset);
-        $result = $a11yCheck->executeCheck($uid);
+        $results = $a11yCheck->executeCheck($uid);
 
-        $io->text($result);
+        DebugUtility::debug($results);
 
         $io->success('All done!');
     }

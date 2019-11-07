@@ -10,10 +10,19 @@
 </f:section>
 
 <f:section name="content">
-    <p>First prototype of the accessibility check</p>
+    <f:form action="index" name="checkDemand" object="{checkDemand}" class="form-horizontal">
+        <div class="form-group">
+            <label for="preset" class="control-label col-xs-2">Preset</label>
+            <div class="col-xs-10">
+                <f:form.select id="preset" property="preset" options="{presets}" value="{preset}" optionValueField="id" optionLabelField="name" additionalAttributes="{onChange : 'document.checkDemand.submit();'}" class="form-control"/>
+            </div>
+        </div>
 
-    <f:form action="check">
-        <f:form.submit title="Go" value="Go" />
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <f:form.submit value="Go" property="analyze" class="btn btn-default" />
+            </div>
+        </div>
     </f:form>
 </f:section>
 

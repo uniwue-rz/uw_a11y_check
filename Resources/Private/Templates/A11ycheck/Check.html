@@ -10,7 +10,33 @@
 </f:section>
 
 <f:section name="content">
-    Bla
+
+    <f:for each="{results}" as="result">
+        <f:be.infobox state="{result.state}" title="{result.title}" message="{result.description}" />
+
+        <f:if condition="{result.hasErrors}">
+            <div>
+                Impact: {result.impact}
+            </div>
+            <div>
+                Help: {result.help}
+            </div>
+            <div>
+                Help URL: {result.helpUrl}
+            </div>
+
+            <f:groupedFor each="{result.nodes}" as="nodes" groupBy="uid" groupKey="elementUid">
+                <div>
+                    <div>Content Element UID: {elementUid}</div>
+                    <f:for each="{nodes}" as="node">
+                        <div>Element HTML: {node.html}</div>
+                    </f:for>
+                </div>
+            </f:groupedFor>
+        </f:if>
+
+    </f:for>
+
 </f:section>
 
 </html>

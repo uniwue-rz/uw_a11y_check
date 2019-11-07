@@ -5,10 +5,10 @@ analyzers:
 checkUrlGenerators:
   page:
     className: "UniWue\\UwA11yCheck\\CheckUrlGenerators\\Page"
-    configuration: []
+    configuration: {}
   pageContent:
     className: "UniWue\\UwA11yCheck\\CheckUrlGenerators\\PageContent"
-    configuration: []
+    configuration: {}
   newsDetail:
     className: "UniWue\\UwA11yCheck\\CheckUrlGenerators\\NewsDetail"
     configuration:
@@ -17,38 +17,42 @@ checkUrlGenerators:
 presets:
   preset1:
     name: "A name for preset 1"
+    description: "A description for the preset"
     configuration:
       baseUrl: "http://uni-wuerzburg-87.typo3.local/"
     analyzer:
       id: "internalA11yCheck"
-      configuration: []
+      configuration: {}
     checkUrlGenerator:
       id: "pageContent"
       configuration:
         targetPid: 216467
     testSuite:
       id: "testSuite1"
-      configuration: []
+      tests:
+        image:
+          configuration: {}
   preset2:
     name: "A name for preset 2"
+    description: "A description for the preset"
     configuration:
       baseUrl: "http://uni-wuerzburg-87.typo3.local/"
     analyzer:
       id: "internalA11yCheck"
-      configuration: []
+      configuration: {}
     checkUrlGenerator:
       id: "newsDetail"
-      configuration: []
+      configuration: {}
     testSuite:
       id: "testSuite1"
-      configuration: []
+      configuration: {}
 
 testSuites:
   testSuite1:
     tests:
-      - { name: "Image alt attributes", className: "UniWue\\UwA11yCheck\\Tests\\ImageAltAttributes", configuration: [] }
-      - { name: "Link title attributes ", className: "UniWue\\UwA11yCheck\\Tests\\LinkTitleAttributes", configuration: [] }
+      linkNameTest: { name: "Link-Name", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\LinkNameTest", configuration: {} }
+      imageAltTest: { name: "Image-Alt", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\ImageAltTest", configuration: {} }
   testSuite2:
     tests:
-      - { name: "Test 1", className: "UniWue\\UwA11yCheck\\Tests\\Test1", configuration: [] }
-      - { name: "Test 2", className: "UniWue\\UwA11yCheck\\Tests\\Test2", configuration: [] }
+      test1: { name: "Test 1", className: "UniWue\\UwA11yCheck\\Tests\\Test1", configuration: {} }
+      test2: { name: "Test 2", className: "UniWue\\UwA11yCheck\\Tests\\Test2", configuration: {} }
