@@ -37,11 +37,6 @@ class Result
     protected $helpUrl = '';
 
     /**
-     * @var string
-     */
-    protected $id = '';
-
-    /**
      * @var null|int
      */
     protected $impact = null;
@@ -137,22 +132,6 @@ class Result
     public function setHelpUrl(string $helpUrl): void
     {
         $this->helpUrl = $helpUrl;
-    }
-
-    /**
-     * @return string
-     */
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param string $id
-     */
-    public function setId(string $id): void
-    {
-        $this->id = $id;
     }
 
     /**

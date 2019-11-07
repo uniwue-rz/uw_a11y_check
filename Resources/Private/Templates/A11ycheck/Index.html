@@ -10,19 +10,30 @@
 </f:section>
 
 <f:section name="content">
-    <f:form action="index" name="checkDemand" object="{checkDemand}" class="form-horizontal">
-        <div class="form-group">
-            <label for="preset" class="control-label col-xs-2">Preset</label>
-            <div class="col-xs-10">
-                <f:form.select id="preset" property="preset" options="{presets}" value="{preset}" optionValueField="id" optionLabelField="name" additionalAttributes="{onChange : 'document.checkDemand.submit();'}" class="form-control"/>
+    <f:form action="index" name="checkDemand" object="{checkDemand}" class="form-horizontal settings">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label for="preset" class="control-label col-xs-2">Preset</label>
+                <div class="col-xs-10">
+                    <f:form.select id="preset" property="preset" options="{presets}" optionValueField="id" optionLabelField="name" additionalAttributes="{onChange : 'document.checkDemand.submit();'}" class="form-control"/>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-xs-offset-2 col-xs-10">
-                <f:form.submit value="Go" property="analyze" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-xs-offset-2 col-xs-10">
+                    <f:form.submit value="Go" property="analyze" class="btn btn-default" />
+                </div>
             </div>
         </div>
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label for="preset" class="control-label col-xs-2">Level</label>
+                <div class="col-xs-10">
+                    <f:form.select id="level" property="level" options="{levelSelectorOptions}" class="form-control"/>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
     </f:form>
 </f:section>
 

@@ -20,6 +20,11 @@ class CheckDemand extends AbstractEntity
     protected $preset = null;
 
     /**
+     * @var int
+     */
+    protected $level = 0;
+
+    /**
      * @return string
      */
     public function getAnalyze(): string
@@ -52,6 +57,22 @@ class CheckDemand extends AbstractEntity
     }
 
     /**
+     * @return int
+     */
+    public function getLevel(): int
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param int $level
+     */
+    public function setLevel(int $level): void
+    {
+        $this->level = $level;
+    }
+
+    /**
      * @return array
      */
     public function toArray()
@@ -59,6 +80,7 @@ class CheckDemand extends AbstractEntity
         return [
             'analyze' => $this->getAnalyze(),
             'preset' => $this->preset->getId() ?? '',
+            'level' => $this->getLevel(),
         ];
     }
 }

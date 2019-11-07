@@ -1,6 +1,7 @@
 <?php
 namespace UniWue\UwA11yCheck\Analyzers;
 
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use UniWue\UwA11yCheck\Check\TestSuite;
 
 /**
@@ -10,5 +11,5 @@ interface AnalyzerInterface
 {
     public function getType();
 
-    public function executeTestSuite(string $url, TestSuite $testSuite);
+    public function executeTestSuite(TestSuite $testSuite, string $url): ObjectStorage;
 }

@@ -2,9 +2,12 @@
 namespace UniWue\UwA11yCheck\Controller;
 
 use TYPO3\CMS\Backend\View\BackendTemplateView;
+use TYPO3\CMS\Core\Database\QueryGenerator;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use UniWue\UwA11yCheck\Check\A11yCheck;
+use UniWue\UwA11yCheck\Check\ResultSet;
 use UniWue\UwA11yCheck\Domain\Model\Dto\CheckDemand;
 use UniWue\UwA11yCheck\Service\PresetService;
 
@@ -57,6 +60,11 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         parent::initializeView($view);
 
         $this->view->getModuleTemplate()->setFlashMessageQueue($this->controllerContext->getFlashMessageQueue());
+        if ($view instanceof BackendTemplateView) {
+            $view->getModuleTemplate()->getPageRenderer()->addCssFile(
+                'EXT:uw_a11y_check/Resources/Public/Css/a11y_check.css'
+            );
+        }
     }
 
     /**
@@ -96,7 +104,25 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->view->assignMultiple([
             'checkDemand' => $checkDemand,
             'presets' => $this->presetService->getPresets(),
+            'levelSelectorOptions' => $this->getLevelSelectorOptions(),
         ]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getLevelSelectorOptions(): array
+    {
+        $langId = 'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:';
+        $availableOptions = [
+            0 => $this->getLanguageService()->sL($langId. 'labels.depth_0'),
+            1 => $this->getLanguageService()->sL($langId. 'labels.depth_1'),
+            2 => $this->getLanguageService()->sL($langId. 'labels.depth_2'),
+            3 => $this->getLanguageService()->sL($langId. 'labels.depth_3'),
+            4 => $this->getLanguageService()->sL($langId. 'labels.depth_4'),
+            999 => $this->getLanguageService()->sL($langId. 'labels.depth_infi')
+        ];
+        return $availableOptions;
     }
 
     /**
@@ -127,12 +153,39 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function checkAction(CheckDemand $checkDemand): void
     {
         $preset = $checkDemand->getPreset();
-        $a11yCheck = new A11yCheck($preset);
-        $results = $a11yCheck->executeCheck($this->pid);
+
+        $checkPids = [$this->pid];
+        if ($checkDemand->getLevel() > 0) {
+            $queryGenerator = GeneralUtility::makeInstance(QueryGenerator::class);
+            $pidList = $queryGenerator->getTreeList($this->pid, $checkDemand->getLevel(), 0, 1);
+            $checkPids = GeneralUtility::intExplode(',', $pidList, true);
+        }
+
+        $results = [];
+        foreach ($checkPids as $checkPid) {
+            $a11yCheck = new A11yCheck($preset);
+            $checkResults = $a11yCheck->executeCheck($checkPid);
+
+            $resultSet = GeneralUtility::makeInstance(ResultSet::class);
+            $resultSet->setPid($checkPid);
+            $resultSet->setResults($checkResults);
+
+            $results[] = $resultSet;
+        }
 
         $this->view->assignMultiple([
             'checkDemand' => $checkDemand,
             'results' => $results
         ]);
+    }
+
+    /**
+     * Returns LanguageService
+     *
+     * @return \TYPO3\CMS\Lang\LanguageService
+     */
+    protected function getLanguageService()
+    {
+        return $GLOBALS['LANG'];
     }
 }

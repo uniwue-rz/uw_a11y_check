@@ -3,6 +3,7 @@ namespace UniWue\UwA11yCheck\Analyzers;
 
 use GuzzleHttp\Client;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use UniWue\UwA11yCheck\Check\TestSuite;
 use UniWue\UwA11yCheck\Tests\TestInterface;
 
@@ -19,18 +20,22 @@ class Internal extends AbstractAnalyzer
     /**
      * Executes all tests in the testSuite
      *A
-     * @param string $url
      * @param TestSuite $testSuite
+     * @param string $url
+     * @return ObjectStorage
      */
-    public function executeTestSuite(string $url, TestSuite $testSuite): void
+    public function executeTestSuite(TestSuite $testSuite, string $url): ObjectStorage
     {
+        $results = new ObjectStorage();
         $html = $this->fetchHtml($url);
 
         /** @var TestInterface $test */
         foreach ($testSuite->getTests() as $test) {
             $result = $test->run($html);
-            $this->addResult($result);
+            $results->attach($result);
         }
+
+        return $results;
     }
 
     /**

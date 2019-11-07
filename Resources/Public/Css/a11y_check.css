@@ -1,0 +1,46 @@
+.a11y-check .clear {
+    clear: both;
+}
+
+.a11y-check .panel {
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.a11y-check .panel-title a {
+    display: block;
+}
+
+.a11y-check .settings {
+    background-color: #EDEDED;
+    border-top: 1px solid #CDCDCD;
+    border-bottom: 1px solid #CDCDCD;
+    padding: 12px;
+    margin-bottom: 24px;
+}
+
+.panel-group-a11y pre {
+    margin-bottom: 5px;
+}
+
+.a11y-check .impact-0 {
+    background-color: #ddeacf;
+    color: #000000;
+}
+
+.a11y-check .impact-1 {
+    background-color: #cccccc;
+    color: #000000;
+}
+
+.a11y-check .impact-2 {
+    background-color: #dddddd;
+    color: #000000;
+}
+
+.a11y-check .impact-3,
+.a11y-check .impact-4 {
+    background-color: #efc7c7;
+    color: #000000;
+}
+

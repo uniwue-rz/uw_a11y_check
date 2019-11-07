@@ -6,8 +6,9 @@ namespace UniWue\UwA11yCheck\Check\Result;
  */
 class Impact
 {
-    const MINOR = 0;
-    const MODERATE = 1;
-    const SERIOUS = 2;
-    const CRITICAL = 3;
+    const NONE = 0;
+    const MINOR = 1;
+    const MODERATE = 2;
+    const SERIOUS = 3;
+    const CRITICAL = 4;
 }

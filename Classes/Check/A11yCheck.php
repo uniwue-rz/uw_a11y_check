@@ -1,6 +1,8 @@
 <?php
 namespace UniWue\UwA11yCheck\Check;
 
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
 /**
  * Class A11yCheck
  */
@@ -27,7 +29,7 @@ class A11yCheck
      * @param int $id
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
-    public function executeCheck(int $id)
+    public function executeCheck(int $id): ObjectStorage
     {
         return $this->preset->executeTestSuite($id);
     }

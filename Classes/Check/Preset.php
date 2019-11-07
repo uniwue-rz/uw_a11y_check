@@ -122,7 +122,6 @@ class Preset
     public function executeTestSuite(int $id)
     {
         $checkUrl = $this->getCheckUrl($id);
-        $this->analyzer->executeTestSuite($checkUrl, $this->testSuite);
-        return $this->analyzer->getResults();
+        return $this->analyzer->executeTestSuite($this->testSuite, $checkUrl);
     }
 }
