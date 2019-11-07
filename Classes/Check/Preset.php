@@ -95,6 +95,14 @@ class Preset
     }
 
     /**
+     * @return string
+     */
+    public function getCheckTableName()
+    {
+        return $this->checkUrlGenerator->getTableName();
+    }
+
+    /**
      * Returns the check URL
      *
      * @param int $id

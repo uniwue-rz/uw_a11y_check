@@ -7,6 +7,18 @@ namespace UniWue\UwA11yCheck\CheckUrlGenerators;
 class Page extends AbstractCheckUrlGenerator
 {
     /**
+     * Page constructor.
+     *
+     * @param array $configuration
+     */
+    public function __construct(array $configuration)
+    {
+        parent::__construct($configuration);
+
+        $this->tableName = 'pages';
+    }
+
+    /**
      * Returns the check URL
      *
      * @param string $baseUrl

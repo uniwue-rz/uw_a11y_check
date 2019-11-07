@@ -9,6 +9,11 @@ use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 abstract class AbstractCheckUrlGenerator
 {
     /**
+     * @var string
+     */
+    protected $tableName = '';
+
+    /**
      * @var UriBuilder
      */
     protected $uriBuilder = null;
@@ -27,5 +32,13 @@ abstract class AbstractCheckUrlGenerator
 
     public function getCheckUrl(string $baseUrl, int $pageUid)
     {
+    }
+
+    /**
+     * @return string
+     */
+    public function getTableName(): string
+    {
+        return $this->tableName;
     }
 }

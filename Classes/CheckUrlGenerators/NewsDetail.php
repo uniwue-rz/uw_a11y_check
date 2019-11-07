@@ -13,7 +13,7 @@ class NewsDetail extends AbstractCheckUrlGenerator
     protected $targetPid = 0;
 
     /**
-     * PageContent constructor.
+     * NewsDetail constructor.
      *
      * @param array $configuration
      */
@@ -21,6 +21,7 @@ class NewsDetail extends AbstractCheckUrlGenerator
     {
         parent::__construct($configuration);
 
+        $this->tableName = 'tx_news_domain_model_news';
         $this->targetPid = $configuration['targetPid'];
     }
 

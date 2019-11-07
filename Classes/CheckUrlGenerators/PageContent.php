@@ -24,6 +24,7 @@ class PageContent extends AbstractCheckUrlGenerator
     {
         parent::__construct($configuration);
 
+        $this->tableName = 'tt_content';
         $this->targetPid = $configuration['targetPid'];
     }
 

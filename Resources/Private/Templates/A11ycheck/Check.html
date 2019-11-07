@@ -27,7 +27,7 @@
 
             <f:groupedFor each="{result.nodes}" as="nodes" groupBy="uid" groupKey="elementUid">
                 <div>
-                    <div>Content Element UID: {elementUid}</div>
+                    <div>Element UID ({checkDemand.preset.checkTableName}): {elementUid}</div>
                     <f:for each="{nodes}" as="node">
                         <div>Element HTML: {node.html}</div>
                     </f:for>
