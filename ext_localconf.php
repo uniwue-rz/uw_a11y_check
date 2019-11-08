@@ -19,4 +19,10 @@ call_user_func(function () {
             \UniWue\UwA11yCheck\Property\TypeConverter\PresetTypeConverter::class
         );
     }
+
+    // Register configuration yaml file
+    if (empty($GLOBALS['TYPO3_CONF_VARS']['UwA11yCheck']['Configuration'])) {
+        $GLOBALS['TYPO3_CONF_VARS']['UwA11yCheck']['Configuration'] =
+            'EXT:uw_a11y_check/Configuration/A11y/Default.yaml';
+    }
 });

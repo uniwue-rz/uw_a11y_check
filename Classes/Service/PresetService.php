@@ -10,6 +10,7 @@ use UniWue\UwA11yCheck\Check\Preset;
 use UniWue\UwA11yCheck\Check\TestSuite;
 use UniWue\UwA11yCheck\CheckUrlGenerators\AbstractCheckUrlGenerator;
 use UniWue\UwA11yCheck\Tests\TestInterface;
+use UniWue\UwA11yCheck\Utility\Exception\ConfigurationFileNotFoundException;
 
 /**
  * Class PresetService
@@ -46,7 +47,7 @@ class PresetService
      */
     public function getPresets(): array
     {
-        $yamlFile = 'EXT:uw_a11y_check/Configuration/A11y/Default.yaml';
+        $yamlFile = $this->getConfigurationFile();
         $yamlData = $this->yamlFileLoader->load($yamlFile);
 
         $presets = [];
@@ -190,5 +191,18 @@ class PresetService
         ArrayUtility::mergeRecursiveWithOverrule($globalConfiguration, $localConfiguration);
 
         return $globalConfiguration;
+    }
+
+    protected function getConfigurationFile()
+    {
+        $file = $GLOBALS['TYPO3_CONF_VARS']['UwA11yCheck']['Configuration'];
+        if (!file_exists(GeneralUtility::getFileAbsFileName($file))) {
+            throw new ConfigurationFileNotFoundException(
+                'Configured yaml "' . $file . '" configuration does not exist.',
+                1573216092216
+            );
+        }
+
+        return $file;
     }
 }
