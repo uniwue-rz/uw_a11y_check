@@ -20,16 +20,6 @@ class ImageAltTest extends AbstractTest
     /**
      * @var string
      */
-    protected $description = 'Ensures <img> elements have alternate text or a role of none or presentation';
-
-    /**
-     * @var string
-     */
-    protected $help = 'Images must have alternate text';
-
-    /**
-     * @var string
-     */
     protected $helpUrl = 'https://dequeuniversity.com/rules/axe/3.4/image-alt';
 
     /**

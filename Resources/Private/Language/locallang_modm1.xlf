@@ -11,10 +11,10 @@
             </trans-unit>
 
             <trans-unit id="result.title.0" xml:space="preserve">
-                <source>Tests passed</source>
+                <source>Test passed</source>
             </trans-unit>
             <trans-unit id="result.title.1" xml:space="preserve">
-                <source>Tests failed with violations</source>
+                <source>Test failed with violations</source>
             </trans-unit>
             <trans-unit id="result.title.2" xml:space="preserve">
                 <source>No elements found for test</source>

@@ -21,16 +21,6 @@ class LinkNameTest extends AbstractTest
     /**
      * @var string
      */
-    protected $description = 'Ensures links have discernible text';
-
-    /**
-     * @var string
-     */
-    protected $help = 'Links must have discernible text';
-
-    /**
-     * @var string
-     */
     protected $helpUrl = 'https://dequeuniversity.com/rules/axe/3.4/link-name';
 
     /**

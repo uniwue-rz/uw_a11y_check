@@ -21,16 +21,6 @@ class LinkTextBlacklistedTest extends AbstractTest
     /**
      * @var string
      */
-    protected $description = 'Ensures a link name or linked image alt/title attribute does not equal a blacklisted word';
-
-    /**
-     * @var string
-     */
-    protected $help = 'The link name or the title/alt of a linked image equals a blacklisted word.';
-
-    /**
-     * @var string
-     */
     protected $helpUrl = '';
 
     /**
@@ -50,7 +40,7 @@ class LinkTextBlacklistedTest extends AbstractTest
         $blacklist = $configuration['blacklist'] ?? [];
         $this->blacklist = $this->initBlacklist($blacklist);
 
-        $this->help = $this->help . PHP_EOL . ' Current blacklist: "' . implode('", "', $this->blacklist) . '"';
+        $this->help = $this->help . '"' . implode('", "', $this->blacklist) . '"';
     }
 
     /**

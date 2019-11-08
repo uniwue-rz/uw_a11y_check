@@ -87,6 +87,13 @@ abstract class AbstractTest implements TestInterface
     public function __construct(array $configuration = [])
     {
         $this->configuration = $configuration;
+
+        if ($this->description === '') {
+            $this->description = $this->translateLabel($this->id . '.description');
+        }
+        if ($this->help === '') {
+            $this->help = $this->translateLabel($this->id . '.help');
+        }
     }
 
     /**
@@ -103,5 +110,25 @@ abstract class AbstractTest implements TestInterface
         $result->setStatus(Result\Status::INAPPLICABLE);
 
         return $result;
+    }
+
+    /**
+     * @param string $label
+     * @return string
+     */
+    protected function translateLabel(string $label): string
+    {
+        $langId = 'LLL:EXT:uw_a11y_check/Resources/Private/Language/locallang.xlf:';
+        return $this->getLanguageService()->sL($langId . $label);
+    }
+
+    /**
+     * Returns LanguageService
+     *
+     * @return \TYPO3\CMS\Lang\LanguageService
+     */
+    protected function getLanguageService()
+    {
+        return $GLOBALS['LANG'];
     }
 }

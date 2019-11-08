@@ -18,21 +18,6 @@ class RedundantTitleTest extends AbstractTest
     protected $id = 'redundant-title';
 
     /**
-     * @var string
-     */
-    protected $description = 'Ensures title attribute text is not the same as text or alternative text.';
-
-    /**
-     * @var string
-     */
-    protected $help = 'The title attribute value is used to provide advisory information. It typically appears when the users hovers the mouse over an element. The advisory information presented should not be identical to or very similar to the element text or alternative text.';
-
-    /**
-     * @var string
-     */
-    protected $helpUrl = '';
-
-    /**
      * @var int
      */
     protected $impact = Result\Impact::MINOR;

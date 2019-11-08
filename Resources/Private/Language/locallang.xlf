@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2019-11-01T10:00:06Z" product-name="uw_a11y_check">
+        <header/>
+        <body>
+            <trans-unit id="image-alt.description" xml:space="preserve">
+                <source>Ensures <![CDATA[<img>]]> elements have alternate text or a role of none or presentation</source>
+            </trans-unit>
+            <trans-unit id="image-alt.help" xml:space="preserve">
+                <source>Images must have alternate text.</source>
+            </trans-unit>
+
+            <trans-unit id="link-name.description" xml:space="preserve">
+                <source>Ensures links have discernible text</source>
+            </trans-unit>
+            <trans-unit id="link-name.help" xml:space="preserve">
+                <source>Links must have discernible text.</source>
+            </trans-unit>
+
+            <trans-unit id="link-name-blacklisted.description" xml:space="preserve">
+                <source>Ensures a link name or linked image alt/title attribute does not equal a blacklisted word</source>
+            </trans-unit>
+            <trans-unit id="link-name-blacklisted.help" xml:space="preserve">
+                <source>The link name or the title/alt of a linked image equals a blacklisted word. Current Blacklist: </source>
+            </trans-unit>
+
+            <trans-unit id="redundant-title.description" xml:space="preserve">
+                <source>Ensures title attribute text is not the same as text or alternative text</source>
+            </trans-unit>
+            <trans-unit id="redundant-title.help" xml:space="preserve">
+                <source>The title attribute value is used to provide advisory information. It typically appears when the users hovers the mouse over an element. The advisory information presented should not be identical to or very similar to the element text or alternative text.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
