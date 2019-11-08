@@ -36,7 +36,7 @@
                                         </tr>
                                         <tr>
                                             <td><strong>Help:</strong></td>
-                                            <td>{result.help}</td>
+                                            <td>{result.help -> f:format.nl2br()}</td>
                                         </tr>
                                         <f:if condition="{result.helpUrl}">
                                             <tr>

@@ -108,6 +108,26 @@ class SharedUtility
             $content = $element->getAttribute('alt');
         }
 
-        return strtolower($content) !== strtolower($element->getAttribute('title'));
+        return mb_strtolower($content) !== mb_strtolower($element->getAttribute('title'));
+    }
+
+    /**
+     * @param \DOMElement $element
+     * @param string $attribute
+     * @param array $blacklist
+     * @return bool
+     */
+    public static function elementAttributeValueNotBlacklisted(
+        \DOMElement $element,
+        string $attribute,
+        array $blacklist
+    ) {
+        if (!$element->hasAttribute($attribute)) {
+            return true;
+        }
+
+        $content = StringUtility::clearString($element->getAttribute($attribute));
+
+        return in_array(strtolower($content), $blacklist, true) === false;
     }
 }

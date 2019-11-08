@@ -30,8 +30,9 @@ presets:
     testSuite:
       id: "testSuite1"
       tests:
-        image:
-          configuration: {}
+        linkTextBlacklisted:
+          configuration:
+            blacklist: ['mehr', 'details']
   preset2:
     name: "A name for preset 2"
     description: "A description for the preset"
@@ -53,6 +54,7 @@ testSuites:
       linkNameTest: { name: "Link-Name", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\LinkNameTest", configuration: {} }
       imageAltTest: { name: "Image-Alt", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\ImageAltTest", configuration: {} }
       redundantTitle: { name: "Redundant-Title", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\RedundantTitleTest", configuration: {} }
+      linkTextBlacklisted: { name: "Link-Text-Blacklisted", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\LinkTextBlacklistedTest", configuration: {} }
   testSuite2:
     tests:
       test1: { name: "Test 1", className: "UniWue\\UwA11yCheck\\Tests\\Test1", configuration: {} }

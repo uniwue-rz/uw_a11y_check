@@ -35,6 +35,11 @@ abstract class AbstractTest implements TestInterface
     protected $impact = 0;
 
     /**
+     * @var array
+     */
+    protected $configuration = [];
+
+    /**
      * @return string
      */
     public function getId(): string
@@ -72,6 +77,16 @@ abstract class AbstractTest implements TestInterface
     public function getImpact(): int
     {
         return $this->impact;
+    }
+
+    /**
+     * AbstractTest constructor.
+     *
+     * @param array $configuration
+     */
+    public function __construct(array $configuration = [])
+    {
+        $this->configuration = $configuration;
     }
 
     /**

@@ -365,4 +365,52 @@ class SharedUtilityTest extends BaseTestCase
 
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @return array
+     */
+    public function elementAttributeValueNotBlacklistedTestsDataProvider()
+    {
+        return [
+            'attibute not found' => [
+                '<a href="link.html">This is a link</a>',
+                'title',
+                ['more', 'details'],
+                true
+            ],
+            'attribute blacklisted exact case' => [
+                '<a href="link.html" title="more">This is a link</a>',
+                'title',
+                ['more', 'details'],
+                false
+            ],
+            'attribute blacklisted different case' => [
+                '<a href="link.html" title="More">This is a link</a>',
+                'title',
+                ['more', 'details'],
+                false
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider elementAttributeValueNotBlacklistedTestsDataProvider
+     * @test
+     * @param $html
+     * @param $attribute
+     * @param $blacklist
+     * @param $expected
+     */
+    public function elementAttributeValueNotBlacklistedTests($html, $attribute, $blacklist, $expected)
+    {
+        $doc = new DOMDocument();
+        $doc->loadHTML($html);
+
+        /** @var \DOMElement $element */
+        $element = $doc->getElementsByTagName('a')->item(0);
+        $result = SharedUtility::elementAttributeValueNotBlacklisted($element, $attribute, $blacklist);
+
+        $this->assertEquals($expected, $result);
+    }
+
 }

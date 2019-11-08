@@ -63,4 +63,127 @@ class LinkUtilityTest extends BaseTestCase
 
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @return array
+     */
+    public function linkTextNotBlacklistedTestsDataProvider()
+    {
+        return [
+            'text not blacklisted' => [
+                '<a href="link.html">This is a link</a>',
+                ['more', 'details'],
+                true
+            ],
+            'text blacklisted exact case' => [
+                '<a href="link.html">more</a>',
+                ['more', 'details'],
+                false
+            ],
+            'text blacklisted different case' => [
+                '<a href="link.html">Details</a>',
+                ['more', 'details'],
+                false
+            ],
+            'only chars taken into account' => [
+                '<a href="link.html">Details...</a>',
+                ['more', 'details'],
+                false
+            ],
+            'empty blacklist' => [
+                '<a href="link.html">Details...</a>',
+                [],
+                true
+            ],
+            'empty test' => [
+                '<a href="link.html"><img src="test.gif" alt="" /></a>',
+                ['more', 'details'],
+                true
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider linkTextNotBlacklistedTestsDataProvider
+     * @test
+     * @param $html
+     * @param $blacklist
+     * @param $expected
+     */
+    public function linkTextNotBlacklistedTests($html, $blacklist, $expected)
+    {
+        $doc = new DOMDocument();
+        $doc->loadHTML($html);
+
+        /** @var \DOMElement $element */
+        $element = $doc->getElementsByTagName('a')->item(0);
+        $result = LinkUtility::linkTextNotBlacklisted($element, $blacklist);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @return array
+     */
+    public function linkImageAttributeNotBlacklistedTestsDataProvider()
+    {
+        return [
+            'no blacklist' => [
+                '<a href=#" title="more">This is a link</a>',
+                'title',
+                [],
+                true
+            ],
+            'no image' => [
+                '<a href=#" title="more">This is a link</a>',
+                'title',
+                ['more', 'details'],
+                true
+            ],
+            'image with no attribute' => [
+                '<a href=#" title="more"><img src="test.gif" /></a>',
+                'title',
+                ['more', 'details'],
+                true
+            ],
+            'image with attribute value not blacklisted' => [
+                '<a href=#" title="more"><img src="test.gif" title="Not blacklisted" /></a>',
+                'title',
+                ['more', 'details'],
+                true
+            ],
+            'image with attribute value blacklisted' => [
+                '<a href=#" title="more"><img src="test.gif" title="Details" /></a>',
+                'title',
+                ['more', 'details'],
+                false
+            ],
+            'image with attribute value blacklisted including extra chars' => [
+                '<a href=#" title="more"><img src="test.gif" title="Details..." /></a>',
+                'title',
+                ['more', 'details'],
+                false
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider linkImageAttributeNotBlacklistedTestsDataProvider
+     * @param $html
+     * @param $attribute
+     * @param $blacklist
+     * @param $expected
+     */
+    public function linkImageAttributeNotBlacklistedTests($html, $attribute, $blacklist, $expected)
+    {
+        $doc = new DOMDocument();
+        $doc->loadHTML($html);
+
+        /** @var \DOMElement $element */
+        $element = $doc->getElementsByTagName('a')->item(0);
+        $result = LinkUtility::linkImageAttributeNotBlacklisted($element, $attribute, $blacklist);
+
+        $this->assertEquals($expected, $result);
+    }
 }
