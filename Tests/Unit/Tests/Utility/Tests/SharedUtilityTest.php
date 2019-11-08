@@ -297,4 +297,72 @@ class SharedUtilityTest extends BaseTestCase
 
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @return array
+     */
+    public function elementTitleNotRedundantTestsDataProvider()
+    {
+        return [
+            'link has no title' => [
+                '<a href="text.html">Test</a>',
+                'a',
+                true
+            ],
+            'image has no title' => [
+                '<img src="text.html" alt="" />',
+                'img',
+                true
+            ],
+            'link has no redundant title' => [
+                '<a href="text.html" title="Title">Link Text</a>',
+                'a',
+                true
+            ],
+            'image has no redundant title' => [
+                '<img src="text.html" title="Title" alt="Alternative" />',
+                'img',
+                true
+            ],
+            'link has redundant title same case' => [
+                '<a href="text.html" title="Title">Title</a>',
+                'a',
+                false
+            ],
+            'image has redundant title same case' => [
+                '<img src="text.html" title="Title" alt="Title" />',
+                'img',
+                false
+            ],
+            'link has redundant title different case' => [
+                '<a href="text.html" title="title">Title</a>',
+                'a',
+                false
+            ],
+            'image has redundant title different case' => [
+                '<img src="text.html" title="title" alt="Title" />',
+                'img',
+                false
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider elementTitleNotRedundantTestsDataProvider
+     * @param $html
+     * @param $elementTag
+     * @param $expected
+     */
+    public function elementTitleNotRedundantTests($html, $elementTag, $expected)
+    {
+        $doc = new DOMDocument();
+        $doc->loadHTML($html);
+
+        /** @var \DOMElement $element */
+        $element = $doc->getElementsByTagName($elementTag)->item(0);
+        $result = SharedUtility::elementTitleNotRedundant($element);
+
+        $this->assertEquals($expected, $result);
+    }
 }

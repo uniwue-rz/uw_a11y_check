@@ -87,4 +87,27 @@ class SharedUtility
     {
         return $image->hasAttribute('alt');
     }
+
+    /**
+     * @param \DOMElement $element
+     * @return bool
+     */
+    public static function elementTitleNotRedundant(\DOMElement $element): bool
+    {
+        if (($element->tagName === 'a' && $element->textContent === '') ||
+            ($element->tagName === 'img' && !$element->hasAttribute('alt')) ||
+            ($element->tagName === 'a' && !$element->hasAttribute('title')) ||
+            ($element->tagName === 'img' && !$element->hasAttribute('title'))
+        ) {
+            return true;
+        }
+
+        if ($element->tagName === 'a') {
+            $content = $element->textContent;
+        } else {
+            $content = $element->getAttribute('alt');
+        }
+
+        return strtolower($content) !== strtolower($element->getAttribute('title'));
+    }
 }

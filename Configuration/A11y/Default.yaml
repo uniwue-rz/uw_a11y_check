@@ -52,6 +52,7 @@ testSuites:
     tests:
       linkNameTest: { name: "Link-Name", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\LinkNameTest", configuration: {} }
       imageAltTest: { name: "Image-Alt", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\ImageAltTest", configuration: {} }
+      redundantTitle: { name: "Redundant-Title", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\RedundantTitleTest", configuration: {} }
   testSuite2:
     tests:
       test1: { name: "Test 1", className: "UniWue\\UwA11yCheck\\Tests\\Test1", configuration: {} }
