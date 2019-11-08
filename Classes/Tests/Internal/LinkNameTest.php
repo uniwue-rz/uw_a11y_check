@@ -66,8 +66,6 @@ class LinkNameTest extends AbstractTest
                 $node->setUid(ElementUidUtility::determineElementUid($link));
                 $result->addNode($node);
                 $result->setStatus(Result\Status::VIOLATIONS);
-
-                // @todo: Determine content element UID
             }
         }
 

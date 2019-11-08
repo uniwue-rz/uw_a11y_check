@@ -64,8 +64,6 @@ class ImageAltTest extends AbstractTest
                 $node->setUid(ElementUidUtility::determineElementUid($image));
                 $result->addNode($node);
                 $result->setStatus(Result\Status::VIOLATIONS);
-
-                // @todo: Determine content element UID
             }
         }
 
