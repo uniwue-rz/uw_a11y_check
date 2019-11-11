@@ -23,6 +23,10 @@
     border-bottom: 1px solid #cccccc;
 }
 
+.panel-a11y .panel-group .panel-heading + .panel-collapse > .list-group, .panel-group .panel-heading + .panel-collapse > .panel-body {
+    border-top: none;
+}
+
 .a11y-check .panel-title .collapsed .caret {
     transform: rotate(-90deg);
 }
