@@ -1,8 +1,6 @@
 <?php
 namespace UniWue\UwA11yCheck\Check;
 
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-
 /**
  * Class A11yCheck
  */

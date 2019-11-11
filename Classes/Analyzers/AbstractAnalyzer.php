@@ -2,9 +2,9 @@
 namespace UniWue\UwA11yCheck\Analyzers;
 
 use GuzzleHttp\Client;
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Database\QueryGenerator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use UniWue\UwA11yCheck\Check\Preset;
 use UniWue\UwA11yCheck\Check\ResultSet;
 use UniWue\UwA11yCheck\Tests\TestInterface;
@@ -42,7 +42,7 @@ abstract class AbstractAnalyzer implements AnalyzerInterface
      */
     public function runTests(Preset $preset, int $recordUid): ResultSet
     {
-        $results = new ObjectStorage();
+        $results = [];
         $testSuite = $preset->getTestSuite();
 
         $url = $preset->getCheckUrl($recordUid);
@@ -51,11 +51,14 @@ abstract class AbstractAnalyzer implements AnalyzerInterface
         /** @var TestInterface $test */
         foreach ($testSuite->getTests() as $test) {
             $result = $test->run($html, $recordUid);
-            $results->attach($result);
+            $results[] = $result;
         }
+
+        $pid = $this->getPidByRecordUid($preset->getCheckTableName(), $recordUid);
 
         $resultSet = GeneralUtility::makeInstance(ResultSet::class);
         $resultSet->setUid($recordUid);
+        $resultSet->setPid($pid);
         $resultSet->setResults($results);
         $resultSet->setTable($preset->getCheckTableName());
 
@@ -79,6 +82,23 @@ abstract class AbstractAnalyzer implements AnalyzerInterface
         }
 
         $this->pageUids = $pageUids;
+    }
+
+    /**
+     * Returns the PID of the record
+     *
+     * @param string $table
+     * @param int $recordUid
+     * @return int
+     */
+    protected function getPidByRecordUid(string $table, int $recordUid): int
+    {
+        if ($table === 'pages') {
+            return $recordUid;
+        }
+
+        $record = BackendUtility::getRecord($table, $recordUid, 'pid');
+        return $record['pid'] ?? 0;
     }
 
     /**

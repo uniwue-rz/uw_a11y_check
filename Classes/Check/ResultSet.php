@@ -1,7 +1,6 @@
 <?php
 namespace UniWue\UwA11yCheck\Check;
 
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use UniWue\UwA11yCheck\Check\Result\Impact;
 
 /**
@@ -25,17 +24,9 @@ class ResultSet
     protected $table = '';
 
     /**
-     * @var ObjectStorage
+     * @var array
      */
-    protected $results = null;
-
-    /**
-     * ResultSet constructor.
-     */
-    public function __construct()
-    {
-        $this->results = new ObjectStorage();
-    }
+    protected $results = [];
 
     /**
      * @return int
@@ -54,17 +45,17 @@ class ResultSet
     }
 
     /**
-     * @return ObjectStorage
+     * @return array
      */
-    public function getResults(): ObjectStorage
+    public function getResults(): array
     {
         return $this->results;
     }
 
     /**
-     * @param ObjectStorage $results
+     * @param array $results
      */
-    public function setResults(ObjectStorage $results): void
+    public function setResults(array $results): void
     {
         $this->results = $results;
     }
@@ -112,7 +103,7 @@ class ResultSet
 
         /** @var Result $result */
         foreach ($this->results as $result) {
-            if ($result->getNodes()->count() > 0 && $result->getImpact() > $impact) {
+            if (count($result->getNodes()) > 0 && $result->getImpact() > $impact) {
                 $impact = $result->getImpact();
             }
         }

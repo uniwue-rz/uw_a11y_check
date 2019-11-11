@@ -1,7 +1,6 @@
 <?php
 namespace UniWue\UwA11yCheck\Check;
 
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use UniWue\UwA11yCheck\Tests\TestInterface;
 
 /**
@@ -10,36 +9,20 @@ use UniWue\UwA11yCheck\Tests\TestInterface;
 class TestSuite
 {
     /**
-     * @var ObjectStorage
+     * @var array
      */
-    protected $tests = null;
-
-    /**
-     * TestSuite constructor.
-     */
-    public function __construct()
-    {
-            $this->tests = new ObjectStorage();
-    }
+    protected $tests = [];
 
     /**
      * @param TestInterface $test
      */
     public function addTest(TestInterface $test)
     {
-        $this->tests->attach($test);
+        $this->tests[] = $test;
     }
 
     /**
-     * @param TestInterface $test
-     */
-    public function removeTest(TestInterface $test)
-    {
-        $this->tests->detach($test);
-    }
-
-    /**
-     * @return ObjectStorage
+     * @return array
      */
     public function getTests()
     {
@@ -47,9 +30,9 @@ class TestSuite
     }
 
     /**
-     * @param ObjectStorage $tests
+     * @param array $tests
      */
-    public function setTests(ObjectStorage $tests)
+    public function setTests(array $tests)
     {
         $this->tests = $tests;
     }

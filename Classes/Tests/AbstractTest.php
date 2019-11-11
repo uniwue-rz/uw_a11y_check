@@ -103,7 +103,7 @@ abstract class AbstractTest implements TestInterface
     public function initResultWithMetaDataFromTest(): Result
     {
         $result = new Result();
-        $result->setTest($this);
+        $result->setTestId($this->getId());
         $result->setDescription($this->getDescription());
         $result->setHelp($this->help);
         $result->setHelpUrl($this->helpUrl);

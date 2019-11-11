@@ -1,21 +1,14 @@
 <?php
 namespace UniWue\UwA11yCheck\Check;
 
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use UniWue\UwA11yCheck\Check\Result\Node;
-use UniWue\UwA11yCheck\Tests\TestInterface;
 
 /**
  * Class Result
  */
 class Result
 {
-    /**
-     * @var TestInterface
-     */
-    protected $test = null;
-
     /**
      * @var null|int
      */
@@ -42,33 +35,14 @@ class Result
     protected $impact = null;
 
     /**
-     * @var ObjectStorage
+     * @var array
      */
-    protected $nodes = null;
+    protected $nodes = [];
 
     /**
-     * Result constructor.
+     * @var string
      */
-    public function __construct()
-    {
-        $this->nodes = new ObjectStorage();
-    }
-
-    /**
-     * @return TestInterface
-     */
-    public function getTest(): TestInterface
-    {
-        return $this->test;
-    }
-
-    /**
-     * @param TestInterface $test
-     */
-    public function setTest(TestInterface $test): void
-    {
-        $this->test = $test;
-    }
+    protected $testId = '';
 
     /**
      * @return int|null
@@ -151,35 +125,43 @@ class Result
     }
 
     /**
-     * @return ObjectStorage
+     * @return array
      */
-    public function getNodes(): ObjectStorage
+    public function getNodes(): array
     {
         return $this->nodes;
     }
 
     /**
-     * @param ObjectStorage $nodes
+     * @param Node $node
      */
-    public function setNodes(ObjectStorage $nodes): void
+    public function addNode(Node $node)
+    {
+        $this->nodes[] = $node;
+    }
+
+    /**
+     * @param array $nodes
+     */
+    public function setNodes(array $nodes): void
     {
         $this->nodes = $nodes;
     }
 
     /**
-     * @param Node $node
+     * @return string
      */
-    public function addNode(Node $node): void
+    public function getTestId(): string
     {
-        $this->nodes->attach($node);
+        return $this->testId;
     }
 
     /**
-     * @param Node $node
+     * @param string $testId
      */
-    public function removeNode(Node $node): void
+    public function setTestId(string $testId): void
     {
-        $this->nodes->detach($node);
+        $this->testId = $testId;
     }
 
     /**
@@ -187,7 +169,7 @@ class Result
      */
     public function getHasErrors(): bool
     {
-        return $this->nodes->count() > 0;
+        return count($this->nodes) > 0;
     }
 
     /**

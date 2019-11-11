@@ -59,7 +59,7 @@ class ImageAltTest extends AbstractTest
         }
 
         // If all found nodes passed, set status to passes
-        if ($images->count() > 0 && $result->getNodes()->count() === 0) {
+        if ($images->count() > 0 && count($result->getNodes()) === 0) {
             $result->setStatus(Result\Status::PASSES);
         }
 

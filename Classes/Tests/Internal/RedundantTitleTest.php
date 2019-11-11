@@ -50,7 +50,7 @@ class RedundantTitleTest extends AbstractTest
         }
 
         // If all found nodes passed, set status to passes
-        if ($elements->count() > 0 && $result->getNodes()->count() === 0) {
+        if ($elements->count() > 0 && count($result->getNodes()) === 0) {
             $result->setStatus(Result\Status::PASSES);
         }
 
