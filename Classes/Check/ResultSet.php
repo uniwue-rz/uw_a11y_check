@@ -9,7 +9,20 @@ use UniWue\UwA11yCheck\Check\Result\Impact;
  */
 class ResultSet
 {
+    /**
+     * @var int
+     */
     protected $pid = 0;
+
+    /**
+     * @var int
+     */
+    protected $uid = 0;
+
+    /**
+     * @var string
+     */
+    protected $table = '';
 
     /**
      * @var ObjectStorage
@@ -54,6 +67,38 @@ class ResultSet
     public function setResults(ObjectStorage $results): void
     {
         $this->results = $results;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUid(): int
+    {
+        return $this->uid;
+    }
+
+    /**
+     * @param int $uid
+     */
+    public function setUid(int $uid): void
+    {
+        $this->uid = $uid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTable(): string
+    {
+        return $this->table;
+    }
+
+    /**
+     * @param string $table
+     */
+    public function setTable(string $table): void
+    {
+        $this->table = $table;
     }
 
     /**

@@ -26,10 +26,18 @@ abstract class AbstractCheckUrlGenerator
         $this->uriBuilder = $uriBuilder;
     }
 
+    /**
+     * AbstractCheckUrlGenerator constructor.
+     * @param array $configuration
+     */
     public function __construct(array $configuration)
     {
     }
 
+    /**
+     * @param string $baseUrl
+     * @param int $pageUid
+     */
     public function getCheckUrl(string $baseUrl, int $pageUid)
     {
     }

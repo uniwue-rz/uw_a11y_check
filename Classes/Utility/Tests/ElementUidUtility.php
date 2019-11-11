@@ -14,7 +14,10 @@ class ElementUidUtility
      */
     public static function determineElementUid(\DOMElement $element): int
     {
-        if (!$element->hasAttribute('data-uid') && $element->parentNode) {
+        if (!$element->hasAttribute('data-uid') &&
+            $element->parentNode &&
+            $element->parentNode instanceof \DOMElement
+        ) {
             return self::determineElementUid($element->parentNode);
         } elseif ($element->hasAttribute('data-uid')) {
             return $element->getAttribute('data-uid');

@@ -27,10 +27,11 @@ class A11yCheck
      * Executes the check and returns the result as objectStorage
      *
      * @param int $id
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @param int $levels
+     * @return array
      */
-    public function executeCheck(int $id): ObjectStorage
+    public function executeCheck(int $id, int $levels = 0): array
     {
-        return $this->preset->executeTestSuite($id);
+        return $this->preset->executeTestSuiteByPageUid($id, $levels);
     }
 }

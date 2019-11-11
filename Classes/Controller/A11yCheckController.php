@@ -2,12 +2,8 @@
 namespace UniWue\UwA11yCheck\Controller;
 
 use TYPO3\CMS\Backend\View\BackendTemplateView;
-use TYPO3\CMS\Core\Database\QueryGenerator;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
-use UniWue\UwA11yCheck\Check\A11yCheck;
-use UniWue\UwA11yCheck\Check\ResultSet;
 use UniWue\UwA11yCheck\Domain\Model\Dto\CheckDemand;
 use UniWue\UwA11yCheck\Service\PresetService;
 
@@ -153,25 +149,7 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function checkAction(CheckDemand $checkDemand): void
     {
         $preset = $checkDemand->getPreset();
-
-        $checkPids = [$this->pid];
-        if ($checkDemand->getLevel() > 0) {
-            $queryGenerator = GeneralUtility::makeInstance(QueryGenerator::class);
-            $pidList = $queryGenerator->getTreeList($this->pid, $checkDemand->getLevel(), 0, 1);
-            $checkPids = GeneralUtility::intExplode(',', $pidList, true);
-        }
-
-        $results = [];
-        foreach ($checkPids as $checkPid) {
-            $a11yCheck = new A11yCheck($preset);
-            $checkResults = $a11yCheck->executeCheck($checkPid);
-
-            $resultSet = GeneralUtility::makeInstance(ResultSet::class);
-            $resultSet->setPid($checkPid);
-            $resultSet->setResults($checkResults);
-
-            $results[] = $resultSet;
-        }
+        $results = $preset->executeTestSuiteByPageUid($this->pid, $checkDemand->getLevel());
 
         $this->view->assignMultiple([
             'checkDemand' => $checkDemand,

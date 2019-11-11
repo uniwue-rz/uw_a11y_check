@@ -1,6 +1,8 @@
 analyzers:
-  internalA11yCheck:
-    className: "UniWue\\UwA11yCheck\\Analyzers\\Internal"
+  pageContentAnalyzer:
+    className: "UniWue\\UwA11yCheck\\Analyzers\\PageContentAnalyzer"
+  newsAnalyzer:
+    className: "UniWue\\UwA11yCheck\\Analyzers\\NewsAnalyzer"
 
 checkUrlGenerators:
   page:
@@ -11,45 +13,45 @@ checkUrlGenerators:
     configuration: {}
   newsDetail:
     className: "UniWue\\UwA11yCheck\\CheckUrlGenerators\\NewsDetail"
-    configuration:
-      targetPid: 216468
+    configuration: {}
 
 presets:
-  preset1:
-    name: "A name for preset 1"
-    description: "A description for the preset"
+  pageContent:
+    name: "Check page content elements"
+    description: "This check renders all content elements of the given page(s) and performs the accessibility check"
     configuration:
       baseUrl: "http://uni-wuerzburg-87.typo3.local/"
     analyzer:
-      id: "internalA11yCheck"
+      id: "pageContentAnalyzer"
       configuration: {}
     checkUrlGenerator:
       id: "pageContent"
       configuration:
         targetPid: 216467
     testSuite:
-      id: "testSuite1"
+      id: "internalTests"
       tests:
         linkTextBlacklisted:
           configuration:
             blacklist: ['mehr', 'details']
-  preset2:
-    name: "A name for preset 2"
-    description: "A description for the preset"
+  extNews:
+    name: "Check ext:news records"
+    description: "This check renders all news records of the given page(s) and performs the accessibility check"
     configuration:
       baseUrl: "http://uni-wuerzburg-87.typo3.local/"
     analyzer:
-      id: "internalA11yCheck"
+      id: "newsAnalyzer"
       configuration: {}
     checkUrlGenerator:
       id: "newsDetail"
-      configuration: {}
+      configuration:
+        targetPid: 216468
     testSuite:
-      id: "testSuite1"
+      id: "internalTests"
       configuration: {}
 
 testSuites:
-  testSuite1:
+  internalTests:
     tests:
       linkNameTest: { name: "Link-Name", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\LinkNameTest", configuration: {} }
       imageAltTest: { name: "Image-Alt", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\ImageAltTest", configuration: {} }

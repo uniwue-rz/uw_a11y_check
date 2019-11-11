@@ -97,7 +97,7 @@ class Preset
     /**
      * @return string
      */
-    public function getCheckTableName()
+    public function getCheckTableName(): string
     {
         return $this->checkUrlGenerator->getTableName();
     }
@@ -108,20 +108,52 @@ class Preset
      * @param int $id
      * @return string
      */
-    protected function getCheckUrl(int $id): string
+    public function getCheckUrl(int $id): string
     {
         return $this->baseUrl . $this->checkUrlGenerator->getCheckUrl($this->baseUrl, $id);
     }
 
     /**
-     * Executes the testSuite configured in the preset
-     *
-     * @param int $id
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @return TestSuite
      */
-    public function executeTestSuite(int $id)
+    public function getTestSuite(): TestSuite
     {
-        $checkUrl = $this->getCheckUrl($id);
-        return $this->analyzer->executeTestSuite($this->testSuite, $checkUrl);
+        return $this->testSuite;
+    }
+
+    /**
+     * Executes the testSuite configured in the preset by the given page UID and recursive levels
+     *
+     * @param int $pageUid
+     * @param int $levels
+     * @return array
+     */
+    public function executeTestSuiteByPageUid(int $pageUid, int $levels)
+    {
+        $result = [];
+        $this->analyzer->initializePageUids($pageUid, $levels);
+
+        foreach ($this->analyzer->getCheckRecordUids($this) as $recordUid) {
+            $result[] = $this->analyzer->runTests($this, $recordUid);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Executes the testSuite configured in the preset by the given array of record UIDs
+     *
+     * @param array $recordUids
+     * @return array
+     */
+    public function executeTestSuiteByRecordUids(array $recordUids): array
+    {
+        $result = [];
+
+        foreach ($recordUids as $recordUid) {
+            $result[] = $this->analyzer->runTests($this, $recordUid);
+        }
+
+        return $result;
     }
 }
