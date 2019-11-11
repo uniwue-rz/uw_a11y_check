@@ -202,7 +202,11 @@ class Result
                 $state = 0;
                 break;
             case 1:
-                $state = 2;
+                if ($this->getImpact() >= 3) {
+                    $state = 2;
+                } else {
+                    $state = 1;
+                }
                 break;
             case 2:
                 $state = -1;
