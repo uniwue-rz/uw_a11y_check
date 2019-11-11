@@ -32,9 +32,10 @@ class LinkNameTest extends AbstractTest
      * Runs the test
      *
      * @param string $html
+     * @param int $fallbackElementUid
      * @return Result
      */
-    public function run(string $html): Result
+    public function run(string $html, int $fallbackElementUid): Result
     {
         $result = $this->initResultWithMetaDataFromTest();
 
@@ -53,7 +54,7 @@ class LinkNameTest extends AbstractTest
             if (!$checkResult) {
                 $node = new Result\Node();
                 $node->setHtml($link->ownerDocument->saveHTML($link));
-                $node->setUid(ElementUidUtility::determineElementUid($link));
+                $node->setUid($this->getElementUid($link, $fallbackElementUid));
                 $result->addNode($node);
                 $result->setStatus(Result\Status::VIOLATIONS);
             }

@@ -5,10 +5,26 @@
 .a11y-check .panel {
     border-radius: 0;
     box-shadow: none;
+    border: none;
 }
 
 .a11y-check .panel-title a {
     display: block;
+    padding: 2px 0;
+}
+
+.panel-a11y .panel-heading {
+    border-left: 2px solid #cccccc;
+}
+
+.panel-a11y .panel-body {
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+}
+
+.a11y-check .panel-title .collapsed .caret {
+    transform: rotate(-90deg);
 }
 
 .a11y-check .settings {
@@ -25,22 +41,26 @@
 
 .a11y-check .impact-0 {
     background-color: #ddeacf;
+    border-color: #79a548;
     color: #000000;
 }
 
 .a11y-check .impact-1 {
-    background-color: #cccccc;
+    background-color: #f8e4c6;
+    border-color: #e8a33d;
     color: #000000;
 }
 
 .a11y-check .impact-2 {
     background-color: #dddddd;
+    border-color: #c83c3c;
     color: #000000;
 }
 
 .a11y-check .impact-3,
 .a11y-check .impact-4 {
     background-color: #efc7c7;
+    border-color: #c83c3c;
     color: #000000;
 }
 

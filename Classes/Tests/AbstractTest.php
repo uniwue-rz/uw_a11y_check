@@ -2,6 +2,7 @@
 namespace UniWue\UwA11yCheck\Tests;
 
 use UniWue\UwA11yCheck\Check\Result;
+use UniWue\UwA11yCheck\Utility\Tests\ElementUidUtility;
 
 /**
  * Class AbstractTest
@@ -110,6 +111,22 @@ abstract class AbstractTest implements TestInterface
         $result->setStatus(Result\Status::INAPPLICABLE);
 
         return $result;
+    }
+
+    /**
+     * Returns the element UID in the node. If no UID could be determined, the fallbackElementUid is returned
+     *
+     * @param \DOMElement $node
+     * @param int $fallbackElementUid
+     * @return int
+     */
+    public function getElementUid(\DOMElement $node, int $fallbackElementUid): int
+    {
+        $elementUid = ElementUidUtility::determineElementUid($node);
+        if ($elementUid === 0) {
+            $elementUid = $fallbackElementUid;
+        }
+        return $elementUid;
     }
 
     /**

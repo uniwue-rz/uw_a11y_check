@@ -50,7 +50,7 @@ abstract class AbstractAnalyzer implements AnalyzerInterface
 
         /** @var TestInterface $test */
         foreach ($testSuite->getTests() as $test) {
-            $result = $test->run($html);
+            $result = $test->run($html, $recordUid);
             $results->attach($result);
         }
 

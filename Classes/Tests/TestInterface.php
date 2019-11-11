@@ -8,5 +8,5 @@ use UniWue\UwA11yCheck\Check\Result;
  */
 interface TestInterface
 {
-    public function run(string $html): Result;
+    public function run(string $html, int $fallbackElementUid): Result;
 }

@@ -31,9 +31,10 @@ class ImageAltTest extends AbstractTest
      * Runs the test
      *
      * @param string $html
+     * @param int $fallbackElementUid
      * @return Result
      */
-    public function run(string $html): Result
+    public function run(string $html, int $fallbackElementUid): Result
     {
         $result = $this->initResultWithMetaDataFromTest();
 
@@ -51,7 +52,7 @@ class ImageAltTest extends AbstractTest
             if (!$checkResult) {
                 $node = new Result\Node();
                 $node->setHtml($image->ownerDocument->saveHTML($image));
-                $node->setUid(ElementUidUtility::determineElementUid($image));
+                $node->setUid($this->getElementUid($image, $fallbackElementUid));
                 $result->addNode($node);
                 $result->setStatus(Result\Status::VIOLATIONS);
             }
