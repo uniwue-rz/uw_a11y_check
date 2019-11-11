@@ -23,7 +23,9 @@ class PresetByRecordUidsCommand extends AbstractCheckCommand
     public function configure()
     {
         $this
-            ->setDescription('a11y check for the given preset and list or record UIDs (Preset should contain checks for records)')
+            ->setDescription(
+                'a11y check for the given preset and list or record UIDs (Preset should contain checks for records)'
+            )
             ->addArgument(
                 'preset',
                 InputArgument::REQUIRED
