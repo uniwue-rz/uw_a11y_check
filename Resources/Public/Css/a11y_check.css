@@ -23,6 +23,11 @@
     border-bottom: 1px solid #cccccc;
 }
 
+.a11y-check .check-date {
+    float: right;
+    font-size: 0.7em;
+}
+
 .panel-a11y .panel-group .panel-heading + .panel-collapse > .list-group, .panel-group .panel-heading + .panel-collapse > .panel-body {
     border-top: none;
 }

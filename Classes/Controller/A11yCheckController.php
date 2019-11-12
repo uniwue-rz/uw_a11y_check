@@ -21,11 +21,24 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     protected $serializationService = null;
 
     /**
+     * @var PresetService
+     */
+    protected $presetService = null;
+
+    /**
      * @param SerializationService $serializationService
      */
     public function injectSerializationService(\UniWue\UwA11yCheck\Service\SerializationService $serializationService)
     {
         $this->serializationService = $serializationService;
+    }
+
+    /**
+     * @param PresetService $presetService
+     */
+    public function injectConfigurationService(PresetService $presetService)
+    {
+        $this->presetService = $presetService;
     }
 
     /**
@@ -48,19 +61,6 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * @var BackendTemplateView
      */
     protected $view;
-
-    /**
-     * @var PresetService
-     */
-    protected $presetService = null;
-
-    /**
-     * @param PresetService $presetService
-     */
-    public function injectConfigurationService(PresetService $presetService)
-    {
-        $this->presetService = $presetService;
-    }
 
     /**
      * Set up the doc header properly here
@@ -159,16 +159,17 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 
         $this->view->assignMultiple([
             'checkDemand' => $checkDemand,
-            'results' => $results
+            'results' => $results,
+            'date' => new \DateTime()
         ]);
     }
 
     public function resultsAction(): void
     {
-        $results = $this->getResultsByPid($this->pid);
+        $resultsArray = $this->getResultsArrayByPid($this->pid);
 
         $this->view->assignMultiple([
-            'results' => $results
+            'resultsArray' => $resultsArray
         ]);
     }
 
@@ -218,10 +219,13 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     }
 
     /**
+     * Returns all saved results from the database. An array is returned containing both the presets and
+     * the check results.
+     *
      * @param int $pid
      * @return array
      */
-    protected function getResultsByPid(int $pid): array
+    protected function getResultsArrayByPid(int $pid): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('tx_a11ycheck_result');
@@ -234,10 +238,11 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                     'pid',
                     $queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
                 )
-            );
+            )->orderBy('preset_id', 'asc');
 
         $queryResult = $query->execute()->fetchAll();
-        $resultSets = [];
+
+        $dbResults = [];
 
         foreach ($queryResult as $result) {
             $unserializedData = $this->serializationService->getSerializer()->deserialize(
@@ -246,10 +251,22 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                 'json'
             );
 
-            $resultSets[] = $unserializedData;
+            $presetId = $result['preset_id'];
+
+            if (!isset($dbResults[$presetId])) {
+                $checkDate = new \DateTime();
+                $checkDate->setTimestamp($result['check_date']);
+                $dbResults[$presetId] = [
+                    'preset' => $this->presetService->getPresetById($presetId) ?? 'Unknown',
+                    'results' => [$unserializedData],
+                    'date' => $checkDate,
+                ];
+            } else {
+                $dbResults[$presetId]['results'][] = $unserializedData;
+            }
         }
 
-        return $resultSets;
+        return $dbResults;
     }
 
     /**

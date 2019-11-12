@@ -10,7 +10,9 @@
 </f:section>
 
 <f:section name="content">
-    <f:render partial="Results" arguments="{results: results}" />
+    <f:for each="{resultsArray}" as="singleResult">
+        <f:render partial="Results" arguments="{results: singleResult.results, preset: singleResult.preset, date: singleResult.date}" />
+    </f:for>
 </f:section>
 
 </html>

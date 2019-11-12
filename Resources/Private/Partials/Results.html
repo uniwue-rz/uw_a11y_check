@@ -1,3 +1,4 @@
+<h3>Preset: {preset.name} <span class="check-date"><f:format.date format="d.m.Y h:i:s">{date}</f:format.date></span></h3>
 <div class="panel-group panel-group-a11y" role="tablist" aria-multiselectable="true">
   <f:for each="{results}" as="resultSet" iteration="i">
     <div class="panel panel-default panel-a11y">
@@ -36,7 +37,7 @@
 
               <f:groupedFor each="{result.nodes}" as="nodes" groupBy="uid" groupKey="elementUid">
                 <div>
-                  <p>Element UID ({checkDemand.preset.checkTableName}): {elementUid}</p>
+                  <p>Element UID ({preset.checkTableName}): {elementUid}</p>
                   <f:for each="{nodes}" as="node">
                     <pre>{node.html}</pre>
                   </f:for>
