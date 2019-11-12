@@ -12,39 +12,47 @@
       </div>
       <div class="panel-collapse collapse" id="resultset-{preset.id}-{i.index}" role="tabpanel" aria-expanded="false">
         <div class="panel-body" role="tablist" aria-multiselectable="false">
-          <f:for each="{resultSet.results}" as="result">
-            <f:be.infobox state="{result.state}" title="{result.title}" message="{result.description}" />
+          <f:if condition="{resultSet.impact} > 0">
+            <f:then>
+              <f:for each="{resultSet.results}" as="result">
+                <f:be.infobox state="{result.state}" title="{result.title}" message="{result.description}" />
 
-            <f:if condition="{result.hasErrors}">
-              <table class="table table-striped table-bordered">
-                <tbody>
-                <tr>
-                  <td><strong>Impact:</strong></td>
-                  <td>{result.impact}</td>
-                </tr>
-                <tr>
-                  <td><strong>Help:</strong></td>
-                  <td>{result.help -> f:format.nl2br()}</td>
-                </tr>
-                <f:if condition="{result.helpUrl}">
-                  <tr>
-                    <td><strong>Help URL:</strong></td>
-                    <td><f:link.external uri="{result.helpUrl}" target="_blank">{result.helpUrl}</f:link.external></td>
-                  </tr>
+                <f:if condition="{result.hasErrors}">
+                  <table class="table table-striped table-bordered">
+                    <tbody>
+                    <tr>
+                      <td><strong>Impact:</strong></td>
+                      <td>{result.impact}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Help:</strong></td>
+                      <td>{result.help -> f:format.nl2br()}</td>
+                    </tr>
+                    <f:if condition="{result.helpUrl}">
+                      <tr>
+                        <td><strong>Help URL:</strong></td>
+                        <td><f:link.external uri="{result.helpUrl}" target="_blank">{result.helpUrl}</f:link.external></td>
+                      </tr>
+                    </f:if>
+                    </tbody>
+                  </table>
+
+                  <f:groupedFor each="{result.nodes}" as="nodes" groupBy="uid" groupKey="elementUid">
+                    <div>
+                      <p>Element UID ({preset.checkTableName}): {elementUid}</p>
+                      <f:for each="{nodes}" as="node">
+                        <pre>{node.html}</pre>
+                      </f:for>
+                    </div>
+                  </f:groupedFor>
                 </f:if>
-                </tbody>
-              </table>
+              </f:for>
+            </f:then>
+            <f:else>
+              <f:be.infobox state="2" title="Check Failed" message="{resultSet.failedMessage}" />
+            </f:else>
+          </f:if>
 
-              <f:groupedFor each="{result.nodes}" as="nodes" groupBy="uid" groupKey="elementUid">
-                <div>
-                  <p>Element UID ({preset.checkTableName}): {elementUid}</p>
-                  <f:for each="{nodes}" as="node">
-                    <pre>{node.html}</pre>
-                  </f:for>
-                </div>
-              </f:groupedFor>
-            </f:if>
-          </f:for>
         </div>
       </div>
     </div>

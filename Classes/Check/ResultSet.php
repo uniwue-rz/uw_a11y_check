@@ -24,6 +24,16 @@ class ResultSet
     protected $table = '';
 
     /**
+     * @var bool
+     */
+    protected $failed = false;
+
+    /**
+     * @var string
+     */
+    protected $failedMessage = '';
+
+    /**
      * @var array
      */
     protected $results = [];
@@ -93,6 +103,38 @@ class ResultSet
     }
 
     /**
+     * @return bool
+     */
+    public function getFailed(): bool
+    {
+        return $this->failed;
+    }
+
+    /**
+     * @param bool $failed
+     */
+    public function setFailed(bool $failed): void
+    {
+        $this->failed = $failed;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFailedMessage(): string
+    {
+        return $this->failedMessage;
+    }
+
+    /**
+     * @param string $failedMessage
+     */
+    public function setFailedMessage(string $failedMessage): void
+    {
+        $this->failedMessage = $failedMessage;
+    }
+
+    /**
      * Returns the highest impact of all results
      *
      * @return int
@@ -100,6 +142,10 @@ class ResultSet
     public function getImpact(): int
     {
         $impact = Impact::NONE;
+
+        if ($this->getFailed()) {
+            return Impact::FAILED;
+        }
 
         /** @var Result $result */
         foreach ($this->results as $result) {

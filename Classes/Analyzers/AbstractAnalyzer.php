@@ -45,18 +45,23 @@ abstract class AbstractAnalyzer implements AnalyzerInterface
         $results = [];
         $testSuite = $preset->getTestSuite();
 
+        $pid = $this->getPidByRecordUid($preset->getCheckTableName(), $recordUid);
+        $resultSet = GeneralUtility::makeInstance(ResultSet::class);
         $url = $preset->getCheckUrl($recordUid);
-        $html = $this->fetchHtml($url);
 
-        /** @var TestInterface $test */
-        foreach ($testSuite->getTests() as $test) {
-            $result = $test->run($html, $recordUid);
-            $results[] = $result;
+        try {
+            $html = $this->fetchHtml($url);
+
+            /** @var TestInterface $test */
+            foreach ($testSuite->getTests() as $test) {
+                $result = $test->run($html, $recordUid);
+                $results[] = $result;
+            }
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $resultSet->setFailed(true);
+            $resultSet->setFailedMessage($e->getMessage());
         }
 
-        $pid = $this->getPidByRecordUid($preset->getCheckTableName(), $recordUid);
-
-        $resultSet = GeneralUtility::makeInstance(ResultSet::class);
         $resultSet->setUid($recordUid);
         $resultSet->setPid($pid);
         $resultSet->setResults($results);
