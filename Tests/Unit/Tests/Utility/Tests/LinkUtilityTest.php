@@ -129,37 +129,37 @@ class LinkUtilityTest extends BaseTestCase
     {
         return [
             'no blacklist' => [
-                '<a href=#" title="more">This is a link</a>',
+                '<a href="link.html" title="more">This is a link</a>',
                 'title',
                 [],
                 true
             ],
             'no image' => [
-                '<a href=#" title="more">This is a link</a>',
+                '<a href="link.html" title="more">This is a link</a>',
                 'title',
                 ['more', 'details'],
                 true
             ],
             'image with no attribute' => [
-                '<a href=#" title="more"><img src="test.gif" /></a>',
+                '<a href="link.html" title="more"><img src="test.gif" /></a>',
                 'title',
                 ['more', 'details'],
                 true
             ],
             'image with attribute value not blacklisted' => [
-                '<a href=#" title="more"><img src="test.gif" title="Not blacklisted" /></a>',
+                '<a href="link.html" title="more"><img src="test.gif" title="Not blacklisted" /></a>',
                 'title',
                 ['more', 'details'],
                 true
             ],
             'image with attribute value blacklisted' => [
-                '<a href=#" title="more"><img src="test.gif" title="Details" /></a>',
+                '<a href="link.html" title="more"><img src="test.gif" title="Details" /></a>',
                 'title',
                 ['more', 'details'],
                 false
             ],
             'image with attribute value blacklisted including extra chars' => [
-                '<a href=#" title="more"><img src="test.gif" title="Details..." /></a>',
+                '<a href="link.html" title="more"><img src="test.gif" title="Details..." /></a>',
                 'title',
                 ['more', 'details'],
                 false
@@ -185,5 +185,71 @@ class LinkUtilityTest extends BaseTestCase
         $result = LinkUtility::linkImageAttributeNotBlacklisted($element, $attribute, $blacklist);
 
         $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @return array
+     */
+    public function hasRedundantLinkNamesTestsDataProvider()
+    {
+        return [
+            'no links at all' => [
+                [
+                    '<img src="test.html" alt="" />'
+                ],
+                0
+            ],
+            'only one link' => [
+                [
+                    '<a href="link.html">Link 1</a>'
+                ],
+                0
+            ],
+            'two links but not redundant name' => [
+                [
+                    '<a href="link.html">Link 1</a>',
+                    '<a href="link.html">Link 2</a>'
+                ],
+                0
+            ],
+            'two links with redundant name' => [
+                [
+                    '<a href="link.html">Link 1</a>',
+                    '<a href="link.html">Link 1</a>'
+                ],
+                1
+            ],
+            'three links with redundant name' => [
+                [
+                    '<a href="link.html">Link 1</a>',
+                    '<a href="link.html">Link 1</a>',
+                    '<a href="link.html">Link 1</a>'
+                ],
+                1
+            ],
+        ];
+    }
+
+    /**
+     * @test
+     * @dataProvider hasRedundantLinkNamesTestsDataProvider
+     * @param $html
+     * @param $expected
+     */
+    public function hasRedundantLinkNamesTests($htmlArray, $expected)
+    {
+        $elements = [];
+
+        foreach ($htmlArray as $htmlLink) {
+            $doc = new DOMDocument();
+            $doc->loadHTML($htmlLink);
+            $element = $doc->getElementsByTagName('a')->item(0);
+            $elements[] = $element;
+        }
+
+        /** @var \DOMElement $element */
+        $result = LinkUtility::getRedundantLinkNames($elements);
+
+        $this->assertEquals($expected, count($result));
     }
 }

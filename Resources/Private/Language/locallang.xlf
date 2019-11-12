@@ -30,6 +30,13 @@
             <trans-unit id="redundant-title.help" xml:space="preserve">
                 <source>The title attribute value is used to provide advisory information. It typically appears when the users hovers the mouse over an element. The advisory information presented should not be identical to or very similar to the element text or alternative text.</source>
             </trans-unit>
+
+            <trans-unit id="redundant-link.description" xml:space="preserve">
+                <source>Ensures links with the same location have different names</source>
+            </trans-unit>
+            <trans-unit id="redundant-link.help" xml:space="preserve">
+                <source>For a keyboard user, it is tedious to navigate through redundant links. For users of assistive technologies, it can be confusing to encounter successive identical links. When the text alternative for the icon is a duplicate of the link text, it is repetitive as screen readers read the description twice.</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>

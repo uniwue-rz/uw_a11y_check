@@ -58,6 +58,7 @@ testSuites:
       linkNameTest: { name: "Link-Name", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\LinkNameTest", configuration: {} }
       imageAltTest: { name: "Image-Alt", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\ImageAltTest", configuration: {} }
       redundantTitle: { name: "Redundant-Title", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\RedundantTitleTest", configuration: {} }
+      redundantLink: { name: "Redundant-Link", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\RedundantLinkTest", configuration: {} }
       linkTextBlacklisted: { name: "Link-Text-Blacklisted", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\LinkTextBlacklistedTest", configuration: {} }
   testSuite2:
     tests:

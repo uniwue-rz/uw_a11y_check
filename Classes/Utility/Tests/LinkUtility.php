@@ -78,4 +78,28 @@ class LinkUtility
 
         return true;
     }
+
+    /**
+     * Checks, if the link name for the given array of link DOMElements is redundant and if so, returns an array
+     * of link affected DOMElements
+     *
+     * @param array $elements
+     * @return array
+     */
+    public static function getRedundantLinkNames(array $elements): array
+    {
+        $linkNames = [];
+        $redundantLinks = [];
+
+        /** @var \DOMElement $element */
+        foreach ($elements as $element) {
+            if ($element->textContent !== '' && !in_array($element->textContent, $linkNames)) {
+                $linkNames[] = $element->textContent;
+            } elseif (in_array($element->textContent, $linkNames) && !isset($redundantLinks[$element->textContent])) {
+                $redundantLinks[$element->textContent] = $element;
+            }
+        }
+
+        return $redundantLinks;
+    }
 }
