@@ -2,15 +2,15 @@
 <div class="panel-group panel-group-a11y" role="tablist" aria-multiselectable="true">
   <f:for each="{results}" as="resultSet" iteration="i">
     <div class="panel panel-default panel-a11y">
-      <div class="panel-heading impact-{resultSet.impact}" role="tab" id="heading-{i.index}">
+      <div class="panel-heading impact-{resultSet.impact}" role="tab" id="heading-{preset.id}-{i.index}">
         <h2 class="panel-title">
-          <a href="#resultset-{i.index}" class="collapsed" data-toggle="collapse" aria-controls="#resultset-{i.index}">
+          <a href="#resultset-{preset.id}-{i.index}" class="collapsed" data-toggle="collapse" aria-controls="#resultset-{i.index}">
             <span class="caret"></span>
             <strong>{resultSet.table} - {resultSet.uid}</strong>
           </a>
         </h2>
       </div>
-      <div class="panel-collapse collapse" id="resultset-{i.index}" role="tabpanel" aria-expanded="false">
+      <div class="panel-collapse collapse" id="resultset-{preset.id}-{i.index}" role="tabpanel" aria-expanded="false">
         <div class="panel-body" role="tablist" aria-multiselectable="false">
           <f:for each="{resultSet.results}" as="result">
             <f:be.infobox state="{result.state}" title="{result.title}" message="{result.description}" />
