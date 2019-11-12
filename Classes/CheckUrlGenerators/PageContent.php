@@ -11,6 +11,11 @@ use UniWue\UwA11yCheck\Utility\ContentElementUtility;
 class PageContent extends AbstractCheckUrlGenerator
 {
     /**
+     * @var array
+     */
+    protected $requiredConfiguration = ['targetPid'];
+
+    /**
      * @var int
      */
     protected $targetPid = 0;

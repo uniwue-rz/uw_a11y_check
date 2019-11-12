@@ -8,6 +8,11 @@ namespace UniWue\UwA11yCheck\CheckUrlGenerators;
 class NewsDetail extends AbstractCheckUrlGenerator
 {
     /**
+     * @var array
+     */
+    protected $requiredConfiguration = ['targetPid'];
+
+    /**
      * @var int
      */
     protected $targetPid = 0;

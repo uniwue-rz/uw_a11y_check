@@ -2,12 +2,18 @@
 namespace UniWue\UwA11yCheck\CheckUrlGenerators;
 
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use UniWue\UwA11yCheck\Utility\Exception\MissingConfigurationException;
 
 /**
  * Class AbstractCheckUrlGenerator
  */
 abstract class AbstractCheckUrlGenerator
 {
+    /**
+     * @var array
+     */
+    protected $requiredConfiguration = [];
+
     /**
      * @var string
      */
@@ -32,6 +38,7 @@ abstract class AbstractCheckUrlGenerator
      */
     public function __construct(array $configuration)
     {
+        $this->checkRequiredConfiguration($configuration);
     }
 
     /**
@@ -48,5 +55,22 @@ abstract class AbstractCheckUrlGenerator
     public function getTableName(): string
     {
         return $this->tableName;
+    }
+
+    /**
+     * Checks, if all required configuration settings are available and if not, throws an exception
+     *
+     * @param array $configuration
+     */
+    protected function checkRequiredConfiguration(array $configuration)
+    {
+        foreach ($this->requiredConfiguration as $configurationKey) {
+            if (!isset($configuration[$configurationKey])) {
+                throw new MissingConfigurationException(
+                    'Missing configuration key "' . $configurationKey . '" in ' . __CLASS__,
+                    1573565583355
+                );
+            }
+        }
     }
 }
