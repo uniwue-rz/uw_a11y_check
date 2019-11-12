@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2019-11-01T10:00:06Z" product-name="uw_a11y_check">
+        <header/>
+        <body>
+            <trans-unit id="module.index" xml:space="preserve">
+                <source>Manual accessibility check</source>
+            </trans-unit>
+            <trans-unit id="module.results" xml:space="preserve">
+                <source>Accessibility check results</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

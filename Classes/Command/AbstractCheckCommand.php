@@ -3,13 +3,11 @@ declare(strict_types = 1);
 namespace UniWue\UwA11yCheck\Command;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UniWue\UwA11yCheck\Check\Preset;
 use UniWue\UwA11yCheck\Check\ResultSet;
+use UniWue\UwA11yCheck\Service\SerializationService;
 
 /**
  * Class AbstractCheckCommand
@@ -17,9 +15,9 @@ use UniWue\UwA11yCheck\Check\ResultSet;
 abstract class AbstractCheckCommand extends Command
 {
     /**
-     * @var Serializer
+     * @var SerializationService
      */
-    protected $serializer = null;
+    protected $serializationService = null;
 
     /**
      * AbstractCheckCommand constructor.
@@ -29,9 +27,7 @@ abstract class AbstractCheckCommand extends Command
     {
         parent::__construct($name);
 
-        $encoders = [new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $this->serializer = new Serializer($normalizers, $encoders);
+        $this->serializationService = new SerializationService();
     }
 
     /**
@@ -59,7 +55,7 @@ abstract class AbstractCheckCommand extends Command
      */
     protected function saveResult(Preset $preset, ResultSet $resultSet): void
     {
-        $serializedData = $this->serializer->serialize($resultSet, 'json');
+        $serializedData = $this->serializationService->getSerializer()->serialize($resultSet, 'json');
 
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('tx_a11ycheck_result');
