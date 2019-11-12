@@ -4,7 +4,6 @@ namespace UniWue\UwA11yCheck\Tests\Internal;
 use Symfony\Component\DomCrawler\Crawler;
 use UniWue\UwA11yCheck\Check\Result;
 use UniWue\UwA11yCheck\Tests\AbstractTest;
-use UniWue\UwA11yCheck\Utility\Tests\ElementUidUtility;
 use UniWue\UwA11yCheck\Utility\Tests\SharedUtility;
 
 /**
