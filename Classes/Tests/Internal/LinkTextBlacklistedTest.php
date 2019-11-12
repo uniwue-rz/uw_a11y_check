@@ -69,11 +69,13 @@ class LinkTextBlacklistedTest extends AbstractTest
 
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
-            $checkResult = LinkUtility::linkTextNotBlacklisted($element, $this->blacklist) &&
+            $checkResult = (LinkUtility::linkTextNotBlacklisted($element, $this->blacklist) &&
                 SharedUtility::elementAttributeValueNotBlacklisted($element, 'title', $this->blacklist) &&
                 SharedUtility::elementAttributeValueNotBlacklisted($element, 'aria-label', $this->blacklist) &&
                 LinkUtility::linkImageAttributeNotBlacklisted($element, 'alt', $this->blacklist) &&
-                LinkUtility::linkImageAttributeNotBlacklisted($element, 'title', $this->blacklist);
+                LinkUtility::linkImageAttributeNotBlacklisted($element, 'title', $this->blacklist)) ||
+                SharedUtility::elementHasRolePresentation($element) ||
+                SharedUtility::elementHasRoleNone($element);
 
             if (!$checkResult) {
                 $node = new Result\Node();
