@@ -17,7 +17,7 @@ checkUrlGenerators:
 
 presets:
   pageContent:
-    name: "Check page content elements"
+    name: "Check page content elements (no plugins)"
     description: "This check renders all content elements of the given page(s) and performs the accessibility check"
     configuration:
       baseUrl: "http://uni-wuerzburg-87.typo3.local/"
@@ -28,6 +28,8 @@ presets:
       id: "pageContent"
       configuration:
         targetPid: 216467
+        ignoreContentTypes:
+          - list
     testSuite:
       id: "internalTests"
       tests:

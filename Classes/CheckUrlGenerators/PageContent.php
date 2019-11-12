@@ -16,6 +16,11 @@ class PageContent extends AbstractCheckUrlGenerator
     protected $targetPid = 0;
 
     /**
+     * @var array
+     */
+    protected $ignoredContentTypes = [];
+
+    /**
      * PageContent constructor.
      *
      * @param array $configuration
@@ -26,6 +31,10 @@ class PageContent extends AbstractCheckUrlGenerator
 
         $this->tableName = 'pages';
         $this->targetPid = $configuration['targetPid'];
+
+        if (isset($configuration['ignoreContentTypes']) && is_array($configuration['ignoreContentTypes'])) {
+            $this->ignoredContentTypes = $configuration['ignoreContentTypes'];
+        }
     }
 
     /**
@@ -37,7 +46,7 @@ class PageContent extends AbstractCheckUrlGenerator
      */
     public function getCheckUrl(string $baseUrl, int $pageUid)
     {
-        $contentElementUids = ContentElementUtility::getContentElementsUidsByPage($pageUid);
+        $contentElementUids = ContentElementUtility::getContentElementUidsByPage($pageUid, $this->ignoredContentTypes);
         $contentElementUidList = implode(',', $contentElementUids);
         $hmac = GeneralUtility::hmac($contentElementUidList, 'tt_content_uid_list');
 
