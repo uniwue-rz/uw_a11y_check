@@ -10,7 +10,7 @@ CREATE TABLE tx_a11ycheck_result (
 	record_uid int(11) DEFAULT '0' NOT NULL,
 	preset_id varchar(255) DEFAULT '' NOT NULL,
 	table_name varchar(255) DEFAULT '' NOT NULL,
-	resultset text,
+	resultset mediumtext,
 
 	PRIMARY KEY (uid),
 	KEY page (pid)
