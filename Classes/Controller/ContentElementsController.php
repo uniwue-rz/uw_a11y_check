@@ -25,18 +25,32 @@ class ContentElementsController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
     }
 
     /**
-     * @param string $uidList
+     * @param int $pageUid
+     * @param string $ignoreContentTypes
      * @param string $hmac
+     * @throws \Exception
      */
-    public function showAction(string $uidList, $hmac)
+    public function showAction(int $pageUid, string $ignoreContentTypes, string $hmac)
     {
-        $expectedHmac = GeneralUtility::hmac($uidList, 'tt_content_uid_list');
+        $hmacString = $pageUid . $ignoreContentTypes;
+        $expectedHmac = GeneralUtility::hmac($hmacString, 'page_content');
+
         if ($expectedHmac !== $hmac) {
             throw new \Exception('HMAC does not match', 1572608738828);
         }
 
+        $whereCondition = 'colPos >= 0';
+
+        if ($ignoreContentTypes !== '') {
+            $ignoreContentTypes = preg_replace('#[^a-zA-Z_,]#', '', $ignoreContentTypes);
+            $ignoreContentTypesArray = GeneralUtility::trimExplode(',', $ignoreContentTypes);
+            $additionalWhere = '"' . implode('","', $ignoreContentTypesArray) . '"';
+            $whereCondition .= ' AND CType not in(' . $additionalWhere . ')';
+        }
+
         $this->view->assignMultiple([
-            'ttContentUidList' => GeneralUtility::intExplode(',', $uidList, true)
+            'pageUid' => $pageUid,
+            'where' => $whereCondition,
         ]);
     }
 }

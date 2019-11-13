@@ -1,0 +1,32 @@
+lib.dynamicContent = COA
+lib.dynamicContent {
+    5 = LOAD_REGISTER
+    5 {
+        pageUid.cObject = TEXT
+        pageUid.cObject {
+            field = pageUid
+            ifEmpty.data = TSFE:id
+        }
+        where.cObject = TEXT
+        where.cObject {
+            field = where
+            ifEmpty.value = colPos >= 0
+        }
+    }
+    20 = CONTENT
+    20 {
+        table = tt_content
+        select {
+            includeRecordsWithoutDefaultTranslation = 1
+            orderBy = colPos, sorting
+            where.data =  register:where
+            pidInList.data = register:pageUid
+        }
+        renderObj {
+            stdWrap {
+                dataWrap = <div data-uid="{field:uid}">|</div>
+            }
+        }
+    }
+    90 = RESTORE_REGISTER
+}

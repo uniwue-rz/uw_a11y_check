@@ -1,3 +1,5 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:uw_a11y_check/Configuration/TypoScript/ContentElement/Helper/DynamicContent.typoscript">
+
 #==============================================
 # BE-module configuration for EXT:uw_a11y_check
 #==============================================
@@ -16,12 +18,4 @@ module.tx_uwa11ycheck {
             1 = {$module.tx_uwa11ycheck.view.layoutRootPath}
         }
     }
-}
-
-# Rendering of content elements in Fluid views
-lib.tx_uwa11ycheck.contentElementRendering = RECORDS
-lib.tx_uwa11ycheck.contentElementRendering {
-    tables = tt_content
-    source.current = 1
-    dontCheckPid = 1
 }

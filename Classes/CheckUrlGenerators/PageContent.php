@@ -51,16 +51,17 @@ class PageContent extends AbstractCheckUrlGenerator
      */
     public function getCheckUrl(string $baseUrl, int $pageUid)
     {
-        $contentElementUids = ContentElementUtility::getContentElementUidsByPage($pageUid, $this->ignoredContentTypes);
-        $contentElementUidList = implode(',', $contentElementUids);
-        $hmac = GeneralUtility::hmac($contentElementUidList, 'tt_content_uid_list');
+        $ignoreContentTypes = implode(',', $this->ignoredContentTypes);
+        $hmacString = $pageUid . $ignoreContentTypes;
+        $hmac = GeneralUtility::hmac($hmacString, 'page_content');
 
         return $this->uriBuilder
             ->setTargetPageUid($this->targetPid)
             ->setArguments([
                 'tx_uwa11ycheck_pi1[action]' => 'show',
                 'tx_uwa11ycheck_pi1[controller]' => 'ContentElements',
-                'tx_uwa11ycheck_pi1[uidList]' => $contentElementUidList,
+                'tx_uwa11ycheck_pi1[pageUid]' => $pageUid,
+                'tx_uwa11ycheck_pi1[ignoreContentTypes]' => $ignoreContentTypes,
                 'tx_uwa11ycheck_pi1[hmac]' => $hmac
             ])
             ->buildFrontendUri();

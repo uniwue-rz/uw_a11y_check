@@ -4,13 +4,7 @@
 <f:layout name="Default" />
 
 <f:section name="main">
-    <f:if condition="{ttContentUidList}">
-        <f:for each="{ttContentUidList}" as="ttContentUid">
-            <div data-uid="{ttContentUid}">
-                <f:cObject typoscriptObjectPath="lib.tx_uwa11ycheck.contentElementRendering">{ttContentUid}</f:cObject>
-            </div>
-        </f:for>
-    </f:if>
+    <f:cObject typoscriptObjectPath="lib.dynamicContent" data="{pageUid: pageUid, where: where}" />
 </f:section>
 
 </html>
