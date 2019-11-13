@@ -53,7 +53,8 @@ class NewsAnalyzer extends AbstractAnalyzer
 
         $query = $queryBuilder
             ->select('uid')
-            ->from($demand->getTableName());
+            ->from($demand->getTableName())
+            ->orderBy('datetime', 'desc');
 
         if ($demand->getPid() > 0) {
             $query->where(
