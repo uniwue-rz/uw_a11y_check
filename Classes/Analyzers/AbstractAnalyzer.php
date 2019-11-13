@@ -114,9 +114,10 @@ abstract class AbstractAnalyzer implements AnalyzerInterface
      */
     protected function fetchHtml(string $url): string
     {
-        $client = GeneralUtility::makeInstance(Client::class);
+        $client = GeneralUtility::makeInstance(Client::class, ['verify' => false ]);
         $response = $client->get($url);
 
+        // @todo: Move make verify=>false to configurable
         // @todo: Check Response for errors
 
         return $response->getBody()->getContents();
