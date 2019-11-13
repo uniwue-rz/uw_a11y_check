@@ -1,8 +1,10 @@
 <?php
 namespace UniWue\UwA11yCheck\Controller;
 
+use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\Components\Menu\Menu;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
@@ -82,6 +84,7 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         }
 
         $this->createMenu();
+        $this->createDefaultButtons();
     }
 
     /**
@@ -201,6 +204,25 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     }
 
     /**
+     * Created default buttons for the module
+     *
+     * @return void
+     */
+    protected function createDefaultButtons(): void
+    {
+        $buttonBar = $this->view->getModuleTemplate()->getDocHeaderComponent()->getButtonBar();
+
+        // Shortcut
+        if ($this->getBackendUser()->mayMakeShortcut()) {
+            $shortcutButton = $buttonBar->makeShortcutButton()
+                ->setModuleName('web_UwA11yCheckTxUwa11ycheckM1')
+                ->setGetVariables(['route', 'module', 'id'])
+                ->setDisplayName('Shortcut');
+            $buttonBar->addButton($shortcutButton, ButtonBar::BUTTON_POSITION_RIGHT);
+        }
+    }
+
+    /**
      * @return array
      */
     protected function getLevelSelectorOptions(): array
@@ -300,5 +322,15 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     protected function getLanguageService()
     {
         return $GLOBALS['LANG'];
+    }
+
+    /**
+     * Get backend user
+     *
+     * @return BackendUserAuthentication
+     */
+    protected function getBackendUser(): BackendUserAuthentication
+    {
+        return $GLOBALS['BE_USER'];
     }
 }

@@ -48,6 +48,9 @@
                 <source>Review check results</source>
             </trans-unit>
 
+            <trans-unit id="backToIndex" xml:space="preserve">
+                <source>Back to index</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
