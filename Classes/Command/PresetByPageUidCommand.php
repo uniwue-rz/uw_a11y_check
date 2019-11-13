@@ -4,6 +4,7 @@ namespace UniWue\UwA11yCheck\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -33,9 +34,10 @@ class PresetByPageUidCommand extends AbstractCheckCommand
                 InputArgument::REQUIRED,
                 'UID of page to check'
             )
-            ->addArgument(
+            ->addOption(
                 'levels',
-                InputArgument::OPTIONAL,
+                'l',
+                InputOption::VALUE_OPTIONAL,
                 'Amount of levels to check'
             );
     }
@@ -57,7 +59,7 @@ class PresetByPageUidCommand extends AbstractCheckCommand
 
         $presetId = $input->getArgument('preset');
         $pageUid = (int)$input->getArgument('uid');
-        $levels = $input->getArgument('levels') ? (int)$input->getArgument('levels') : 0;
+        $levels = $input->hasOption('levels') ? (int)$input->getOption('levels') : 0;
 
         $preset = $presetService->getPresetById($presetId);
 
