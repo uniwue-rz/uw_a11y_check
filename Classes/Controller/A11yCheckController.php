@@ -118,12 +118,11 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             );
         }
 
-        $this->createMenu();
-
         $this->view->assignMultiple([
             'checkDemand' => $checkDemand,
             'presets' => $this->presetService->getPresets(),
             'levelSelectorOptions' => $this->getLevelSelectorOptions(),
+            'savedResultsCount' => $this->getSavedResultsCount($this->pid),
         ]);
     }
 
@@ -216,6 +215,30 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             999 => $this->getLanguageService()->sL($langId. 'labels.depth_infi')
         ];
         return $availableOptions;
+    }
+
+    /**
+     * Returns the amount of saved DB check results
+     *
+     * @param int $pid
+     * @return int
+     */
+    protected function getSavedResultsCount(int $pid): int
+    {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable('tx_a11ycheck_result');
+        $queryBuilder->getRestrictions()->removeAll();
+        $query = $queryBuilder
+            ->count('uid')
+            ->from('tx_a11ycheck_result')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'pid',
+                    $queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
+                )
+            )->orderBy('preset_id', 'asc');
+
+        return $query->execute()->fetchColumn(0);
     }
 
     /**

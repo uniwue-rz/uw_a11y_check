@@ -37,6 +37,17 @@
             <trans-unit id="redundant-link.help" xml:space="preserve">
                 <source>For a keyboard user, it is tedious to navigate through redundant links. For users of assistive technologies, it can be confusing to encounter successive identical links. When the text alternative for the icon is a duplicate of the link text, it is repetitive as screen readers read the description twice.</source>
             </trans-unit>
+
+            <trans-unit id="savedResults.title" xml:space="preserve">
+                <source>Saved results exist</source>
+            </trans-unit>
+            <trans-unit id="savedResults.message" xml:space="preserve">
+                <source>The database contains %s saved check results created by an automated check. It is advised to review the check results.</source>
+            </trans-unit>
+            <trans-unit id="savedResults.review" xml:space="preserve">
+                <source>Review check results</source>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

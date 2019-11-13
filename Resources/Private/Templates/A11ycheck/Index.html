@@ -35,6 +35,29 @@
         </div>
         <div class="clear"></div>
     </f:form>
+
+    <f:if condition="{savedResultsCount} > 0">
+        <div class="callout callout-info">
+            <div class="media">
+                <div class="media-left">
+                    <span class="fa-stack fa-lg callout-icon"> <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-info fa-stack-1x"></i> </span>
+                </div>
+                <div class="media-body">
+                    <h4 class="callout-title">{f:translate(key: 'savedResults.title')}</h4>
+                    <div class="callout-body">
+                        <p>
+                            {f:translate(key: 'savedResults.message', arguments: '{0: savedResultsCount}')}
+                        </p>
+                        <p>
+                            <f:link.action action="results" class="btn btn-info">{f:translate(key: 'savedResults.review')}</f:link.action>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </f:if>
+
 </f:section>
 
 </html>
