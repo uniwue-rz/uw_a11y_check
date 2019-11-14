@@ -56,14 +56,22 @@ class NewsAnalyzer extends AbstractAnalyzer
             ->from($demand->getTableName())
             ->orderBy('datetime', 'desc');
 
+        $constraints = [];
+
+        // We only select real news records (no redirects)
+        $constraints[] = $queryBuilder->expr()->eq(
+            'type',
+            $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)
+        );
+
         if ($demand->getPid() > 0) {
-            $query->where(
-                $queryBuilder->expr()->eq(
-                    'pid',
-                    $queryBuilder->createNamedParameter($demand->getPid(), Connection::PARAM_INT)
-                )
+            $constraints[] = $queryBuilder->expr()->eq(
+                'pid',
+                $queryBuilder->createNamedParameter($demand->getPid(), Connection::PARAM_INT)
             );
         }
+
+        $query->where(...$constraints);
 
         if ($demand->getMaxResults() > 0) {
             $query->setMaxResults($demand->getMaxResults());
