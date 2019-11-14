@@ -2,8 +2,12 @@
 namespace UniWue\UwA11yCheck\Service;
 
 use TYPO3\CMS\Core\Configuration\Loader\YamlFileLoader;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Core\Utility\DebugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\Container\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use UniWue\UwA11yCheck\Analyzers\AbstractAnalyzer;
 use UniWue\UwA11yCheck\Check\Preset;
@@ -27,9 +31,18 @@ class PresetService
      */
     protected $objectManager = null;
 
+    /**
+     * @var FlashMessageService
+     */
+    protected $flashMessageService = null;
+
+    /**
+     * PresetService constructor.
+     */
     public function __construct()
     {
         $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $this->flashMessageService = $this->objectManager->get(FlashMessageService::class);
     }
 
     /**
@@ -55,21 +68,37 @@ class PresetService
         foreach ($yamlData['presets'] as $id => $presetData) {
             $name = $presetData['name'] ?? 'No name given';
 
-            $analyzerConfig = $this->getConfiguration($presetData, 'analyzer', $yamlData);
-            $analyzer = $this->getAnalyzerById($presetData['analyzer']['id'], $yamlData, $analyzerConfig);
+            try {
+                $analyzerConfig = $this->getConfiguration($presetData, 'analyzer', $yamlData);
+                $analyzer = $this->getAnalyzerById($presetData['analyzer']['id'], $yamlData, $analyzerConfig);
 
-            $checkUrlGeneratorConfig = $this->getConfiguration($presetData, 'checkUrlGenerator', $yamlData);
-            $checkUrlGenerator = $this->getCheckUrlGeneratorById(
-                $presetData['checkUrlGenerator']['id'],
-                $yamlData,
-                $checkUrlGeneratorConfig
-            );
+                $checkUrlGeneratorConfig = $this->getConfiguration($presetData, 'checkUrlGenerator', $yamlData);
+                $checkUrlGenerator = $this->getCheckUrlGeneratorById(
+                    $presetData['checkUrlGenerator']['id'],
+                    $yamlData,
+                    $checkUrlGeneratorConfig
+                );
 
-            $testSuite = $this->getTestSuiteById($presetData['testSuite']['id'], $yamlData, $presetData['testSuite']);
+                $testSuite = $this->getTestSuiteById(
+                    $presetData['testSuite']['id'],
+                    $yamlData,
+                    $presetData['testSuite']
+                );
 
-            $configuration = $presetData['configuration'];
+                $configuration = $presetData['configuration'];
 
-            $presets[] = new Preset($id, $name, $analyzer, $checkUrlGenerator, $testSuite, $configuration);
+                $presets[] = new Preset($id, $name, $analyzer, $checkUrlGenerator, $testSuite, $configuration);
+            } catch (UnknownObjectException $exception) {
+                $message = new FlashMessage(
+                    $exception->getMessage(),
+                    'Class not found in preset "' . $name . '"',
+                    FlashMessage::ERROR,
+                    true
+                );
+                $this->flashMessageService->getMessageQueueByIdentifier(
+                    'extbase.flashmessages.tx_uwa11ycheck_web_uwa11ychecktxuwa11ycheckm1'
+                )->addMessage($message);
+            }
         }
 
         return $presets;

@@ -64,7 +64,7 @@ class PresetByPageUidCommand extends AbstractCheckCommand
         $preset = $presetService->getPresetById($presetId);
 
         if (!$preset) {
-            $io->error('Preset "' . $presetId . '" not found.');
+            $io->error('Preset "' . $presetId . '" not found or contains errors (check classNames!).');
             return false;
         }
 
