@@ -36,6 +36,9 @@ presets:
         linkTextBlacklisted:
           configuration:
             blacklist: ['mehr', 'details']
+        headingOrder:
+          configuration:
+            limitToColPos: [0]
   extNews:
     name: "Check ext:news records"
     description: "This check renders all news records of the given page(s) and performs the accessibility check"
@@ -60,6 +63,7 @@ testSuites:
       redundantTitle: { name: "Redundant-Title", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\RedundantTitleTest", configuration: {} }
       redundantLink: { name: "Redundant-Link", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\RedundantLinkTest", configuration: {} }
       linkTextBlacklisted: { name: "Link-Text-Blacklisted", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\LinkTextBlacklistedTest", configuration: {} }
+      headingOrder: { name: "Heading-Order", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\HeadingOrderTest", configuration: {} }
   testSuite2:
     tests:
       test1: { name: "Test 1", className: "UniWue\\UwA11yCheck\\Tests\\Test1", configuration: {} }

@@ -2,7 +2,7 @@
 namespace UniWue\UwA11yCheck\Tests;
 
 use UniWue\UwA11yCheck\Check\Result;
-use UniWue\UwA11yCheck\Utility\Tests\ElementUidUtility;
+use UniWue\UwA11yCheck\Utility\Tests\ElementUtility;
 
 /**
  * Class AbstractTest
@@ -122,7 +122,7 @@ abstract class AbstractTest implements TestInterface
      */
     public function getElementUid(\DOMElement $node, int $fallbackElementUid): int
     {
-        $elementUid = ElementUidUtility::determineElementUid($node);
+        $elementUid = ElementUtility::determineElementUid($node);
         if ($elementUid === 0) {
             $elementUid = $fallbackElementUid;
         }

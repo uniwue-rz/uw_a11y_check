@@ -38,6 +38,13 @@
                 <source>For a keyboard user, it is tedious to navigate through redundant links. For users of assistive technologies, it can be confusing to encounter successive identical links. When the text alternative for the icon is a duplicate of the link text, it is repetitive as screen readers read the description twice.</source>
             </trans-unit>
 
+            <trans-unit id="heading-order.description" xml:space="preserve">
+                <source>Ensure headings are in a logical order.</source>
+            </trans-unit>
+            <trans-unit id="heading-order.help" xml:space="preserve">
+                <source>Headings must be in a valid logical order, meaning <![CDATA[<h1>]]> through <![CDATA[<h6>]]> element tags must appear in a sequentially-descending order.</source>
+            </trans-unit>
+
             <trans-unit id="savedResults.title" xml:space="preserve">
                 <source>Saved results exist</source>
             </trans-unit>

@@ -32,6 +32,10 @@ class LinkTextBlacklistedTest extends AbstractTest
      */
     protected $blacklist = [];
 
+    /**
+     * LinkTextBlacklistedTest constructor.
+     * @param array $configuration
+     */
     public function __construct(array $configuration)
     {
         parent::__construct($configuration);

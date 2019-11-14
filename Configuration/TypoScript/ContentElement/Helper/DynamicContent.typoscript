@@ -24,7 +24,7 @@ lib.dynamicContent {
         }
         renderObj {
             stdWrap {
-                dataWrap = <div data-uid="{field:uid}">|</div>
+                dataWrap = <div data-uid="{field:uid}" data-colpos="{field:colPos}">|</div>
             }
         }
     }

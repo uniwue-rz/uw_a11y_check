@@ -60,15 +60,10 @@
     color: #000000;
 }
 
-.a11y-check .impact-2 {
+.a11y-check .impact-2,
+.a11y-check .impact-3 {
     background-color: #f8e4c6;
     border-color: #e8a33d;
-    color: #000000;
-}
-
-.a11y-check .impact-3 {
-    background-color: #dddddd;
-    border-color: #c83c3c;
     color: #000000;
 }
 
