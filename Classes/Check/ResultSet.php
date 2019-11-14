@@ -34,6 +34,11 @@ class ResultSet
     protected $failedMessage = '';
 
     /**
+     * @var string
+     */
+    protected $checkedUrl = '';
+
+    /**
      * @var array
      */
     protected $results = [];
@@ -154,5 +159,21 @@ class ResultSet
             }
         }
         return $impact;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCheckedUrl(): string
+    {
+        return $this->checkedUrl;
+    }
+
+    /**
+     * @param string $checkedUrl
+     */
+    public function setCheckedUrl(string $checkedUrl): void
+    {
+        $this->checkedUrl = $checkedUrl;
     }
 }

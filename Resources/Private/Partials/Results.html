@@ -1,3 +1,7 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:a11y="http://typo3.org/ns/UniWue/UwA11yCheck/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
 <h3>Preset: {preset.name} <span class="check-date"><f:format.date format="d.m.Y H:i:s">{date}</f:format.date></span></h3>
 <div class="panel-group panel-group-a11y" role="tablist" aria-multiselectable="true">
   <f:for each="{results}" as="resultSet" iteration="i">
@@ -52,8 +56,16 @@
               <f:be.infobox state="2" title="Check Failed" message="{resultSet.failedMessage}" />
             </f:else>
           </f:if>
+
+          <a11y:be.security.isAdmin>
+            <p>
+              <f:link.external uri="{resultSet.checkedUrl}" target="_blank" class="btn btn-info">Open checked URL in external window</f:link.external>
+            </p>
+          </a11y:be.security.isAdmin>
         </div>
       </div>
     </div>
   </f:for>
 </div>
+
+</html>
