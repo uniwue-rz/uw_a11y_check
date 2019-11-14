@@ -39,7 +39,7 @@ class LinkNameTest extends AbstractTest
         $result = $this->initResultWithMetaDataFromTest();
 
         $crawler = new Crawler($html);
-        $links = $crawler->filter('a');
+        $links = $crawler->filter('a[href]');
 
         /** @var \DOMElement $link */
         foreach ($links as $link) {

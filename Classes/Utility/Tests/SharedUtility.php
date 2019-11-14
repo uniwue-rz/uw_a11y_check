@@ -22,6 +22,15 @@ class SharedUtility
      * @param \DOMElement $element
      * @return bool
      */
+    public static function elementIsLinkWithHref(\DOMElement $element): bool
+    {
+        return $element->tagName === 'a' &&  $element->hasAttribute('href');
+    }
+
+    /**
+     * @param \DOMElement $element
+     * @return bool
+     */
     public static function elementHasRolePresentation(\DOMElement $element): bool
     {
         return $element->hasAttribute('role') && strtolower($element->getAttribute('role')) === 'presentation';

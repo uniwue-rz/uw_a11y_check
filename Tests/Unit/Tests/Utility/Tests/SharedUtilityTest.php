@@ -413,4 +413,51 @@ class SharedUtilityTest extends BaseTestCase
         $this->assertEquals($expected, $result);
     }
 
+    /**
+     * @return array
+     */
+    public function elementIsLinkWithHrefTestsDataProvider()
+    {
+        return [
+            'no link' => [
+                '<p>test</p>',
+                'p',
+                false
+            ],
+            'link without link' => [
+                '<a id="123">test</a>',
+                'a',
+                false
+            ],
+            'link with empty href' => [
+                '<a href="">test</a>',
+                'a',
+                true
+            ],
+            'link with href' => [
+                '<a href="test.html">test</a>',
+                'a',
+                true
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider elementIsLinkWithHrefTestsDataProvider
+     * @test
+     * @param $html
+     * @param $tag
+     * @param $expected
+     */
+    public function elementIsLinkWithHrefTests($html, $tag, $expected)
+    {
+        $doc = new DOMDocument();
+        $doc->loadHTML($html);
+
+        /** @var \DOMElement $element */
+        $element = $doc->getElementsByTagName($tag)->item(0);
+        $result = SharedUtility::elementIsLinkWithHref($element);
+
+        $this->assertEquals($expected, $result);
+    }
 }
