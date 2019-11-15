@@ -1,0 +1,10 @@
+checkUrlGenerators:
+  page:
+    className: "UniWue\\UwA11yCheck\\CheckUrlGenerators\\Page"
+    configuration: {}
+  pageContent:
+    className: "UniWue\\UwA11yCheck\\CheckUrlGenerators\\PageContent"
+    configuration: {}
+  newsDetail:
+    className: "UniWue\\UwA11yCheck\\CheckUrlGenerators\\NewsDetail"
+    configuration: {}

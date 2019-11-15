@@ -1,19 +1,8 @@
-analyzers:
-  pageContentAnalyzer:
-    className: "UniWue\\UwA11yCheck\\Analyzers\\PageContentAnalyzer"
-  newsAnalyzer:
-    className: "UniWue\\UwA11yCheck\\Analyzers\\NewsAnalyzer"
-
-checkUrlGenerators:
-  page:
-    className: "UniWue\\UwA11yCheck\\CheckUrlGenerators\\Page"
-    configuration: {}
-  pageContent:
-    className: "UniWue\\UwA11yCheck\\CheckUrlGenerators\\PageContent"
-    configuration: {}
-  newsDetail:
-    className: "UniWue\\UwA11yCheck\\CheckUrlGenerators\\NewsDetail"
-    configuration: {}
+# Load includes
+imports:
+  - { resource: "EXT:uw_a11y_check/Configuration/A11y/Includes/Analyzers.yaml" }
+  - { resource: "EXT:uw_a11y_check/Configuration/A11y/Includes/CheckUrlGenerators.yaml" }
+  - { resource: "EXT:uw_a11y_check/Configuration/A11y/Includes/TestSuites.yaml" }
 
 presets:
   pageContent:
@@ -54,17 +43,3 @@ presets:
     testSuite:
       id: "internalTests"
       configuration: {}
-
-testSuites:
-  internalTests:
-    tests:
-      linkNameTest: { name: "Link-Name", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\LinkNameTest", configuration: {} }
-      imageAltTest: { name: "Image-Alt", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\ImageAltTest", configuration: {} }
-      redundantTitle: { name: "Redundant-Title", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\RedundantTitleTest", configuration: {} }
-      redundantLink: { name: "Redundant-Link", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\RedundantLinkTest", configuration: {} }
-      linkTextBlacklisted: { name: "Link-Text-Blacklisted", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\LinkTextBlacklistedTest", configuration: {} }
-      headingOrder: { name: "Heading-Order", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\HeadingOrderTest", configuration: {} }
-  testSuite2:
-    tests:
-      test1: { name: "Test 1", className: "UniWue\\UwA11yCheck\\Tests\\Test1", configuration: {} }
-      test2: { name: "Test 2", className: "UniWue\\UwA11yCheck\\Tests\\Test2", configuration: {} }

@@ -1,0 +1,5 @@
+analyzers:
+  pageContentAnalyzer:
+    className: "UniWue\\UwA11yCheck\\Analyzers\\PageContentAnalyzer"
+  newsAnalyzer:
+    className: "UniWue\\UwA11yCheck\\Analyzers\\NewsAnalyzer"
