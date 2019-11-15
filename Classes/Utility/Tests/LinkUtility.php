@@ -38,7 +38,7 @@ class LinkUtility
      */
     public static function linkTextNotBlacklisted(\DOMElement $element, array $blacklist): bool
     {
-        if (empty($blacklist) || $element->textContent === '') {
+        if (empty($blacklist) || StringUtility::stripNewLines($element->textContent) === '') {
             return true;
         }
         $content = StringUtility::clearString($element->textContent);
@@ -93,7 +93,9 @@ class LinkUtility
 
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
-            if ($element->textContent !== '' && !in_array($element->textContent, $linkNames)) {
+            if (StringUtility::stripNewLines($element->textContent) !== ''
+                && !in_array($element->textContent, $linkNames)
+            ) {
                 $linkNames[] = $element->textContent;
             } elseif (in_array($element->textContent, $linkNames) && !isset($redundantLinks[$element->textContent])) {
                 $redundantLinks[$element->textContent] = $element;

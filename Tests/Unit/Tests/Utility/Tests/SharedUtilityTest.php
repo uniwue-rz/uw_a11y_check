@@ -183,6 +183,10 @@ class SharedUtilityTest extends BaseTestCase
                 '<div></div>',
                 false
             ],
+            'space in div' => [
+                '<div> </div>',
+                false
+            ],
             'image in div' => [
                 '<div><img src="test.gif" alt="Alternative"></div>',
                 false

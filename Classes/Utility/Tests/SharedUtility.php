@@ -15,7 +15,7 @@ class SharedUtility
      */
     public static function elementHasVisibleText(\DOMElement $link): bool
     {
-        return $link->textContent !== '';
+        return StringUtility::stripNewLines($link->textContent);
     }
 
     /**

@@ -17,4 +17,15 @@ class StringUtility
         $remove = ['.', '#', '{', '}', '[', ']'];
         return str_replace($remove, '', $string);
     }
+
+    /**
+     * Removes all new lines from the given string
+     *
+     * @param string|null $text
+     * @return string
+     */
+    public static function stripNewLines(?string $text): string
+    {
+        return trim(preg_replace('/\s\s+/', ' ', $text));
+    }
 }
