@@ -5,27 +5,23 @@ use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\Components\Menu\Menu;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
-use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
-use UniWue\UwA11yCheck\Check\ResultSet;
 use UniWue\UwA11yCheck\Domain\Model\Dto\CheckDemand;
 use UniWue\UwA11yCheck\Service\PresetService;
-use UniWue\UwA11yCheck\Service\SerializationService;
+use UniWue\UwA11yCheck\Service\ResultsService;
 
+/**
+ * Class A11yCheckController
+ */
 class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
     const LANG_CORE = 'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:';
     const LANG_LOCAL = 'LLL:EXT:uw_a11y_check/Resources/Private/Language/locallang.xlf:';
-
-    /**
-     * @var SerializationService
-     */
-    protected $serializationService = null;
 
     /**
      * @var PresetService
@@ -33,17 +29,9 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     protected $presetService = null;
 
     /**
-     * @param SerializationService $serializationService
-     */
-    public function injectSerializationService(\UniWue\UwA11yCheck\Service\SerializationService $serializationService)
-    {
-        $this->serializationService = $serializationService;
-    }
-
-    /**
      * @param PresetService $presetService
      */
-    public function injectConfigurationService(PresetService $presetService)
+    public function injectPresetService(PresetService $presetService)
     {
         $this->presetService = $presetService;
     }
@@ -72,7 +60,12 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     /**
      * @var IconFactory
      */
-    protected $iconFactory;
+    protected $iconFactory = null;
+
+    /**
+     * @var ResultsService
+     */
+    protected $resultsService = null;
 
     /**
      * Set up the doc header properly here
@@ -87,6 +80,8 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         parent::initializeView($view);
 
         $this->iconFactory = GeneralUtility::makeInstance(IconFactory::class);
+        $this->resultsService = $this->objectManager->get(ResultsService::class);
+
         $this->view->getModuleTemplate()->setFlashMessageQueue($this->controllerContext->getFlashMessageQueue());
         if ($view instanceof BackendTemplateView) {
             $view->getModuleTemplate()->getPageRenderer()->addCssFile(
@@ -136,7 +131,7 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             'checkDemand' => $checkDemand,
             'presets' => $this->presetService->getPresets(),
             'levelSelectorOptions' => $this->getLevelSelectorOptions(),
-            'savedResultsCount' => $this->getSavedResultsCount($this->pid),
+            'savedResultsCount' => $this->resultsService->getSavedResultsCount($this->pid),
         ]);
     }
 
@@ -184,7 +179,7 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function resultsAction(): void
     {
         $this->createAcknowledgeButton($this->pid);
-        $resultsArray = $this->getResultsArrayByPid($this->pid);
+        $resultsArray = $this->resultsService->getResultsArrayByPid($this->pid);
 
         $this->view->assignMultiple([
             'resultsArray' => $resultsArray
@@ -198,7 +193,7 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     public function acknowledgeResultAction(int $pageUid)
     {
-        $this->deleteSavedResultsCount($pageUid);
+        $this->resultsService->deleteSavedResults($pageUid);
         return $this->redirect('index');
     }
 
@@ -290,104 +285,6 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             999 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_infi')
         ];
         return $availableOptions;
-    }
-
-    /**
-     * Returns the amount of saved DB check results
-     *
-     * @param int $pid
-     * @return int
-     */
-    protected function getSavedResultsCount(int $pid): int
-    {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getQueryBuilderForTable('tx_a11ycheck_result');
-        $queryBuilder->getRestrictions()->removeAll();
-        $query = $queryBuilder
-            ->count('uid')
-            ->from('tx_a11ycheck_result')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'pid',
-                    $queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
-                )
-            )->orderBy('preset_id', 'asc');
-
-        return $query->execute()->fetchColumn(0);
-    }
-
-    /**
-     * Deleted the saved result for the given PID
-     *
-     * @param int $pid
-     * @return void
-     */
-    protected function deleteSavedResultsCount(int $pid): void
-    {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getQueryBuilderForTable('tx_a11ycheck_result');
-        $queryBuilder->getRestrictions()->removeAll();
-        $query = $queryBuilder
-            ->delete('tx_a11ycheck_result')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'pid',
-                    $queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
-                )
-            );
-
-        $query->execute();
-    }
-
-    /**
-     * Returns all saved results from the database. An array is returned containing both the presets and
-     * the check results.
-     *
-     * @param int $pid
-     * @return array
-     */
-    protected function getResultsArrayByPid(int $pid): array
-    {
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getQueryBuilderForTable('tx_a11ycheck_result');
-        $queryBuilder->getRestrictions()->removeAll();
-        $query = $queryBuilder
-            ->select('*')
-            ->from('tx_a11ycheck_result')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'pid',
-                    $queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
-                )
-            )->orderBy('preset_id', 'asc');
-
-        $queryResult = $query->execute()->fetchAll();
-
-        $dbResults = [];
-
-        foreach ($queryResult as $result) {
-            $unserializedData = $this->serializationService->getSerializer()->deserialize(
-                $result['resultset'],
-                ResultSet::class,
-                'json'
-            );
-
-            $presetId = $result['preset_id'];
-
-            if (!isset($dbResults[$presetId])) {
-                $checkDate = new \DateTime();
-                $checkDate->setTimestamp($result['check_date']);
-                $dbResults[$presetId] = [
-                    'preset' => $this->presetService->getPresetById($presetId) ?? 'Unknown',
-                    'results' => [$unserializedData],
-                    'date' => $checkDate,
-                ];
-            } else {
-                $dbResults[$presetId]['results'][] = $unserializedData;
-            }
-        }
-
-        return $dbResults;
     }
 
     /**
