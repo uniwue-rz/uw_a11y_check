@@ -6,6 +6,8 @@ use TYPO3\CMS\Backend\Template\Components\Menu\Menu;
 use TYPO3\CMS\Backend\View\BackendTemplateView;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Imaging\Icon;
+use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
@@ -17,6 +19,9 @@ use UniWue\UwA11yCheck\Service\SerializationService;
 
 class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
+    const LANG_CORE = 'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:';
+    const LANG_LOCAL = 'LLL:EXT:uw_a11y_check/Resources/Private/Language/locallang.xlf:';
+
     /**
      * @var SerializationService
      */
@@ -65,6 +70,11 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     protected $view;
 
     /**
+     * @var IconFactory
+     */
+    protected $iconFactory;
+
+    /**
      * Set up the doc header properly here
      *
      * @param ViewInterface $view
@@ -76,6 +86,7 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         /** @var BackendTemplateView $view */
         parent::initializeView($view);
 
+        $this->iconFactory = GeneralUtility::makeInstance(IconFactory::class);
         $this->view->getModuleTemplate()->setFlashMessageQueue($this->controllerContext->getFlashMessageQueue());
         if ($view instanceof BackendTemplateView) {
             $view->getModuleTemplate()->getPageRenderer()->addCssFile(
@@ -166,13 +177,29 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         ]);
     }
 
+    /**
+     * Results action
+     * @return void
+     */
     public function resultsAction(): void
     {
+        $this->createAcknowledgeButton($this->pid);
         $resultsArray = $this->getResultsArrayByPid($this->pid);
 
         $this->view->assignMultiple([
             'resultsArray' => $resultsArray
         ]);
+    }
+
+    /**
+     * AcknowledgeResult Action
+     *
+     * @param int $pageUid
+     */
+    public function acknowledgeResultAction(int $pageUid)
+    {
+        $this->deleteSavedResultsCount($pageUid);
+        return $this->redirect('index');
     }
 
     /**
@@ -190,9 +217,8 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $actions = ['index', 'results'];
 
         foreach ($actions as $action) {
-            $langId = 'LLL:EXT:uw_a11y_check/Resources/Private/Language/locallang_be.xlf:module.';
             $item = $menu->makeMenuItem()
-                ->setTitle($this->getLanguageService()->sL($langId . $action))
+                ->setTitle($this->getLanguageService()->sL(self::LANG_LOCAL . 'module.' . $action))
                 ->setHref($uriBuilder->reset()->uriFor($action, [], 'A11yCheck'))
                 ->setActive($this->request->getControllerActionName() === $action);
             $menu->addMenuItem($item);
@@ -204,7 +230,7 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     }
 
     /**
-     * Created default buttons for the module
+     * Creates default buttons for the module
      *
      * @return void
      */
@@ -223,18 +249,45 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     }
 
     /**
+     * Creates the acknowledge button
+     *
+     * @param int $pid
+     * @return void
+     */
+    protected function createAcknowledgeButton(int $pid): void
+    {
+        $uriBuilder = $this->objectManager->get(UriBuilder::class);
+        $uriBuilder->setRequest($this->request);
+
+        $buttonBar = $this->view->getModuleTemplate()->getDocHeaderComponent()->getButtonBar();
+
+        $title = $this->getLanguageService()->sL(self::LANG_LOCAL . 'labels.acknowledgeResults');
+        $button = $buttonBar->makeLinkButton();
+        $button->setHref($uriBuilder->reset()->setRequest($this->request)
+            ->uriFor('acknowledgeResult', ['pageUid' => $pid], 'A11yCheck'))
+            ->setDataAttributes([
+                'toggle' => 'tooltip',
+                'placement' => 'bottom',
+                'title' => $title
+            ])
+            ->setTitle($title)
+            ->setShowLabelText(true)
+            ->setIcon($this->iconFactory->getIcon('actions-check', Icon::SIZE_SMALL));
+        $buttonBar->addButton($button, ButtonBar::BUTTON_POSITION_LEFT, 2);
+    }
+
+    /**
      * @return array
      */
     protected function getLevelSelectorOptions(): array
     {
-        $langId = 'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:';
         $availableOptions = [
-            0 => $this->getLanguageService()->sL($langId. 'labels.depth_0'),
-            1 => $this->getLanguageService()->sL($langId. 'labels.depth_1'),
-            2 => $this->getLanguageService()->sL($langId. 'labels.depth_2'),
-            3 => $this->getLanguageService()->sL($langId. 'labels.depth_3'),
-            4 => $this->getLanguageService()->sL($langId. 'labels.depth_4'),
-            999 => $this->getLanguageService()->sL($langId. 'labels.depth_infi')
+            0 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_0'),
+            1 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_1'),
+            2 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_2'),
+            3 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_3'),
+            4 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_4'),
+            999 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_infi')
         ];
         return $availableOptions;
     }
@@ -261,6 +314,29 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             )->orderBy('preset_id', 'asc');
 
         return $query->execute()->fetchColumn(0);
+    }
+
+    /**
+     * Deleted the saved result for the given PID
+     *
+     * @param int $pid
+     * @return void
+     */
+    protected function deleteSavedResultsCount(int $pid): void
+    {
+        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getQueryBuilderForTable('tx_a11ycheck_result');
+        $queryBuilder->getRestrictions()->removeAll();
+        $query = $queryBuilder
+            ->delete('tx_a11ycheck_result')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'pid',
+                    $queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
+                )
+            );
+
+        $query->execute();
     }
 
     /**

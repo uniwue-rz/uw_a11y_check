@@ -3,6 +3,15 @@
     <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2019-11-01T10:00:06Z" product-name="uw_a11y_check">
         <header/>
         <body>
+            <trans-unit id="module.index" xml:space="preserve">
+                <source>Manual accessibility check</source>
+                <target>Test Barrierefreiheit</target>
+            </trans-unit>
+            <trans-unit id="module.results" xml:space="preserve">
+                <source>Accessibility check results</source>
+                <target>Test Barrierefreiheit - Ergebnis</target>
+            </trans-unit>
+
             <trans-unit id="title.index" xml:space="preserve">
                 <source>Accessibility Check</source>
                 <target>Test Barrierefreiheit</target>
@@ -47,6 +56,10 @@
             <trans-unit id="labels.openCheckUrl" xml:space="preserve">
                 <source>Open checked URL in new window</source>
                 <target>Geprüfte URL im neuen Fenster öffnen</target>
+            </trans-unit>
+            <trans-unit id="labels.acknowledgeResults" xml:space="preserve">
+                <source>Delete results</source>
+                <target>Ergebnisse löschen</target>
             </trans-unit>
 
             <trans-unit id="image-alt.description" xml:space="preserve">
