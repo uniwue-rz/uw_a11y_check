@@ -10,13 +10,13 @@
     <div class="panel panel-default panel-a11y">
       <div class="panel-heading impact-{resultSet.impact}" role="tab" id="heading-{preset.id}-{i.index}">
         <h2 class="panel-title">
-          <a href="#resultset-{preset.id}-{i.index}" class="collapsed" data-toggle="collapse" aria-controls="#resultset-{i.index}">
+          <a href="#resultset-{preset.id}-{i.index}" class="{f:if(condition: '{results -> f:count()} > 1', then: 'collapsed', else: '')}" data-toggle="collapse" aria-controls="#resultset-{i.index}">
             <span class="caret"></span>
             <strong>{resultSet.table} - {resultSet.uid}</strong>
           </a>
         </h2>
       </div>
-      <div class="panel-collapse collapse" id="resultset-{preset.id}-{i.index}" role="tabpanel" aria-expanded="false">
+      <div class="panel-collapse collapse {f:if(condition: '{results -> f:count()} > 1', then: '', else: 'in')}" id="resultset-{preset.id}-{i.index}" role="tabpanel" aria-expanded="false">
         <div class="panel-body" role="tablist" aria-multiselectable="false">
           <f:if condition="{resultSet.impact} > 0">
             <f:then>
