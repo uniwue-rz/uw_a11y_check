@@ -24,7 +24,7 @@ presets:
       tests:
         linkTextBlacklisted:
           configuration:
-            blacklist: ['mehr', 'details']
+            blacklist: ['mehr', 'details', 'hier']
         headingOrder:
           configuration:
             limitToColPos: [0]
