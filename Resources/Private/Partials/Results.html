@@ -58,9 +58,11 @@
           </f:if>
 
           <a11y:be.security.isAdmin>
-            <p>
-              <f:link.external uri="{resultSet.checkedUrl}" target="_blank" class="btn btn-info">Open checked URL in external window</f:link.external>
-            </p>
+            <f:if condition="{resultSet.checkedUrl}">
+              <p>
+                <f:link.external uri="{resultSet.checkedUrl}" target="_blank" class="btn btn-info">Open checked URL in external window</f:link.external>
+              </p>
+            </f:if>
           </a11y:be.security.isAdmin>
         </div>
       </div>
