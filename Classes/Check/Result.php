@@ -209,7 +209,7 @@ class Result
     {
         $status = $this->status ?? 1;
         return LocalizationUtility::translate(
-            'LLL:EXT:uw_a11y_check/Resources/Private/Language/locallang_modm1.xlf:result.title.' . $status
+            'LLL:EXT:uw_a11y_check/Resources/Private/Language/locallang.xlf:result.title.' . $status
         );
     }
 }

@@ -9,20 +9,6 @@
             <trans-unit id="mlang_labels_tablabel" xml:space="preserve">
                 <source>Accessibility check</source>
             </trans-unit>
-
-            <trans-unit id="result.title.0" xml:space="preserve">
-                <source>Test passed</source>
-            </trans-unit>
-            <trans-unit id="result.title.1" xml:space="preserve">
-                <source>Test failed with violations</source>
-            </trans-unit>
-            <trans-unit id="result.title.2" xml:space="preserve">
-                <source>No elements found for test</source>
-            </trans-unit>
-            <trans-unit id="result.title.3" xml:space="preserve">
-                <source>Test failed with errors</source>
-            </trans-unit>
-
         </body>
     </file>
 </xliff>

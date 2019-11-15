@@ -1,122 +1,157 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="messages" date="2019-11-01T10:00:06Z" product-name="uw_a11y_check">
+    <file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2019-11-01T10:00:06Z" product-name="uw_a11y_check">
         <header/>
         <body>
             <trans-unit id="title.index" xml:space="preserve">
                 <source>Accessibility Check</source>
+                <target>Test Barrierefreiheit</target>
             </trans-unit>
             <trans-unit id="title.checkResults" xml:space="preserve">
                 <source>Accessibility Check - Results</source>
+                <target>Test Barrierefreiheit - Ergebnis</target>
             </trans-unit>
 
             <trans-unit id="labels.preset" xml:space="preserve">
                 <source>Preset</source>
+                <target>Vorlage</target>
             </trans-unit>
             <trans-unit id="labels.level" xml:space="preserve">
                 <source>Level</source>
+                <source>Ebenen</source>
             </trans-unit>
             <trans-unit id="labels.start" xml:space="preserve">
                 <source>Start tests</source>
+                <target>Tests starten</target>
             </trans-unit>
             <trans-unit id="labels.backToIndex" xml:space="preserve">
                 <source>Back to index</source>
+                <target>Zurück zur Übersicht</target>
             </trans-unit>
             <trans-unit id="labels.impact" xml:space="preserve">
                 <source>Impact</source>
+                <target>Auswirkung</target>
             </trans-unit>
             <trans-unit id="labels.help" xml:space="preserve">
                 <source>Help</source>
+                <target>Hilfe</target>
             </trans-unit>
             <trans-unit id="labels.helpUrl" xml:space="preserve">
                 <source>Help URL</source>
+                <target>Hilf-URL</target>
             </trans-unit>
             <trans-unit id="labels.contentElementUid" xml:space="preserve">
                 <source>Contentelement UID</source>
+                <target>Inhaltselement UID</target>
             </trans-unit>
             <trans-unit id="labels.openCheckUrl" xml:space="preserve">
                 <source>Open checked URL in new window</source>
+                <target>Geprüfte URL im neuen Fenster öffnen</target>
             </trans-unit>
 
             <trans-unit id="image-alt.description" xml:space="preserve">
                 <source>Ensures <![CDATA[<img>]]> elements have alternate text or a role of none or presentation</source>
+                <target>Stellt sicher, dass <![CDATA[<img>]]> Elemente über einen alternativen Text oder über die Rolle "none" oder "presentation" verfügen</target>
             </trans-unit>
             <trans-unit id="image-alt.help" xml:space="preserve">
                 <source>Images must have alternate text.</source>
+                <target>Bilder müssen einen alternativen Text haben</target>
             </trans-unit>
 
             <trans-unit id="link-name.description" xml:space="preserve">
                 <source>Ensures links have discernible text</source>
+                <target>Stellt sicher, dass Links über einen erkennbaren Text verfügen</target>
             </trans-unit>
             <trans-unit id="link-name.help" xml:space="preserve">
                 <source>Links must have discernible text</source>
+                <target>Links müssen einen erkennbaren Text haben</target>
             </trans-unit>
 
             <trans-unit id="link-name-blacklisted.description" xml:space="preserve">
                 <source>Ensures a link name or linked image alt/title attribute does not equal a blacklisted word</source>
+                <target>Stellt sicher, dass der Linkname, der Bild alternative Text oder der Bildtitel nicht zugelassen ist</target>
             </trans-unit>
             <trans-unit id="link-name-blacklisted.help" xml:space="preserve">
                 <source>The link name or the title/alt of a linked image equals a blacklisted word. Current Blacklist: </source>
+                <target>Der Linkname, der Bild alternative Text oder der Bildtitel ist nicht zugelassen. Aktuell nicht zugelassene Wörter: </target>
             </trans-unit>
 
             <trans-unit id="redundant-title.description" xml:space="preserve">
                 <source>Ensures title attribute text is not the same as text or alternative text</source>
+                <target>Stellt sicher, dass der Titel und der alternative Text eines Bildes nicht gleich ist</target>
             </trans-unit>
             <trans-unit id="redundant-title.help" xml:space="preserve">
                 <source>The title attribute value is used to provide advisory information. It typically appears when the users hovers the mouse over an element. The advisory information presented should not be identical to or very similar to the element text or alternative text.</source>
+                <target>Der Titelattributwert wird verwendet, um zusätzliche Informationen zu einem Bild bereitzustellen. Es sollte nicht mit dem alternativen Text übereinstimmen.</target>
             </trans-unit>
 
             <trans-unit id="redundant-link.description" xml:space="preserve">
                 <source>Ensures links with the same location have different names</source>
+                <target>Stellt sicher, dass Links zum gleichen Ziel ein unterschiedlichen Namen haben</target>
             </trans-unit>
             <trans-unit id="redundant-link.help" xml:space="preserve">
                 <source>For a keyboard user, it is tedious to navigate through redundant links. For users of assistive technologies, it can be confusing to encounter successive identical links. When the text alternative for the icon is a duplicate of the link text, it is repetitive as screen readers read the description twice.</source>
+                <target>Bei der Benutzung einer Tastatur ist es störend, wenn Links den gleichen namen haben.</target>
             </trans-unit>
 
             <trans-unit id="heading-order.description" xml:space="preserve">
                 <source>Ensure headings are in a logical order</source>
+                <target>Stellt sicher, dass die logische Reihenfolge der Überschriften eingehalten wird</target>
             </trans-unit>
             <trans-unit id="heading-order.help" xml:space="preserve">
                 <source>Headings must be in a valid logical order, meaning <![CDATA[<h1>]]> through <![CDATA[<h6>]]> element tags must appear in a sequentially-descending order.</source>
+                <target>Die logische Reihenfolge von Überschriften muss eingehalten werden. Dieses bedeutet, dass <![CDATA[<h1>]]> bis <![CDATA[<h6>]]> Überschriften in absteigender Reihenfolge dargestellt werden.</target>
             </trans-unit>
 
             <trans-unit id="savedResults.title" xml:space="preserve">
                 <source>Saved results exist</source>
+                <target>Gespeicherte Test-Ergebnisse vorhanden</target>
             </trans-unit>
             <trans-unit id="savedResults.message" xml:space="preserve">
                 <source>The database contains %s saved check results created by an automated check. It is advised to review the check results.</source>
+                <target>Es sind %s gespeicherte Test-Ergebnisse von automatisierten Tests vorhanden. Es wird empfohlen diese zu prüfen.</target>
             </trans-unit>
             <trans-unit id="savedResults.review" xml:space="preserve">
                 <source>Review check results</source>
+                <target>Ergebnisse prüfen</target>
             </trans-unit>
 
             <trans-unit id="result.title.0" xml:space="preserve">
                 <source>Test passed</source>
+                <target>Test bestanden</target>
             </trans-unit>
             <trans-unit id="result.title.1" xml:space="preserve">
                 <source>Test failed with violations</source>
+                <target>Test nicht bestanden</target>
             </trans-unit>
             <trans-unit id="result.title.2" xml:space="preserve">
                 <source>No elements found for test</source>
+                <target>Keine Elemente für Test gefunden</target>
             </trans-unit>
             <trans-unit id="result.title.3" xml:space="preserve">
                 <source>Test failed with errors</source>
+                <target>Test aufgrund von Fehlern fehlgeschlagen</target>
             </trans-unit>
 
             <trans-unit id="result.impact.1" xml:space="preserve">
                 <source>None</source>
+                <target>Keine</target>
             </trans-unit>
             <trans-unit id="result.impact.2" xml:space="preserve">
                 <source>Minor</source>
+                <target>Gering</target>
             </trans-unit>
             <trans-unit id="result.impact.3" xml:space="preserve">
                 <source>Moderate</source>
+                <target>Mäßig</target>
             </trans-unit>
             <trans-unit id="result.impact.4" xml:space="preserve">
                 <source>Serious</source>
+                <target>Schwerwiegend</target>
             </trans-unit>
             <trans-unit id="result.impact.5" xml:space="preserve">
                 <source>Critical</source>
+                <target>Kritisch</target>
             </trans-unit>
         </body>
     </file>

@@ -2,7 +2,9 @@
       xmlns:a11y="http://typo3.org/ns/UniWue/UwA11yCheck/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<h3>Preset: {preset.name} <span class="check-date"><f:format.date format="d.m.Y H:i:s">{date}</f:format.date></span></h3>
+<h3>
+  <f:translate key="labels.preset" />: {preset.name} <span class="check-date"><f:format.date format="d.m.Y H:i:s">{date}</f:format.date></span>
+</h3>
 <div class="panel-group panel-group-a11y" role="tablist" aria-multiselectable="true">
   <f:for each="{results}" as="resultSet" iteration="i">
     <div class="panel panel-default panel-a11y">
@@ -25,16 +27,22 @@
                   <table class="table table-striped table-bordered">
                     <tbody>
                     <tr>
-                      <td><strong>Impact:</strong></td>
-                      <td>{result.impact}</td>
+                      <td>
+                        <strong><f:translate key="labels.impact" />:</strong>
+                      </td>
+                      <td><f:translate key="result.impact.{result.impact}" /></td>
                     </tr>
                     <tr>
-                      <td><strong>Help:</strong></td>
+                      <td>
+                        <strong><f:translate key="labels.help" />:</strong>
+                      </td>
                       <td>{result.help -> f:format.nl2br()}</td>
                     </tr>
                     <f:if condition="{result.helpUrl}">
                       <tr>
-                        <td><strong>Help URL:</strong></td>
+                        <td>
+                          <strong><f:translate key="labels.helpUrl" />:</strong>
+                        </td>
                         <td><f:link.external uri="{result.helpUrl}" target="_blank">{result.helpUrl}</f:link.external></td>
                       </tr>
                     </f:if>
@@ -43,7 +51,7 @@
 
                   <f:groupedFor each="{result.nodes}" as="nodes" groupBy="uid" groupKey="elementUid">
                     <div>
-                      <p>Element UID ({preset.checkTableName}): {elementUid}</p>
+                      <p><f:translate key="labels.contentElementUid" /> ({preset.checkTableName}): {elementUid}</p>
                       <f:for each="{nodes}" as="node">
                         <pre>{node.html}</pre>
                       </f:for>
@@ -60,7 +68,7 @@
           <a11y:be.security.isAdmin>
             <f:if condition="{resultSet.checkedUrl}">
               <p>
-                <f:link.external uri="{resultSet.checkedUrl}" target="_blank" class="btn btn-info">Open checked URL in external window</f:link.external>
+                <f:link.external uri="{resultSet.checkedUrl}" target="_blank" class="btn btn-info"><f:translate key="labels.openCheckUrl" /></f:link.external>
               </p>
             </f:if>
           </a11y:be.security.isAdmin>
