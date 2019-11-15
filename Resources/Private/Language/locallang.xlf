@@ -39,7 +39,7 @@
                 <source>Help URL</source>
             </trans-unit>
             <trans-unit id="labels.editElement" xml:space="preserve">
-                <source>Edit element</source>
+                <source>Edit record</source>
             </trans-unit>
             <trans-unit id="labels.openCheckUrl" xml:space="preserve">
                 <source>Open checked URL in new window</source>

@@ -50,8 +50,8 @@
                 <target>Hilf-URL</target>
             </trans-unit>
             <trans-unit id="labels.editElement" xml:space="preserve">
-                <source>Edit element</source>
-                <target>Element bearbeiten</target>
+                <source>Edit record</source>
+                <target>Datensatz bearbeiten</target>
             </trans-unit>
             <trans-unit id="labels.openCheckUrl" xml:space="preserve">
                 <source>Open checked URL in new window</source>
