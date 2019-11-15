@@ -5,6 +5,7 @@ use Symfony\Component\DomCrawler\Crawler;
 use UniWue\UwA11yCheck\Check\Result;
 use UniWue\UwA11yCheck\Tests\AbstractTest;
 use UniWue\UwA11yCheck\Utility\Tests\LinkUtility;
+use UniWue\UwA11yCheck\Utility\Tests\SharedUtility;
 
 /**
  * Class RedundantLinkTest
@@ -88,7 +89,10 @@ class RedundantLinkTest extends AbstractTest
 
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
-            if (!$element->hasAttribute('href')) {
+            if (!$element->hasAttribute('href') ||
+                SharedUtility::elementHasRolePresentation($element) ||
+                SharedUtility::elementHasRoleNone($element)
+            ) {
                 continue;
             }
 
