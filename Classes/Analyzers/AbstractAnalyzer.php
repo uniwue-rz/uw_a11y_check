@@ -66,6 +66,7 @@ abstract class AbstractAnalyzer implements AnalyzerInterface
         $resultSet->setPid($pid);
         $resultSet->setResults($results);
         $resultSet->setTable($preset->getCheckTableName());
+        $resultSet->setEditRecordTable($preset->getEditRecordTableName());
         $resultSet->setCheckedUrl($url);
 
         return $resultSet;

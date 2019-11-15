@@ -27,6 +27,7 @@ class NewsDetail extends AbstractCheckUrlGenerator
         parent::__construct($configuration);
 
         $this->tableName = 'tx_news_domain_model_news';
+        $this->editRecordTable = 'tx_news_domain_model_news';
         $this->targetPid = $configuration['targetPid'];
     }
 

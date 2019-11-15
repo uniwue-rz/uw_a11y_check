@@ -38,8 +38,8 @@
             <trans-unit id="labels.helpUrl" xml:space="preserve">
                 <source>Help URL</source>
             </trans-unit>
-            <trans-unit id="labels.contentElementUid" xml:space="preserve">
-                <source>Contentelement UID</source>
+            <trans-unit id="labels.editElement" xml:space="preserve">
+                <source>Edit element</source>
             </trans-unit>
             <trans-unit id="labels.openCheckUrl" xml:space="preserve">
                 <source>Open checked URL in new window</source>

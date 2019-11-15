@@ -16,6 +16,7 @@ class Page extends AbstractCheckUrlGenerator
         parent::__construct($configuration);
 
         $this->tableName = 'pages';
+        $this->editRecordTable = 'pages';
     }
 
     /**

@@ -35,6 +35,7 @@ class PageContent extends AbstractCheckUrlGenerator
         parent::__construct($configuration);
 
         $this->tableName = 'pages';
+        $this->editRecordTable = 'tt_content';
         $this->targetPid = $configuration['targetPid'];
 
         if (isset($configuration['ignoreContentTypes']) && is_array($configuration['ignoreContentTypes'])) {

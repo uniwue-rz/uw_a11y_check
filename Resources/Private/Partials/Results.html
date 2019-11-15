@@ -51,7 +51,16 @@
 
                   <f:groupedFor each="{result.nodes}" as="nodes" groupBy="uid" groupKey="elementUid">
                     <div>
-                      <p><f:translate key="labels.contentElementUid" /> ({preset.checkTableName}): {elementUid}</p>
+                      <p>
+                        <a href="{a11y:be.link.editRecord(uid: elementUid, table: resultSet.editRecordTable)}" class="btn btn-default">
+                          <span class="t3js-icon icon icon-size-small icon-state-default icon-actions-open" data-identifier="actions-open">
+                            <span class="icon-markup">
+                              <img src="/typo3/sysext/core/Resources/Public/Icons/T3Icons/actions/actions-open.svg" width="16" height="16">
+                            </span>
+                          </span>
+                          <f:translate key="labels.editElement" />
+                        </a>
+                      </p>
                       <f:for each="{nodes}" as="node">
                         <pre>{node.html}</pre>
                       </f:for>

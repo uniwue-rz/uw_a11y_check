@@ -24,6 +24,11 @@ class ResultSet
     protected $table = '';
 
     /**
+     * @var string
+     */
+    protected $editRecordTable = '';
+
+    /**
      * @var bool
      */
     protected $failed = false;
@@ -137,6 +142,22 @@ class ResultSet
     public function setFailedMessage(string $failedMessage): void
     {
         $this->failedMessage = $failedMessage;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEditRecordTable(): string
+    {
+        return $this->editRecordTable;
+    }
+
+    /**
+     * @param string $editRecordTable
+     */
+    public function setEditRecordTable(string $editRecordTable): void
+    {
+        $this->editRecordTable = $editRecordTable;
     }
 
     /**

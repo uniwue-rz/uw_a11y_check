@@ -103,6 +103,14 @@ class Preset
     }
 
     /**
+     * @return string
+     */
+    public function getEditRecordTableName(): string
+    {
+        return $this->checkUrlGenerator->getEditRecordTable();
+    }
+
+    /**
      * Returns the check URL
      *
      * @param int $id

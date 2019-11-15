@@ -20,6 +20,11 @@ abstract class AbstractCheckUrlGenerator
     protected $tableName = '';
 
     /**
+     * @var string
+     */
+    protected $editRecordTable = '';
+
+    /**
      * @var UriBuilder
      */
     protected $uriBuilder = null;
@@ -55,6 +60,14 @@ abstract class AbstractCheckUrlGenerator
     public function getTableName(): string
     {
         return $this->tableName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEditRecordTable(): string
+    {
+        return $this->editRecordTable;
     }
 
     /**
