@@ -63,6 +63,7 @@ class Node
      */
     public function getTarget(): string
     {
+        // @extensionScannerIgnoreLine False positive
         return $this->target;
     }
 
@@ -71,6 +72,7 @@ class Node
      */
     public function setTarget(string $target): void
     {
+        // @extensionScannerIgnoreLine False positive
         $this->target = $target;
     }
 

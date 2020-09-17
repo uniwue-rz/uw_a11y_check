@@ -57,6 +57,7 @@ class PresetByRecordUidsCommand extends AbstractCheckCommand
         $preset = $presetService->getPresetById($presetId);
 
         if (!$preset) {
+            // @extensionScannerIgnoreLine False positive
             $io->error('Preset "' . $presetId . '" not found or contains errors (check classNames!).');
             return false;
         }

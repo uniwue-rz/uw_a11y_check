@@ -94,6 +94,7 @@ class PresetService
                     FlashMessage::ERROR,
                     true
                 );
+                // @extensionScannerIgnoreLine False positive
                 $this->flashMessageService->getMessageQueueByIdentifier(
                     'extbase.flashmessages.tx_uwa11ycheck_web_uwa11ychecktxuwa11ycheckm1'
                 )->addMessage($message);

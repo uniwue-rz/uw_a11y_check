@@ -1,4 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
       xmlns:a11y="http://typo3.org/ns/UniWue/UwA11yCheck/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
@@ -52,7 +53,7 @@
                   <f:groupedFor each="{result.nodes}" as="nodes" groupBy="uid" groupKey="elementUid">
                     <div>
                       <p>
-                        <a href="{a11y:be.link.editRecord(uid: elementUid, table: resultSet.editRecordTable)}" class="btn btn-default">
+                        <a href="{be:uri.editRecord(uid: elementUid, table: 'resultSet.editRecordTable')}" class="btn btn-default">
                           <span class="t3js-icon icon icon-size-small icon-state-default icon-actions-open" data-identifier="actions-open">
                             <span class="icon-markup">
                               <img src="/typo3/sysext/core/Resources/Public/Icons/T3Icons/actions/actions-open.svg" width="16" height="16">
