@@ -118,7 +118,13 @@ class Preset
      */
     public function getCheckUrl(int $id): string
     {
-        return $this->checkUrlGenerator->getCheckUrl($this->baseUrl, $id);
+        $url = $this->checkUrlGenerator->getCheckUrl($this->baseUrl, $id);
+
+        if (strpos($url, 'http') === false) {
+            $url = $this->baseUrl . $url;
+        }
+
+        return $url;
     }
 
     /**
