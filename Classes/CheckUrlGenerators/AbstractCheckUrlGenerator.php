@@ -50,7 +50,7 @@ abstract class AbstractCheckUrlGenerator
      * @param string $baseUrl
      * @param int $pageUid
      */
-    public function getCheckUrl(string $baseUrl, int $pageUid)
+    public function getCheckUrl(string $baseUrl, int $pageUid): string
     {
     }
 

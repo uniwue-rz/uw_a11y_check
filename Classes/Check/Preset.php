@@ -118,7 +118,7 @@ class Preset
      */
     public function getCheckUrl(int $id): string
     {
-        return $this->baseUrl . $this->checkUrlGenerator->getCheckUrl($this->baseUrl, $id);
+        return $this->checkUrlGenerator->getCheckUrl($this->baseUrl, $id);
     }
 
     /**

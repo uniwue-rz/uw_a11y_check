@@ -38,7 +38,7 @@ class NewsDetail extends AbstractCheckUrlGenerator
      * @param int $newsUid
      * @return string|void
      */
-    public function getCheckUrl(string $baseUrl, int $newsUid)
+    public function getCheckUrl(string $baseUrl, int $newsUid): string
     {
         return $this->uriBuilder
             ->setTargetPageUid($this->targetPid)

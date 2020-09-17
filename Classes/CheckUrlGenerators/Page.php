@@ -26,7 +26,7 @@ class Page extends AbstractCheckUrlGenerator
      * @param int $pageUid
      * @return string|void
      */
-    public function getCheckUrl(string $baseUrl, int $pageUid)
+    public function getCheckUrl(string $baseUrl, int $pageUid): string
     {
         return $this->uriBuilder
             ->setTargetPageUid($pageUid)
