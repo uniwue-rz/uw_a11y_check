@@ -26,10 +26,7 @@
   "autoload": {
     "psr-4": {
       "UniWue\\UwA11yCheck\\": "Classes"
-    },
-    "classmap": [
-      "Resources/Private/Php/vendor"
-    ]
+    }
   },
   "autoload-dev": {
     "psr-4": {

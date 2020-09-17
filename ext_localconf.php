@@ -25,4 +25,8 @@ call_user_func(function () {
         $GLOBALS['TYPO3_CONF_VARS']['UwA11yCheck']['Configuration'] =
             'EXT:uw_a11y_check/Configuration/A11y/Default.yaml';
     }
+
+    $composerAutoloadFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('uw_a11y_check')
+        . 'Resources/Private/Php/vendor/autoload.php';
+    require_once($composerAutoloadFile);
 });
