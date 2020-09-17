@@ -1,7 +1,5 @@
 <?php
 
-namespace Symfony\Component\PropertyInfo\Tests\Fixtures;
-
 /*
  * This file is part of the Symfony package.
  *
@@ -11,11 +9,8 @@ namespace Symfony\Component\PropertyInfo\Tests\Fixtures;
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\PropertyInfo\Tests\Fixtures;
+namespace Symfony\Component\String\Exception;
 
-/**
- * @author Kévin Dunglas <dunglas@gmail.com>
- */
-class NoProperties
+class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
 {
 }

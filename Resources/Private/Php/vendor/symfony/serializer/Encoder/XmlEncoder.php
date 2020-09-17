@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Serializer\Encoder;
 
+use Symfony\Component\Serializer\Exception\BadMethodCallException;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\SerializerAwareInterface;
 use Symfony\Component\Serializer\SerializerAwareTrait;
@@ -51,7 +52,10 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
     const REMOVE_EMPTY_TAGS = 'remove_empty_tags';
     const ROOT_NODE_NAME = 'xml_root_node_name';
     const STANDALONE = 'xml_standalone';
+
+    /** @deprecated The constant TYPE_CASE_ATTRIBUTES is deprecated since version 4.4 and will be removed in version 5. Use TYPE_CAST_ATTRIBUTES instead. */
     const TYPE_CASE_ATTRIBUTES = 'xml_type_cast_attributes';
+    const TYPE_CAST_ATTRIBUTES = 'xml_type_cast_attributes';
     const VERSION = 'xml_version';
 
     private $defaultContext = [
@@ -61,7 +65,7 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
         self::LOAD_OPTIONS => LIBXML_NONET | LIBXML_NOBLANKS,
         self::REMOVE_EMPTY_TAGS => false,
         self::ROOT_NODE_NAME => 'response',
-        self::TYPE_CASE_ATTRIBUTES => true,
+        self::TYPE_CAST_ATTRIBUTES => true,
     ];
 
     /**
@@ -128,14 +132,18 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
         }
 
         $internalErrors = libxml_use_internal_errors(true);
-        $disableEntities = libxml_disable_entity_loader(true);
+        if (LIBXML_VERSION < 20900) {
+            $disableEntities = libxml_disable_entity_loader(true);
+        }
         libxml_clear_errors();
 
         $dom = new \DOMDocument();
         $dom->loadXML($data, $context[self::LOAD_OPTIONS] ?? $this->defaultContext[self::LOAD_OPTIONS]);
 
         libxml_use_internal_errors($internalErrors);
-        libxml_disable_entity_loader($disableEntities);
+        if (LIBXML_VERSION < 20900) {
+            libxml_disable_entity_loader($disableEntities);
+        }
 
         if ($error = libxml_get_last_error()) {
             libxml_clear_errors();
@@ -335,7 +343,7 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
         }
 
         $data = [];
-        $typeCastAttributes = (bool) ($context[self::TYPE_CASE_ATTRIBUTES] ?? $this->defaultContext[self::TYPE_CASE_ATTRIBUTES]);
+        $typeCastAttributes = (bool) ($context[self::TYPE_CAST_ATTRIBUTES] ?? $this->defaultContext[self::TYPE_CAST_ATTRIBUTES]);
 
         foreach ($node->attributes as $attr) {
             if (!is_numeric($attr->nodeValue) || !$typeCastAttributes || (isset($attr->nodeValue[1]) && '0' === $attr->nodeValue[0])) {
@@ -410,7 +418,7 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
         $removeEmptyTags = $this->context[self::REMOVE_EMPTY_TAGS] ?? $this->defaultContext[self::REMOVE_EMPTY_TAGS] ?? false;
         $encoderIgnoredNodeTypes = $this->context[self::ENCODER_IGNORED_NODE_TYPES] ?? $this->defaultContext[self::ENCODER_IGNORED_NODE_TYPES];
 
-        if (\is_array($data) || ($data instanceof \Traversable && !$this->serializer->supportsNormalization($data, $this->format))) {
+        if (\is_array($data) || ($data instanceof \Traversable && (null === $this->serializer || !$this->serializer->supportsNormalization($data, $this->format)))) {
             foreach ($data as $key => $data) {
                 //Ah this is the magic @ attribute types.
                 if (0 === strpos($key, '@') && $this->isElementNameValid($attributeName = substr($key, 1))) {
@@ -449,6 +457,10 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
         }
 
         if (\is_object($data)) {
+            if (null === $this->serializer) {
+                throw new BadMethodCallException(sprintf('The serializer needs to be set to allow "%s()" to be used with object data.', __METHOD__));
+            }
+
             $data = $this->serializer->normalize($data, $this->format, $this->context);
             if (null !== $data && !is_scalar($data)) {
                 return $this->buildXml($parentNode, $data, $xmlRootNodeName);
@@ -465,7 +477,7 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
             return $this->appendNode($parentNode, $data, 'data');
         }
 
-        throw new NotEncodableValueException(sprintf('An unexpected value could not be serialized: %s', !\is_resource($data) ? var_export($data, true) : sprintf('%s resource', get_resource_type($data))));
+        throw new NotEncodableValueException('An unexpected value could not be serialized: '.(!\is_resource($data) ? var_export($data, true) : sprintf('%s resource', get_resource_type($data))));
     }
 
     /**
@@ -499,8 +511,6 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
     /**
      * Tests the value being passed and decide what sort of element to create.
      *
-     * @param mixed $val
-     *
      * @throws NotEncodableValueException
      */
     private function selectNodeType(\DOMNode $node, $val): bool
@@ -512,7 +522,14 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
             $node->appendChild($child);
         } elseif ($val instanceof \Traversable) {
             $this->buildXml($node, $val);
+        } elseif ($val instanceof \DOMNode) {
+            $child = $this->dom->importNode($val, true);
+            $node->appendChild($child);
         } elseif (\is_object($val)) {
+            if (null === $this->serializer) {
+                throw new BadMethodCallException(sprintf('The serializer needs to be set to allow "%s()" to be used with object data.', __METHOD__));
+            }
+
             return $this->selectNodeType($node, $this->serializer->normalize($val, $this->format, $this->context));
         } elseif (is_numeric($val)) {
             return $this->appendText($node, (string) $val);
@@ -522,9 +539,6 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
             return $this->appendText($node, $val);
         } elseif (\is_bool($val)) {
             return $this->appendText($node, (int) $val);
-        } elseif ($val instanceof \DOMNode) {
-            $child = $this->dom->importNode($val, true);
-            $node->appendChild($child);
         }
 
         return true;

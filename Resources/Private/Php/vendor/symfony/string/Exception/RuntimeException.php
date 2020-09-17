@@ -9,11 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\PropertyInfo\Tests;
+namespace Symfony\Component\String\Exception;
 
-/**
- * @author Kévin Dunglas <dunglas@gmail.com>
- */
-class PropertyInfoExtractorTest extends AbstractPropertyInfoExtractorTest
+class RuntimeException extends \RuntimeException implements ExceptionInterface
 {
 }

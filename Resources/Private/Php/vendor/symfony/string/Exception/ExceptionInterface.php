@@ -9,11 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\Serializer\Tests\Fixtures;
+namespace Symfony\Component\String\Exception;
 
-/**
- * @author Kévin Dunglas <dunglas@gmail.com>
- */
-class ProxyDummy extends ToBeProxyfiedDummy
+interface ExceptionInterface extends \Throwable
 {
 }
