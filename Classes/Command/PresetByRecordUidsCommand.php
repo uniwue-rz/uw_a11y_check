@@ -59,7 +59,7 @@ class PresetByRecordUidsCommand extends AbstractCheckCommand
         if (!$preset) {
             // @extensionScannerIgnoreLine False positive
             $io->error('Preset "' . $presetId . '" not found or contains errors (check classNames!).');
-            return false;
+            return 1;
         }
 
         $results = $preset->executeTestSuiteByRecordUids($recordUids);
@@ -86,5 +86,6 @@ class PresetByRecordUidsCommand extends AbstractCheckCommand
         $this->saveResults($preset, $results);
 
         $io->success('All done!');
+        return 0;
     }
 }

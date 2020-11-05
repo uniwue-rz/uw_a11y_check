@@ -87,7 +87,7 @@ class PresetService
                 $configuration = $presetData['configuration'];
 
                 $presets[] = new Preset($id, $name, $analyzer, $checkUrlGenerator, $testSuite, $configuration);
-            } catch (UnknownObjectException $exception) {
+            } catch (\Exception $exception) {
                 $message = new FlashMessage(
                     $exception->getMessage(),
                     'Class not found in preset "' . $name . '"',
@@ -222,6 +222,11 @@ class PresetService
         return $globalConfiguration;
     }
 
+    /**
+     * Return the configuration file
+     *
+     * @return mixed
+     */
     protected function getConfigurationFile()
     {
         $file = $GLOBALS['TYPO3_CONF_VARS']['UwA11yCheck']['Configuration'];

@@ -7,6 +7,7 @@ use TYPO3\CMS\Backend\View\BackendTemplateView;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
@@ -20,7 +21,7 @@ use UniWue\UwA11yCheck\Service\ResultsService;
  */
 class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-    const LANG_CORE = 'LLL:EXT:lang/Resources/Private/Language/locallang_core.xlf:';
+    const LANG_CORE = 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:';
     const LANG_LOCAL = 'LLL:EXT:uw_a11y_check/Resources/Private/Language/locallang.xlf:';
 
     /**
@@ -106,10 +107,11 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     /**
      * Index action
      *
-     * @param CheckDemand|null $checkDemand
+     * @param \UniWue\UwA11yCheck\Domain\Model\Dto\CheckDemand $checkDemand
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("checkDemand")
      * @return void
      */
-    public function indexAction(?CheckDemand $checkDemand = null): void
+    public function indexAction($checkDemand = null): void
     {
         if (!$checkDemand) {
             $checkDemand = new CheckDemand();
@@ -157,7 +159,8 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     /**
      * Check action
      *
-     * @param CheckDemand $checkDemand
+     * @param \UniWue\UwA11yCheck\Domain\Model\Dto\CheckDemand $checkDemand
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("checkDemand")
      * @return void
      */
     public function checkAction(CheckDemand $checkDemand): void
@@ -276,7 +279,7 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      */
     protected function getLevelSelectorOptions(): array
     {
-        $availableOptions = [
+        return [
             0 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_0'),
             1 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_1'),
             2 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_2'),
@@ -284,13 +287,12 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             4 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_4'),
             999 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_infi')
         ];
-        return $availableOptions;
     }
 
     /**
      * Returns LanguageService
      *
-     * @return \TYPO3\CMS\Lang\LanguageService
+     * @return LanguageService
      */
     protected function getLanguageService()
     {

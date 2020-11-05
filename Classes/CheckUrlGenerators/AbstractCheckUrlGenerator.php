@@ -25,19 +25,6 @@ abstract class AbstractCheckUrlGenerator
     protected $editRecordTable = '';
 
     /**
-     * @var UriBuilder
-     */
-    protected $uriBuilder = null;
-
-    /**
-     * @param UriBuilder $uriBuilder
-     */
-    public function injectUriBuilder(UriBuilder $uriBuilder)
-    {
-        $this->uriBuilder = $uriBuilder;
-    }
-
-    /**
      * AbstractCheckUrlGenerator constructor.
      * @param array $configuration
      */

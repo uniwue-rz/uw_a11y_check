@@ -64,6 +64,12 @@ class NewsAnalyzer extends AbstractAnalyzer
             $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)
         );
 
+        // Only include news with sys_language_uid = 0
+        $constraints[] = $queryBuilder->expr()->eq(
+            'sys_language_uid',
+            $queryBuilder->createNamedParameter(0, Connection::PARAM_INT)
+        );
+
         if ($demand->getPid() > 0) {
             $constraints[] = $queryBuilder->expr()->eq(
                 'pid',

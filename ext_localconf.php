@@ -3,14 +3,14 @@ defined('TYPO3_MODE') or die();
 
 call_user_func(function () {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'UniWue.uw_a11y_check',
+        'uw_a11y_check',
         'Pi1',
         [
-            'ContentElements' => 'show',
+            \UniWue\UwA11yCheck\Controller\ContentElementsController::class => 'show',
         ],
         // non-cacheable actions
         [
-            'ContentElements' => 'show',
+            \UniWue\UwA11yCheck\Controller\ContentElementsController::class => 'show',
         ]
     );
 

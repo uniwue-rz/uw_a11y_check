@@ -1,6 +1,7 @@
 <?php
 namespace UniWue\UwA11yCheck\CheckUrlGenerators;
 
+use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UniWue\UwA11yCheck\Utility\ContentElementUtility;
 
@@ -56,15 +57,15 @@ class PageContent extends AbstractCheckUrlGenerator
         $hmacString = $pageUid . $ignoreContentTypes;
         $hmac = GeneralUtility::hmac($hmacString, 'page_content');
 
-        return $this->uriBuilder
-            ->setTargetPageUid($this->targetPid)
-            ->setArguments([
-                'tx_uwa11ycheck_pi1[action]' => 'show',
-                'tx_uwa11ycheck_pi1[controller]' => 'ContentElements',
-                'tx_uwa11ycheck_pi1[pageUid]' => $pageUid,
-                'tx_uwa11ycheck_pi1[ignoreContentTypes]' => $ignoreContentTypes,
-                'tx_uwa11ycheck_pi1[hmac]' => $hmac
-            ])
-            ->buildFrontendUri();
+        $arguments = [
+            'tx_uwa11ycheck_pi1[action]' => 'show',
+            'tx_uwa11ycheck_pi1[controller]' => 'ContentElements',
+            'tx_uwa11ycheck_pi1[pageUid]' => $pageUid,
+            'tx_uwa11ycheck_pi1[ignoreContentTypes]' => $ignoreContentTypes,
+            'tx_uwa11ycheck_pi1[hmac]' => $hmac
+        ];
+        $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($pageUid);
+
+        return $site->getRouter()->generateUri((string)$pageUid, $arguments);
     }
 }

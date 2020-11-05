@@ -15,7 +15,7 @@
     "GPL-2.0+"
   ],
   "require": {
-    "typo3/cms-core": "^9.5",
+    "typo3/cms-core": "^10.4",
     "symfony/dom-crawler": "^4.3",
     "symfony/css-selector": "^4.3",
     "ext-dom": "*"

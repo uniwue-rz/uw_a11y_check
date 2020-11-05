@@ -1,6 +1,9 @@
 <?php
 namespace UniWue\UwA11yCheck\CheckUrlGenerators;
 
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Generates an URL for to configured targetPid.
  */
@@ -28,8 +31,8 @@ class Page extends AbstractCheckUrlGenerator
      */
     public function getCheckUrl(string $baseUrl, int $pageUid): string
     {
-        return $this->uriBuilder
-            ->setTargetPageUid($pageUid)
-            ->buildFrontendUri();
+        $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($pageUid);
+
+        return $site->getRouter()->generateUri((string)$pageUid);
     }
 }

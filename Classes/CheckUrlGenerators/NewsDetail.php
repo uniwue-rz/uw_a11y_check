@@ -1,6 +1,9 @@
 <?php
 namespace UniWue\UwA11yCheck\CheckUrlGenerators;
 
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Generates an URL for to configured targetPid.
  * The targetPid must include the pi1 plugin of ext:news and the plugin must show the detail view
@@ -40,13 +43,13 @@ class NewsDetail extends AbstractCheckUrlGenerator
      */
     public function getCheckUrl(string $baseUrl, int $newsUid): string
     {
-        return $this->uriBuilder
-            ->setTargetPageUid($this->targetPid)
-            ->setArguments([
-                'tx_news_pi1[action]' => 'detail',
-                'tx_news_pi1[controller]' => 'News',
-                'tx_news_pi1[news]' => $newsUid,
-            ])
-            ->buildFrontendUri();
+        $arguments = [
+            'tx_news_pi1[action]' => 'detail',
+            'tx_news_pi1[controller]' => 'News',
+            'tx_news_pi1[news]' => $newsUid,
+        ];
+        $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($this->targetPid);
+
+        return $site->getRouter()->generateUri((string)$this->targetPid, $arguments);
     }
 }
