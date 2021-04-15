@@ -29,12 +29,13 @@ class PresetByRecordUidsCommand extends AbstractCheckCommand
             )
             ->addArgument(
                 'preset',
-                InputArgument::REQUIRED
+                InputArgument::REQUIRED,
+                'ID of the preset'
             )
             ->addArgument(
                 'uids',
                 InputArgument::REQUIRED,
-                'On or multiple record UIDs se'
+                'On or multiple record UIDs'
             );
     }
 

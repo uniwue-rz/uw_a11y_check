@@ -28,7 +28,8 @@ class PresetByPageUidCommand extends AbstractCheckCommand
             ->setDescription('a11y check for the given preset and page uid (recursive by "levels" if set)')
             ->addArgument(
                 'preset',
-                InputArgument::REQUIRED
+                InputArgument::REQUIRED,
+                'ID of the preset'
             )
             ->addArgument(
                 'uid',
