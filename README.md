@@ -70,7 +70,7 @@ Create 2 pages in the TYPO3 pagetree in a new sysfolder and assign the "blank" b
 
 Example screenshot of the page structure.
 
-![Page structure](/Documentation/Images/a11y-config-pages.png)
+![Page structure](Documentation/Images/a11y-config-pages.png)
 
 3. Add the page uids to configuration
 
