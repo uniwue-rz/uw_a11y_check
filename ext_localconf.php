@@ -27,7 +27,9 @@ call_user_func(function () {
             'EXT:uw_a11y_check/Configuration/A11y/Default.yaml';
     }
 
-    $composerAutoloadFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('uw_a11y_check')
-        . 'Resources/Private/Php/vendor/autoload.php';
-    require_once($composerAutoloadFile);
+    if (!\TYPO3\CMS\Core\Core\Environment::isComposerMode()) {
+        $composerAutoloadFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('uw_a11y_check')
+            . 'Resources/Private/Php/vendor/autoload.php';
+        require_once($composerAutoloadFile);
+    }
 });
