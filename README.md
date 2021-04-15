@@ -1,5 +1,7 @@
 # TYPO3 a11y check
 
+This TYPO3 extension has been developed for the [Julius-Maximilians-Universität Würzburg](https://www.uni-wuerzburg.de).
+
 ## What is it?
 The TYPO3 extension "uw_a11y_check" aims to provide the functionality to evaluate **editor generated content**
 against a configurable set of accessibility checks.  
