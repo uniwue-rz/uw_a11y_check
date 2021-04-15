@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Tests;
 
 use UniWue\UwA11yCheck\Check\Result;
@@ -6,7 +7,6 @@ use UniWue\UwA11yCheck\Utility\Tests\ElementUtility;
 
 /**
  * Class AbstractTest
- * @package UniWue\UwA11yCheck\Tests
  */
 abstract class AbstractTest implements TestInterface
 {

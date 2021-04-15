@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Tests\Unit\Tests\Internal;
 
 /*
@@ -61,7 +62,7 @@ class LinkUtilityTest extends BaseTestCase
         $element = $doc->getElementsByTagName('a')->item(0);
         $result = LinkUtility::linkHasImageWithAlt($element);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -119,7 +120,7 @@ class LinkUtilityTest extends BaseTestCase
         $element = $doc->getElementsByTagName('a')->item(0);
         $result = LinkUtility::linkTextNotBlacklisted($element, $blacklist);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -184,7 +185,7 @@ class LinkUtilityTest extends BaseTestCase
         $element = $doc->getElementsByTagName('a')->item(0);
         $result = LinkUtility::linkImageAttributeNotBlacklisted($element, $attribute, $blacklist);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -250,6 +251,6 @@ class LinkUtilityTest extends BaseTestCase
         /** @var \DOMElement $element */
         $result = LinkUtility::getRedundantLinkNames($elements);
 
-        $this->assertEquals($expected, count($result));
+        self::assertEquals($expected, count($result));
     }
 }

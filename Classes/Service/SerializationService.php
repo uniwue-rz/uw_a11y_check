@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Service;
 
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -15,7 +16,7 @@ class SerializationService
     /**
      * @var Serializer
      */
-    protected $serializer = null;
+    protected $serializer;
 
     /**
      * SerializationService constructor.

@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Domain\Model\Dto;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;

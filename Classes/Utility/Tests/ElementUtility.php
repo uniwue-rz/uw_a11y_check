@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Utility\Tests;
 
 /**
@@ -19,11 +20,11 @@ class ElementUtility
             $element->parentNode instanceof \DOMElement
         ) {
             return self::determineElementUid($element->parentNode);
-        } elseif ($element->hasAttribute('data-uid')) {
-            return $element->getAttribute('data-uid');
-        } else {
-            return 0;
         }
+        if ($element->hasAttribute('data-uid')) {
+            return $element->getAttribute('data-uid');
+        }
+        return 0;
     }
 
     /**
@@ -40,10 +41,10 @@ class ElementUtility
             $element->parentNode instanceof \DOMElement
         ) {
             return self::determineElementColPos($element->parentNode);
-        } elseif ($element->hasAttribute('data-colpos')) {
-            return (int)$element->getAttribute('data-colpos');
-        } else {
-            return null;
         }
+        if ($element->hasAttribute('data-colpos')) {
+            return (int)$element->getAttribute('data-colpos');
+        }
+        return null;
     }
 }

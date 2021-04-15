@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Analyzers;
 
 use UniWue\UwA11yCheck\Check\Preset;

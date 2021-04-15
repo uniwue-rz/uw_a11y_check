@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Check\Result;
 
 /**
@@ -12,9 +13,9 @@ class Node
     protected $html = '';
 
     /**
-     * @var null|Impact
+     * @var Impact|null
      */
-    protected $impact = null;
+    protected $impact;
 
     /**
      * @var string

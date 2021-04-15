@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Check;
 
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
@@ -10,9 +11,9 @@ use UniWue\UwA11yCheck\Check\Result\Node;
 class Result
 {
     /**
-     * @var null|int
+     * @var int|null
      */
-    protected $status = null;
+    protected $status;
 
     /**
      * @var string
@@ -30,9 +31,9 @@ class Result
     protected $helpUrl = '';
 
     /**
-     * @var null|int
+     * @var int|null
      */
-    protected $impact = null;
+    protected $impact;
 
     /**
      * @var array

@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Utility;
 
 use TYPO3\CMS\Core\Database\Connection;

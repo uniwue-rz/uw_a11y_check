@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Component\PropertyInfo\Extractor;
 
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
@@ -32,16 +33,16 @@ class ResultSetExtractor implements PropertyTypeExtractorInterface
      * @param array $context
      * @return array|Type[]|null
      */
-    public function getTypes($class, $property, array $context = array())
+    public function getTypes($class, $property, array $context = [])
     {
         if (is_a($class, ResultSet::class, true) && 'results' === $property) {
             return [
-                new Type(Type::BUILTIN_TYPE_OBJECT, true, Result::class . "[]")
+                new Type(Type::BUILTIN_TYPE_OBJECT, true, Result::class . '[]')
             ];
         }
         if (is_a($class, Result::class, true) && 'nodes' === $property) {
             return [
-                new Type(Type::BUILTIN_TYPE_OBJECT, true, Node::class . "[]")
+                new Type(Type::BUILTIN_TYPE_OBJECT, true, Node::class . '[]')
             ];
         }
         return $this->reflectionExtractor->getTypes($class, $property, $context);

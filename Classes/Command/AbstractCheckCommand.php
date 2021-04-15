@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 namespace UniWue\UwA11yCheck\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -17,7 +18,7 @@ abstract class AbstractCheckCommand extends Command
     /**
      * @var SerializationService
      */
-    protected $serializationService = null;
+    protected $serializationService;
 
     /**
      * AbstractCheckCommand constructor.
@@ -50,8 +51,6 @@ abstract class AbstractCheckCommand extends Command
      *
      * @param Preset $preset
      * @param ResultSet $resultSet
-     *
-     * @return void
      */
     protected function saveResult(Preset $preset, ResultSet $resultSet): void
     {
@@ -96,7 +95,7 @@ abstract class AbstractCheckCommand extends Command
                 ),
                 $queryBuilder->expr()->eq(
                     'preset_id',
-                    $queryBuilder->createNamedParameter($preset->getId(), \PDO::PARAM_STR)
+                    $queryBuilder->createNamedParameter($preset->getId())
                 )
             )
             ->execute();

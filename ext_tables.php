@@ -1,4 +1,5 @@
 <?php
+
 defined('TYPO3_MODE') or die();
 
 call_user_func(function () {
@@ -16,7 +17,7 @@ call_user_func(function () {
             ],
             [
                 'access' => 'user,group',
-                'icon' => 'EXT:uw_a11y_check/Resources/Public/Icons/a11y_check.svg',
+                'icon' => 'EXT:uw_a11y_check/Resources/Public/Icons/Extension.svg',
                 'labels' => 'LLL:EXT:uw_a11y_check/Resources/Private/Language/locallang_modm1.xlf',
             ]
         );

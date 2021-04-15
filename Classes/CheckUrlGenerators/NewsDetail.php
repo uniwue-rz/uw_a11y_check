@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\CheckUrlGenerators;
 
 use TYPO3\CMS\Core\Site\SiteFinder;

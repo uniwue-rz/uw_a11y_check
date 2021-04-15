@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Analyzers;
 
 use GuzzleHttp\Client;
@@ -77,7 +78,6 @@ abstract class AbstractAnalyzer implements AnalyzerInterface
      *
      * @param int $pageUid
      * @param int $levels
-     * @return void
      */
     public function initializePageUids(int $pageUid, int $levels = 0): void
     {

@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 namespace UniWue\UwA11yCheck\Utility\Exception;
 
 /**

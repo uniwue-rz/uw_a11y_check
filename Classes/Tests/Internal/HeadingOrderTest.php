@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Tests\Internal;
 
 use Symfony\Component\DomCrawler\Crawler;
@@ -44,7 +45,6 @@ class HeadingOrderTest extends AbstractTest
 
         $this->limitToColPos = $configuration['limitToColPos'] ?? [];
     }
-
 
     /**
      * Runs the test

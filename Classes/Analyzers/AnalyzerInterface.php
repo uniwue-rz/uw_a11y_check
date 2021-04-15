@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Analyzers;
 
 use UniWue\UwA11yCheck\Check\Preset;
@@ -13,7 +14,7 @@ interface AnalyzerInterface
 
     public function runTests(Preset $preset, int $recordUid): ResultSet;
 
-    public function initializePageUids(int $recordUid, int $levels): void;
+    public function initializePageUids(int $pageUid, int $levels): void;
 
     public function getCheckRecordUids(Preset $preset): array;
 }

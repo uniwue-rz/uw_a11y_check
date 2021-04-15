@@ -26,7 +26,7 @@ before_script:
     - .Build/bin/phpunit -c Tests/Build/UnitTests.xml
     - .Build/bin/phpcs --standard=PSR2 --extensions=php Classes/
 
-# Build in PHP 7.2 and TYPO3 9.5
+# Build in PHP 7.2 and TYPO3 10.4
 test:php72:typo3_95:
   <<: *testing
   variables:
@@ -34,7 +34,7 @@ test:php72:typo3_95:
     TYPO3_VERSION: ^10.4
     TESTING_FRAMEWORK: ^5
 
-# Build in PHP 7.3 and TYPO3 9.5
+# Build in PHP 7.3 and TYPO3 10.4
 test:php73:typo3_95:
   <<: *testing
   variables:
@@ -42,7 +42,7 @@ test:php73:typo3_95:
     TYPO3_VERSION: ^10.4
     TESTING_FRAMEWORK: ^5
 
-# Build in PHP 7.4 and TYPO3 9.5
+# Build in PHP 7.4 and TYPO3 10.4
 test:php74:typo3_95:
   <<: *testing
   variables:

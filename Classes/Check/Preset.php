@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Check;
 
 use UniWue\UwA11yCheck\Analyzers\AbstractAnalyzer;
@@ -32,17 +33,17 @@ class Preset
     /**
      * @var AbstractAnalyzer
      */
-    protected $analyzer = null;
+    protected $analyzer;
 
     /**
      * @var AbstractCheckUrlGenerator
      */
-    protected $checkUrlGenerator = null;
+    protected $checkUrlGenerator;
 
     /**
      * @var TestSuite
      */
-    protected $testSuite = null;
+    protected $testSuite;
 
     /**
      * Preset constructor.

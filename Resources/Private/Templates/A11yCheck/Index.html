@@ -13,16 +13,16 @@
     <f:form action="index" name="checkDemand" object="{checkDemand}" class="form-horizontal settings">
         <div class="col-xs-6">
             <div class="form-group">
-                <label for="preset" class="control-label col-xs-2">
+                <label for="preset" class="control-label col-xs-3">
                     <f:translate key="labels.preset" />
                 </label>
-                <div class="col-xs-10">
+                <div class="col-xs-9">
                     <f:form.select id="preset" property="preset" options="{presets}" optionValueField="id" optionLabelField="name" additionalAttributes="{onChange : 'document.checkDemand.submit();'}" class="form-control"/>
                 </div>
             </div>
 
             <div class="form-group">
-                <div class="col-xs-offset-2 col-xs-10">
+                <div class="col-xs-offset-3 col-xs-9">
                     <f:form.submit value="{f:translate(key: 'labels.start')}" property="analyze" class="btn btn-default" />
                 </div>
             </div>

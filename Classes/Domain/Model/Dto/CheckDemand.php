@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Domain\Model\Dto;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
@@ -17,7 +18,7 @@ class CheckDemand extends AbstractEntity
     /**
      * @var \UniWue\UwA11yCheck\Check\Preset|null
      */
-    protected $preset = null;
+    protected $preset;
 
     /**
      * @var int

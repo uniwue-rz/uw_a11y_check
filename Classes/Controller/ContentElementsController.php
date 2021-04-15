@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Controller;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -14,7 +15,7 @@ class ContentElementsController extends \TYPO3\CMS\Extbase\Mvc\Controller\Action
     /**
      * @var HashService
      */
-    protected $hashService = null;
+    protected $hashService;
 
     /**
      * @param HashService $hashService

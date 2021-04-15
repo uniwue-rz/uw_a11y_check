@@ -49,7 +49,7 @@
             </trans-unit>
 
             <trans-unit id="image-alt.description" xml:space="preserve">
-                <source>Ensures <![CDATA[<img>]]> elements have alternate text or a role of none or presentation</source>
+                <source>Ensures "img" elements have alternate text or a role of none or presentation</source>
             </trans-unit>
             <trans-unit id="image-alt.help" xml:space="preserve">
                 <source>Images must have alternate text.</source>

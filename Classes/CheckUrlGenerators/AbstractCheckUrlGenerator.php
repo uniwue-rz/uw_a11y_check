@@ -1,7 +1,7 @@
 <?php
+
 namespace UniWue\UwA11yCheck\CheckUrlGenerators;
 
-use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use UniWue\UwA11yCheck\Utility\Exception\MissingConfigurationException;
 
 /**

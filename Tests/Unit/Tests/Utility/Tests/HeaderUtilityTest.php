@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Tests\Unit\Tests\Internal;
 
 /*
@@ -68,6 +69,6 @@ class HeaderUtilityTest extends BaseTestCase
 
         $result = HeaderUtility::headersSequentiallyDescending($previosHeader, $currentHeader);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 }

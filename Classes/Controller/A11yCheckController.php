@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Controller;
 
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
@@ -27,7 +28,7 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     /**
      * @var PresetService
      */
-    protected $presetService = null;
+    protected $presetService;
 
     /**
      * @param PresetService $presetService
@@ -61,19 +62,17 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     /**
      * @var IconFactory
      */
-    protected $iconFactory = null;
+    protected $iconFactory;
 
     /**
      * @var ResultsService
      */
-    protected $resultsService = null;
+    protected $resultsService;
 
     /**
      * Set up the doc header properly here
      *
      * @param ViewInterface $view
-     *
-     * @return void
      */
     protected function initializeView(ViewInterface $view)
     {
@@ -96,12 +95,10 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 
     /**
      * Initialize action
-     *
-     * @return void
      */
     public function initializeAction()
     {
-        $this->pid = (int)\TYPO3\CMS\Core\Utility\GeneralUtility::_GET('id');
+        $this->pid = (int)GeneralUtility::_GET('id');
     }
 
     /**
@@ -109,7 +106,6 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      *
      * @param \UniWue\UwA11yCheck\Domain\Model\Dto\CheckDemand $checkDemand
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("checkDemand")
-     * @return void
      */
     public function indexAction($checkDemand = null): void
     {
@@ -139,8 +135,6 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 
     /**
      * Ensure checkDemand array will be converted to an object
-     *
-     * @return void
      */
     public function initializeCheckAction(): void
     {
@@ -161,7 +155,6 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      *
      * @param \UniWue\UwA11yCheck\Domain\Model\Dto\CheckDemand $checkDemand
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("checkDemand")
-     * @return void
      */
     public function checkAction(CheckDemand $checkDemand): void
     {
@@ -177,7 +170,6 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 
     /**
      * Results action
-     * @return void
      */
     public function resultsAction(): void
     {
@@ -197,12 +189,11 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     public function acknowledgeResultAction(int $pageUid)
     {
         $this->resultsService->deleteSavedResults($pageUid);
-        return $this->redirect('index');
+        $this->redirect('index');
     }
 
     /**
      * Create menu
-     *
      */
     protected function createMenu()
     {
@@ -229,8 +220,6 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
 
     /**
      * Creates default buttons for the module
-     *
-     * @return void
      */
     protected function createDefaultButtons(): void
     {
@@ -250,7 +239,6 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
      * Creates the acknowledge button
      *
      * @param int $pid
-     * @return void
      */
     protected function createAcknowledgeButton(int $pid): void
     {
@@ -280,32 +268,22 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     protected function getLevelSelectorOptions(): array
     {
         return [
-            0 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_0'),
-            1 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_1'),
-            2 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_2'),
-            3 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_3'),
-            4 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_4'),
-            999 => $this->getLanguageService()->sL(self::LANG_CORE. 'labels.depth_infi')
+            0 => $this->getLanguageService()->sL(self::LANG_CORE . 'labels.depth_0'),
+            1 => $this->getLanguageService()->sL(self::LANG_CORE . 'labels.depth_1'),
+            2 => $this->getLanguageService()->sL(self::LANG_CORE . 'labels.depth_2'),
+            3 => $this->getLanguageService()->sL(self::LANG_CORE . 'labels.depth_3'),
+            4 => $this->getLanguageService()->sL(self::LANG_CORE . 'labels.depth_4'),
+            999 => $this->getLanguageService()->sL(self::LANG_CORE . 'labels.depth_infi')
         ];
     }
 
-    /**
-     * Returns LanguageService
-     *
-     * @return LanguageService
-     */
-    protected function getLanguageService()
+    protected function getLanguageService(): ?LanguageService
     {
-        return $GLOBALS['LANG'];
+        return $GLOBALS['LANG'] ?? null;
     }
 
-    /**
-     * Get backend user
-     *
-     * @return BackendUserAuthentication
-     */
-    protected function getBackendUser(): BackendUserAuthentication
+    protected function getBackendUser(): ?BackendUserAuthentication
     {
-        return $GLOBALS['BE_USER'];
+        return $GLOBALS['BE_USER'] ?? null;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Check;
 
 /**
@@ -9,7 +10,7 @@ class A11yCheck
     /**
      * @var Preset
      */
-    protected $preset = null;
+    protected $preset;
 
     /**
      * A11yCheck constructor.

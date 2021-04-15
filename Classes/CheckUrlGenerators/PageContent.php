@@ -1,9 +1,9 @@
 <?php
+
 namespace UniWue\UwA11yCheck\CheckUrlGenerators;
 
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use UniWue\UwA11yCheck\Utility\ContentElementUtility;
 
 /**
  * Generates an URL for to configured targetPid.

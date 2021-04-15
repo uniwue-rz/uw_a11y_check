@@ -9,7 +9,7 @@ presets:
     name: "Check page content elements (no plugins)"
     description: "This check renders all content elements of the given page(s) and performs the accessibility check"
     configuration:
-      baseUrl: "http://uni-wuerzburg-95.typo3.local/"
+      baseUrl: "https://your-domain.tld/"
     analyzer:
       id: "pageContentAnalyzer"
       configuration: {}
@@ -32,7 +32,7 @@ presets:
     name: "Check ext:news records"
     description: "This check renders all news records of the given page(s) and performs the accessibility check"
     configuration:
-      baseUrl: "http://uni-wuerzburg-95.typo3.local/"
+      baseUrl: "https://your-domain.tld/"
     analyzer:
       id: "newsAnalyzer"
       configuration: {}

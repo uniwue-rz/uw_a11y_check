@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Service;
 
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -13,12 +14,12 @@ class ResultsService
     /**
      * @var SerializationService
      */
-    protected $serializationService = null;
+    protected $serializationService;
 
     /**
      * @var PresetService
      */
-    protected $presetService = null;
+    protected $presetService;
 
     /**
      * @param SerializationService $serializationService
@@ -115,7 +116,6 @@ class ResultsService
      * Deleted the saved result for the given PID
      *
      * @param int $pid
-     * @return void
      */
     public function deleteSavedResults(int $pid): void
     {

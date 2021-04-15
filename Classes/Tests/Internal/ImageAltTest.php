@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Tests\Internal;
 
 use Symfony\Component\DomCrawler\Crawler;

@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Tests\Unit\Tests\Internal;
 
 /*
@@ -52,7 +53,7 @@ class SharedUtilityTest extends BaseTestCase
         $element = $doc->getElementsByTagName('div')->item(0);
         $result = SharedUtility::elementHasRolePresentation($element);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -89,7 +90,7 @@ class SharedUtilityTest extends BaseTestCase
         $element = $doc->getElementsByTagName('div')->item(0);
         $result = SharedUtility::elementHasRoleNone($element);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -128,7 +129,7 @@ class SharedUtilityTest extends BaseTestCase
         $element = $doc->getElementsByTagName('div')->item(0);
         $result = SharedUtility::elementHasAriaLabelValue($element);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -170,7 +171,7 @@ class SharedUtilityTest extends BaseTestCase
         $element = $crawler->filter('#labelledByElement')->first()->getNode(0);
         $result = SharedUtility::elementAriaLabelledByValueExistsAndNotEmpty($element, $crawler);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -217,7 +218,7 @@ class SharedUtilityTest extends BaseTestCase
         $element = $doc->getElementsByTagName('div')->item(0);
         $result = SharedUtility::elementHasVisibleText($element);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -260,7 +261,7 @@ class SharedUtilityTest extends BaseTestCase
         $element = $doc->getElementsByTagName('div')->item(0);
         $result = SharedUtility::elementHasNonEmptyTitle($element);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -299,7 +300,7 @@ class SharedUtilityTest extends BaseTestCase
         $element = $doc->getElementsByTagName('img')->item(0);
         $result = SharedUtility::elementHasAlt($element);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -367,7 +368,7 @@ class SharedUtilityTest extends BaseTestCase
         $element = $doc->getElementsByTagName($elementTag)->item(0);
         $result = SharedUtility::elementTitleNotRedundant($element);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -414,7 +415,7 @@ class SharedUtilityTest extends BaseTestCase
         $element = $doc->getElementsByTagName('a')->item(0);
         $result = SharedUtility::elementAttributeValueNotBlacklisted($element, $attribute, $blacklist);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -462,6 +463,6 @@ class SharedUtilityTest extends BaseTestCase
         $element = $doc->getElementsByTagName($tag)->item(0);
         $result = SharedUtility::elementIsLinkWithHref($element);
 
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace UniWue\UwA11yCheck\Property\TypeConverter;
 
 use TYPO3\CMS\Extbase\Error\Error;
@@ -15,7 +16,7 @@ class PresetTypeConverter extends AbstractTypeConverter
     /**
      * @var PresetService
      */
-    protected $presetService = null;
+    protected $presetService;
 
     /**
      * @param PresetService $presetService
