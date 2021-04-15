@@ -12,15 +12,20 @@ TYPO3 integrator. So basically, the template generated frontend output of a page
 footer, menus, ...) can be excluded from A11Y checks when only editor generated content has to be processed.
 
 In order to only check the editor generated content the extension comes with a custom plugin, which renders
-all content elements of a given page. This content is then checked against a configuable set of 
-accessibility checks.
+all content elements of a given page. This frontend output of those content elements is then checked against
+a configuable set of accessibility checks.
 
 Editor generated content in record (e.g. ext:news record) can also be checked by providing a custom page
 where the plugin of the affected extension is in place to render a view (e.g. detail view).
 
 The extension is highly configurable and comes with a limited set of A11Y checks, which are processed
 by analyzing generated HTML content. It is however possible to implement custom checks (e.g. processed
-by a 3rd party A11Y checker)   
+by a 3rd party A11Y checker)
+
+**Note:** The included internal tests using symfony domcrawler do only analyze the structure of the DOM and
+do not respect any post-modifications to generated HTML e.g. by JavaScript. If you require more precise A11Y
+checks (e.g. through a 3rd party A11Y check), this can be archieved using a custom analyzer (see section 
+"Customization")
 
 ## Installation
 
