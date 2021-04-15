@@ -26,11 +26,6 @@ class Preset
     protected $description = '';
 
     /**
-     * @var string
-     */
-    protected $baseUrl = '';
-
-    /**
      * @var AbstractAnalyzer
      */
     protected $analyzer;
@@ -67,7 +62,6 @@ class Preset
         $this->name = $name;
         $this->analyzer = $analyzer;
         $this->checkUrlGenerator = $checkUrlGenerator;
-        $this->baseUrl = $configuration['baseUrl'];
         $this->testSuite = $testSuite;
     }
 
@@ -119,13 +113,7 @@ class Preset
      */
     public function getCheckUrl(int $id): string
     {
-        $url = $this->checkUrlGenerator->getCheckUrl($this->baseUrl, $id);
-
-        if (strpos($url, 'http') === false) {
-            $url = $this->baseUrl . $url;
-        }
-
-        return $url;
+        return $this->checkUrlGenerator->getCheckUrl($id);
     }
 
     /**

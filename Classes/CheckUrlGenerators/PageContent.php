@@ -47,11 +47,10 @@ class PageContent extends AbstractCheckUrlGenerator
     /**
      * Returns the check URL
      *
-     * @param string $baseUrl
      * @param int $pageUid
      * @return string|void
      */
-    public function getCheckUrl(string $baseUrl, int $pageUid): string
+    public function getCheckUrl(int $pageUid): string
     {
         $ignoreContentTypes = implode(',', $this->ignoredContentTypes);
         $hmacString = $pageUid . $ignoreContentTypes;

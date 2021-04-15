@@ -26,11 +26,10 @@ class Page extends AbstractCheckUrlGenerator
     /**
      * Returns the check URL
      *
-     * @param string $baseUrl
      * @param int $pageUid
      * @return string|void
      */
-    public function getCheckUrl(string $baseUrl, int $pageUid): string
+    public function getCheckUrl(int $pageUid): string
     {
         $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($pageUid);
 

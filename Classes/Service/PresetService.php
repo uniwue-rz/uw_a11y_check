@@ -84,7 +84,7 @@ class PresetService
                     $presetData['testSuite']
                 );
 
-                $configuration = $presetData['configuration'];
+                $configuration = $presetData['configuration'] ?? [];
 
                 $presets[] = new Preset($id, $name, $analyzer, $checkUrlGenerator, $testSuite, $configuration);
             } catch (\Exception $exception) {

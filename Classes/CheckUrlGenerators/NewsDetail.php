@@ -38,11 +38,10 @@ class NewsDetail extends AbstractCheckUrlGenerator
     /**
      * Returns the check URL
      *
-     * @param string $baseUrl
      * @param int $newsUid
      * @return string|void
      */
-    public function getCheckUrl(string $baseUrl, int $newsUid): string
+    public function getCheckUrl(int $newsUid): string
     {
         $arguments = [
             'tx_news_pi1[action]' => 'detail',

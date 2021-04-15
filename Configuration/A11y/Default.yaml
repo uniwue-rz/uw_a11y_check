@@ -8,8 +8,6 @@ presets:
   pageContent:
     name: "Check page content elements (no plugins)"
     description: "This check renders all content elements of the given page(s) and performs the accessibility check"
-    configuration:
-      baseUrl: "https://your-domain.tld/"
     analyzer:
       id: "pageContentAnalyzer"
       configuration: {}
@@ -31,8 +29,6 @@ presets:
   extNews:
     name: "Check ext:news records"
     description: "This check renders all news records of the given page(s) and performs the accessibility check"
-    configuration:
-      baseUrl: "https://your-domain.tld/"
     analyzer:
       id: "newsAnalyzer"
       configuration: {}
