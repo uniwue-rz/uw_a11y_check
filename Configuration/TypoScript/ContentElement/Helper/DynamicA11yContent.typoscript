@@ -1,5 +1,5 @@
-lib.dynamicContent = COA
-lib.dynamicContent {
+lib.dynamicA11yContent = COA
+lib.dynamicA11yContent {
     5 = LOAD_REGISTER
     5 {
         pageUid.cObject = TEXT
