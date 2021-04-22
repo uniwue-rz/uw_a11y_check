@@ -22,7 +22,7 @@
           <f:if condition="{resultSet.impact} > 0">
             <f:then>
               <f:for each="{resultSet.results}" as="result">
-                <f:be.infobox state="{result.state}" title="{result.title}" message="{result.description}" />
+                <f:be.infobox state="{result.state}" title="{result.title}" message="{result.description -> f:format.htmlspecialchars(doubleEncode: 'false')}" />
 
                 <f:if condition="{result.hasErrors}">
                   <table class="table table-striped table-bordered">
