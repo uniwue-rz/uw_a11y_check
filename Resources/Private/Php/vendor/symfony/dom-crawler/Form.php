@@ -203,7 +203,7 @@ class Form extends Link implements \ArrayAccess
         $uri = parent::getUri();
 
         if (!\in_array($this->getMethod(), ['POST', 'PUT', 'DELETE', 'PATCH'])) {
-            $query = parse_url($uri, PHP_URL_QUERY);
+            $query = parse_url($uri, \PHP_URL_QUERY);
             $currentParameters = [];
             if ($query) {
                 parse_str($query, $currentParameters);
@@ -263,21 +263,17 @@ class Form extends Link implements \ArrayAccess
     /**
      * Returns true if the named field exists.
      *
-     * @param string $name The field name
-     *
      * @return bool true if the field exists, false otherwise
      */
-    public function has($name)
+    public function has(string $name)
     {
         return $this->fields->has($name);
     }
 
     /**
      * Removes a field from the form.
-     *
-     * @param string $name The field name
      */
-    public function remove($name)
+    public function remove(string $name)
     {
         $this->fields->remove($name);
     }
@@ -285,13 +281,11 @@ class Form extends Link implements \ArrayAccess
     /**
      * Gets a named field.
      *
-     * @param string $name The field name
-     *
      * @return FormField|FormField[]|FormField[][] The value of the field
      *
      * @throws \InvalidArgumentException When field is not present in this form
      */
-    public function get($name)
+    public function get(string $name)
     {
         return $this->fields->get($name);
     }
