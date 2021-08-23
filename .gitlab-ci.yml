@@ -27,7 +27,7 @@ before_script:
     - .Build/bin/phpcs --standard=PSR2 --extensions=php Classes/
 
 # Build in PHP 7.2 and TYPO3 10.4
-test:php72:typo3_95:
+test:php72:typo3_104:
   <<: *testing
   variables:
     DOCKER_TAG: 7.2-alpine
@@ -35,7 +35,7 @@ test:php72:typo3_95:
     TESTING_FRAMEWORK: ^5
 
 # Build in PHP 7.3 and TYPO3 10.4
-test:php73:typo3_95:
+test:php73:typo3_104:
   <<: *testing
   variables:
     DOCKER_TAG: 7.3-alpine
@@ -43,7 +43,7 @@ test:php73:typo3_95:
     TESTING_FRAMEWORK: ^5
 
 # Build in PHP 7.4 and TYPO3 10.4
-test:php74:typo3_95:
+test:php74:typo3_104:
   <<: *testing
   variables:
     DOCKER_TAG: 7.4-alpine
