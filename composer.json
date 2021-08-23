@@ -1,7 +1,7 @@
 {
   "name": "uniwue/uw_a11y_check",
   "type": "typo3-cms-extension",
-  "description": "",
+  "description": "Configurable a11y check for tt_content and extension records",
   "authors": [
     {
       "name": "Torben Hansen on behalf of Universität Würzburg",
