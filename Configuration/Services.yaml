@@ -1,0 +1,19 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    UniWue\UwA11yCheck\:
+        resource: '../Classes/*'
+
+    UniWue\UwA11yCheck\Command\PresetByPageUidCommand:
+        tags:
+            - name: 'console.command'
+              command: 'uw_a11y_check:check:presetByPageUid'
+              schedulable: true
+    UniWue\UwA11yCheck\Command\PresetByRecordUidsCommand:
+        tags:
+            - name: 'console.command'
+              command: 'uw_a11y_check:check:presetByRecordUids'
+              schedulable: true
