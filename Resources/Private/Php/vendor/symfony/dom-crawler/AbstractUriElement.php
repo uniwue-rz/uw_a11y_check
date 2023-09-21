@@ -35,7 +35,7 @@ abstract class AbstractUriElement
 
     /**
      * @param \DOMElement $node       A \DOMElement instance
-     * @param string      $currentUri The URI of the page where the link is embedded (or the base href)
+     * @param string|null $currentUri The URI of the page where the link is embedded (or the base href)
      * @param string|null $method     The method to use for the link (GET by default)
      *
      * @throws \InvalidArgumentException if the node is not a link
@@ -47,7 +47,7 @@ abstract class AbstractUriElement
         $this->currentUri = $currentUri;
 
         $elementUriIsRelative = null === parse_url(trim($this->getRawUri()), \PHP_URL_SCHEME);
-        $baseUriIsAbsolute = \in_array(strtolower(substr($this->currentUri, 0, 4)), ['http', 'file']);
+        $baseUriIsAbsolute = null !== $this->currentUri && \in_array(strtolower(substr($this->currentUri, 0, 4)), ['http', 'file']);
         if ($elementUriIsRelative && !$baseUriIsAbsolute) {
             throw new \InvalidArgumentException(sprintf('The URL of the element is relative, so you must define its base URI passing an absolute URL to the constructor of the "%s" class ("%s" was passed).', __CLASS__, $this->currentUri));
         }
@@ -56,7 +56,7 @@ abstract class AbstractUriElement
     /**
      * Gets the node associated with this link.
      *
-     * @return \DOMElement A \DOMElement instance
+     * @return \DOMElement
      */
     public function getNode()
     {
@@ -66,7 +66,7 @@ abstract class AbstractUriElement
     /**
      * Gets the method associated with this link.
      *
-     * @return string The method
+     * @return string
      */
     public function getMethod()
     {
@@ -76,7 +76,7 @@ abstract class AbstractUriElement
     /**
      * Gets the URI associated with this link.
      *
-     * @return string The URI
+     * @return string
      */
     public function getUri()
     {
@@ -103,7 +103,7 @@ abstract class AbstractUriElement
             return $path;
         }
 
-        if ('.' === substr($path, -1)) {
+        if (str_ends_with($path, '.')) {
             $path .= '/';
         }
 

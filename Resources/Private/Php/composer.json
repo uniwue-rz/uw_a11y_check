@@ -1,9 +1,9 @@
 {
     "require": {
-        "symfony/dom-crawler": "^5.2",
-        "symfony/css-selector": "^5.2",
-        "symfony/serializer": "^5.2",
-        "symfony/property-access": "^5.2",
-        "symfony/property-info": "^5.2"
+        "symfony/dom-crawler": "^5.4",
+        "symfony/css-selector": "^5.4",
+        "symfony/serializer": "^5.4",
+        "symfony/property-access": "^5.4",
+        "symfony/property-info": "^5.4"
     }
 }
