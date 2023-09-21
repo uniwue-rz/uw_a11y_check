@@ -28,22 +28,22 @@ class HeaderUtilityTest extends BaseTestCase
             'h1 followed by h2' => [
                 '<h1>h1</h1>',
                 '<h2>h2</h2>',
-                true
+                true,
             ],
             'h1 followed by h3' => [
                 '<h1>h1</h1>',
                 '<h3>h3</h3>',
-                false
+                false,
             ],
             'h1 followed by h6' => [
                 '<h1>h1</h1>',
                 '<h6>h6</h6>',
-                false
+                false,
             ],
             'h3 followed by h2' => [
                 '<h3>h3</h3>',
                 '<h2>h2</h2>',
-                true
+                true,
             ],
         ];
     }

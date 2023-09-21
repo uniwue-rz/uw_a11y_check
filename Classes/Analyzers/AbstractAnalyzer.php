@@ -15,7 +15,7 @@ use UniWue\UwA11yCheck\Tests\TestInterface;
  */
 abstract class AbstractAnalyzer implements AnalyzerInterface
 {
-    const TYPE_INTERNAL = 'internal';
+    public const TYPE_INTERNAL = 'internal';
 
     /**
      * @var string

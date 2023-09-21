@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace UniWue\UwA11yCheck\Command;
 
 use Symfony\Component\Console\Command\Command;

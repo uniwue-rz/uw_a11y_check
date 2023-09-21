@@ -22,8 +22,8 @@ use UniWue\UwA11yCheck\Service\ResultsService;
  */
 class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-    const LANG_CORE = 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:';
-    const LANG_LOCAL = 'LLL:EXT:uw_a11y_check/Resources/Private/Language/locallang.xlf:';
+    public const LANG_CORE = 'LLL:EXT:core/Resources/Private/Language/locallang_core.xlf:';
+    public const LANG_LOCAL = 'LLL:EXT:uw_a11y_check/Resources/Private/Language/locallang.xlf:';
 
     /**
      * @var PresetService
@@ -120,7 +120,7 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
                 null,
                 null,
                 [
-                    'checkDemand' => $checkDemand->toArray()
+                    'checkDemand' => $checkDemand->toArray(),
                 ]
             );
         }
@@ -164,7 +164,7 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $this->view->assignMultiple([
             'checkDemand' => $checkDemand,
             'results' => $results,
-            'date' => new \DateTime()
+            'date' => new \DateTime(),
         ]);
     }
 
@@ -177,7 +177,7 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
         $resultsArray = $this->resultsService->getResultsArrayByPid($this->pid);
 
         $this->view->assignMultiple([
-            'resultsArray' => $resultsArray
+            'resultsArray' => $resultsArray,
         ]);
     }
 
@@ -254,7 +254,7 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             ->setDataAttributes([
                 'toggle' => 'tooltip',
                 'placement' => 'bottom',
-                'title' => $title
+                'title' => $title,
             ])
             ->setTitle($title)
             ->setShowLabelText(true)
@@ -273,7 +273,7 @@ class A11yCheckController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
             2 => $this->getLanguageService()->sL(self::LANG_CORE . 'labels.depth_2'),
             3 => $this->getLanguageService()->sL(self::LANG_CORE . 'labels.depth_3'),
             4 => $this->getLanguageService()->sL(self::LANG_CORE . 'labels.depth_4'),
-            999 => $this->getLanguageService()->sL(self::LANG_CORE . 'labels.depth_infi')
+            999 => $this->getLanguageService()->sL(self::LANG_CORE . 'labels.depth_infi'),
         ];
     }
 

@@ -61,7 +61,7 @@ class PageContent extends AbstractCheckUrlGenerator
             'tx_uwa11ycheck_pi1[controller]' => 'ContentElements',
             'tx_uwa11ycheck_pi1[pageUid]' => $pageUid,
             'tx_uwa11ycheck_pi1[ignoreContentTypes]' => $ignoreContentTypes,
-            'tx_uwa11ycheck_pi1[hmac]' => $hmac
+            'tx_uwa11ycheck_pi1[hmac]' => $hmac,
         ];
         $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($this->targetPid);
 

@@ -26,23 +26,23 @@ class LinkUtilityTest extends BaseTestCase
         return [
             'link with no image' => [
                 '<a href=#">Just Text</a>',
-                false
+                false,
             ],
             'link with image but no alt' => [
                 '<a href=#"><img src="test.gif" /></a>',
-                false
+                false,
             ],
             'link with image and empty alt' => [
                 '<a href=#"><img src="test.gif" alt=""/></a>',
-                false
+                false,
             ],
             'link with image and alt' => [
                 '<a href=#"><img src="test.gif" alt="Alternative"/></a>',
-                true
+                true,
             ],
             'link with multiple images and at least one alt' => [
                 '<a href=#"><img src="test.gif" alt=""/><img src="test.gif" alt="Alternative"/></a>',
-                true
+                true,
             ],
         ];
     }
@@ -74,32 +74,32 @@ class LinkUtilityTest extends BaseTestCase
             'text not blacklisted' => [
                 '<a href="link.html">This is a link</a>',
                 ['more', 'details'],
-                true
+                true,
             ],
             'text blacklisted exact case' => [
                 '<a href="link.html">more</a>',
                 ['more', 'details'],
-                false
+                false,
             ],
             'text blacklisted different case' => [
                 '<a href="link.html">Details</a>',
                 ['more', 'details'],
-                false
+                false,
             ],
             'only chars taken into account' => [
                 '<a href="link.html">Details...</a>',
                 ['more', 'details'],
-                false
+                false,
             ],
             'empty blacklist' => [
                 '<a href="link.html">Details...</a>',
                 [],
-                true
+                true,
             ],
             'empty test' => [
                 '<a href="link.html"><img src="test.gif" alt="" /></a>',
                 ['more', 'details'],
-                true
+                true,
             ],
         ];
     }
@@ -133,37 +133,37 @@ class LinkUtilityTest extends BaseTestCase
                 '<a href="link.html" title="more">This is a link</a>',
                 'title',
                 [],
-                true
+                true,
             ],
             'no image' => [
                 '<a href="link.html" title="more">This is a link</a>',
                 'title',
                 ['more', 'details'],
-                true
+                true,
             ],
             'image with no attribute' => [
                 '<a href="link.html" title="more"><img src="test.gif" /></a>',
                 'title',
                 ['more', 'details'],
-                true
+                true,
             ],
             'image with attribute value not blacklisted' => [
                 '<a href="link.html" title="more"><img src="test.gif" title="Not blacklisted" /></a>',
                 'title',
                 ['more', 'details'],
-                true
+                true,
             ],
             'image with attribute value blacklisted' => [
                 '<a href="link.html" title="more"><img src="test.gif" title="Details" /></a>',
                 'title',
                 ['more', 'details'],
-                false
+                false,
             ],
             'image with attribute value blacklisted including extra chars' => [
                 '<a href="link.html" title="more"><img src="test.gif" title="Details..." /></a>',
                 'title',
                 ['more', 'details'],
-                false
+                false,
             ],
         ];
     }
@@ -196,37 +196,37 @@ class LinkUtilityTest extends BaseTestCase
         return [
             'no links at all' => [
                 [
-                    '<img src="test.html" alt="" />'
+                    '<img src="test.html" alt="" />',
                 ],
-                0
+                0,
             ],
             'only one link' => [
                 [
-                    '<a href="link.html">Link 1</a>'
+                    '<a href="link.html">Link 1</a>',
                 ],
-                0
+                0,
             ],
             'two links but not redundant name' => [
                 [
                     '<a href="link.html">Link 1</a>',
-                    '<a href="link.html">Link 2</a>'
+                    '<a href="link.html">Link 2</a>',
                 ],
-                0
+                0,
             ],
             'two links with redundant name' => [
                 [
                     '<a href="link.html">Link 1</a>',
-                    '<a href="link.html">Link 1</a>'
+                    '<a href="link.html">Link 1</a>',
                 ],
-                1
+                1,
             ],
             'three links with redundant name' => [
                 [
                     '<a href="link.html">Link 1</a>',
                     '<a href="link.html">Link 1</a>',
-                    '<a href="link.html">Link 1</a>'
+                    '<a href="link.html">Link 1</a>',
                 ],
-                1
+                1,
             ],
         ];
     }

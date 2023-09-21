@@ -35,14 +35,14 @@ class ResultSetExtractor implements PropertyTypeExtractorInterface
      */
     public function getTypes($class, $property, array $context = [])
     {
-        if (is_a($class, ResultSet::class, true) && 'results' === $property) {
+        if (is_a($class, ResultSet::class, true) && $property === 'results') {
             return [
-                new Type(Type::BUILTIN_TYPE_OBJECT, true, Result::class . '[]')
+                new Type(Type::BUILTIN_TYPE_OBJECT, true, Result::class . '[]'),
             ];
         }
-        if (is_a($class, Result::class, true) && 'nodes' === $property) {
+        if (is_a($class, Result::class, true) && $property === 'nodes') {
             return [
-                new Type(Type::BUILTIN_TYPE_OBJECT, true, Node::class . '[]')
+                new Type(Type::BUILTIN_TYPE_OBJECT, true, Node::class . '[]'),
             ];
         }
         return $this->reflectionExtractor->getTypes($class, $property, $context);

@@ -27,12 +27,12 @@ class SharedUtilityTest extends BaseTestCase
         return [
             'role presentation present' => [
                 'presentation',
-                true
+                true,
             ],
             'role presentation not present' => [
                 'button',
-                false
-            ]
+                false,
+            ],
         ];
     }
 
@@ -64,12 +64,12 @@ class SharedUtilityTest extends BaseTestCase
         return [
             'role none present' => [
                 'none',
-                true
+                true,
             ],
             'role none not present' => [
                 'button',
-                false
-            ]
+                false,
+            ],
         ];
     }
 
@@ -101,16 +101,16 @@ class SharedUtilityTest extends BaseTestCase
         return [
             'no aria label' => [
                 '<div>Test</div>',
-                false
+                false,
             ],
             'empty aria label' => [
                 '<div aria-label="">Test</div>',
-                false
+                false,
             ],
             'aria label with value' => [
                 '<div aria-label="Label">Test</div>',
-                true
-            ]
+                true,
+            ],
         ];
     }
 
@@ -140,19 +140,19 @@ class SharedUtilityTest extends BaseTestCase
         return [
             'labelledby element does not exist' => [
                 '<div><a id="labelledByElement" href="#" aria-labelledby="notavailable">Link</a></div>',
-                false
+                false,
             ],
             'aria-labelledby not set' => [
                 '<div><a id="labelledByElement" href="#" >Link</a></div>',
-                false
+                false,
             ],
             'labelledby element does exist but empty' => [
                 '<div><label id="test"></label><a id="labelledByElement" href="#" aria-labelledby="test">Link</a></div>',
-                false
+                false,
             ],
             'labelledby element does exist and not empty' => [
                 '<div><label id="test">Label</label><a id="labelledByElement" href="#" aria-labelledby="test">Link</a></div>',
-                true
+                true,
             ],
         ];
     }
@@ -182,23 +182,23 @@ class SharedUtilityTest extends BaseTestCase
         return [
             'no text in div' => [
                 '<div></div>',
-                false
+                false,
             ],
             'space in div' => [
                 '<div> </div>',
-                false
+                false,
             ],
             'image in div' => [
                 '<div><img src="test.gif" alt="Alternative"></div>',
-                false
+                false,
             ],
             'image in div with additional text in span' => [
                 '<div><img src="test.gif" alt="Alternative"><span class="hidden">Text</span></div>',
-                true
+                true,
             ],
             'text in div' => [
                 '<div>Text</div>',
-                true
+                true,
             ],
         ];
     }
@@ -229,19 +229,19 @@ class SharedUtilityTest extends BaseTestCase
         return [
             'no title' => [
                 '<div></div>',
-                false
+                false,
             ],
             'with title but empty' => [
                 '<div title="">Test</div>',
-                false
+                false,
             ],
             'with title and value' => [
                 '<div title="Title">Test</div>',
-                true
+                true,
             ],
             'no title but title in sub node' => [
                 '<div><a href="#" title="title">Test</a></div>',
-                false
+                false,
             ],
         ];
     }
@@ -272,15 +272,15 @@ class SharedUtilityTest extends BaseTestCase
         return [
             'image with no alt' => [
                 '<img src="test.gif">',
-                false
+                false,
             ],
             'image with empty alt' => [
                 '<img src="test.gif" alt="">',
-                true
+                true,
             ],
             'image with alt' => [
                 '<img src="test.gif" alt="alternative">',
-                true
+                true,
             ],
         ];
     }
@@ -312,42 +312,42 @@ class SharedUtilityTest extends BaseTestCase
             'link has no title' => [
                 '<a href="text.html">Test</a>',
                 'a',
-                true
+                true,
             ],
             'image has no title' => [
                 '<img src="text.html" alt="" />',
                 'img',
-                true
+                true,
             ],
             'link has no redundant title' => [
                 '<a href="text.html" title="Title">Link Text</a>',
                 'a',
-                true
+                true,
             ],
             'image has no redundant title' => [
                 '<img src="text.html" title="Title" alt="Alternative" />',
                 'img',
-                true
+                true,
             ],
             'link has redundant title same case' => [
                 '<a href="text.html" title="Title">Title</a>',
                 'a',
-                false
+                false,
             ],
             'image has redundant title same case' => [
                 '<img src="text.html" title="Title" alt="Title" />',
                 'img',
-                false
+                false,
             ],
             'link has redundant title different case' => [
                 '<a href="text.html" title="title">Title</a>',
                 'a',
-                false
+                false,
             ],
             'image has redundant title different case' => [
                 '<img src="text.html" title="title" alt="Title" />',
                 'img',
-                false
+                false,
             ],
         ];
     }
@@ -381,19 +381,19 @@ class SharedUtilityTest extends BaseTestCase
                 '<a href="link.html">This is a link</a>',
                 'title',
                 ['more', 'details'],
-                true
+                true,
             ],
             'attribute blacklisted exact case' => [
                 '<a href="link.html" title="more">This is a link</a>',
                 'title',
                 ['more', 'details'],
-                false
+                false,
             ],
             'attribute blacklisted different case' => [
                 '<a href="link.html" title="More">This is a link</a>',
                 'title',
                 ['more', 'details'],
-                false
+                false,
             ],
         ];
     }
@@ -427,22 +427,22 @@ class SharedUtilityTest extends BaseTestCase
             'no link' => [
                 '<p>test</p>',
                 'p',
-                false
+                false,
             ],
             'link without link' => [
                 '<a id="123">test</a>',
                 'a',
-                false
+                false,
             ],
             'link with empty href' => [
                 '<a href="">test</a>',
                 'a',
-                true
+                true,
             ],
             'link with href' => [
                 '<a href="test.html">test</a>',
                 'a',
-                true
+                true,
             ],
         ];
     }
