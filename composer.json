@@ -15,12 +15,12 @@
     "GPL-2.0+"
   ],
   "require": {
-    "typo3/cms-core": "^10.4",
-    "symfony/dom-crawler": "^5.2",
-    "symfony/css-selector": "^5.2",
-    "symfony/serializer": "^5.2",
-    "symfony/property-access": "^5.2",
-    "symfony/property-info": "^5.2",
+    "typo3/cms-core": "^11.5",
+    "symfony/dom-crawler": "^5.4",
+    "symfony/css-selector": "^5.4",
+    "symfony/serializer": "^5.4",
+    "symfony/property-access": "^5.4",
+    "symfony/property-info": "^5.4",
     "ext-dom": "*"
   },
   "replace": {
@@ -44,7 +44,7 @@
     "typo3/cms": {
       "extension-key": "uw_a11y_check",
       "app-dir": ".Build",
-      "web-dir": ".Build/Web"
+      "web-dir": ".Build/public"
     }
   },
   "scripts": {
