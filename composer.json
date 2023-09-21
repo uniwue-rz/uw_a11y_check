@@ -23,6 +23,10 @@
     "symfony/property-info": "^5.4",
     "ext-dom": "*"
   },
+  "require-dev": {
+    "typo3/testing-framework": "^6.9.0",
+    "friendsofphp/php-cs-fixer": "^3.0"
+  },
   "replace": {
     "typo3-ter/uw-a11y-check": "self.version"
   },
@@ -38,7 +42,11 @@
   },
   "config": {
     "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin"
+    "bin-dir": ".Build/bin",
+    "allow-plugins": {
+      "typo3/cms-composer-installers": true,
+      "typo3/class-alias-loader": true
+    }
   },
   "extra": {
     "typo3/cms": {
@@ -46,10 +54,5 @@
       "app-dir": ".Build",
       "web-dir": ".Build/public"
     }
-  },
-  "scripts": {
-    "post-autoload-dump": [
-      "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
-    ]
   }
 }

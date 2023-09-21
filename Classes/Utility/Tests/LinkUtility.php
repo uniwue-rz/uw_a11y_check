@@ -94,6 +94,10 @@ class LinkUtility
 
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
+            if (!$element) {
+                continue;
+            }
+
             if (StringUtility::stripNewLines($element->textContent) !== ''
                 && !in_array($element->textContent, $linkNames)
             ) {
