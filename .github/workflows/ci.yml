@@ -1,0 +1,51 @@
+name: Unit tests
+
+on: [ push, pull_request ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        env:
+          - { php: 7.4 }
+          - { php: 8.0 }
+          - { php: 8.1 }
+          - { php: 8.2 }
+
+    env: ${{ matrix.env }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up PHP Version
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.env.php }}
+          tools: composer:v2
+
+      # Directory permissions for .composer are wrong, so we remove the complete directory
+      # https://github.com/actions/virtual-environments/issues/824
+      - name: Delete .composer directory
+        run: |
+          sudo rm -rf ~/.composer
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: dependencies-composer-${{ hashFiles('composer.json') }}
+
+      - name: Install composer dependencies
+        run: |
+          composer install --no-progress
+
+      - name: Unit tests
+        run: |
+          echo "Running unit tests";
+          .Build/bin/phpunit --colors -c Tests/Build/UnitTests.xml
