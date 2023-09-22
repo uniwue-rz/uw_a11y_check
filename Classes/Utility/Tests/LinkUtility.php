@@ -85,10 +85,10 @@ class LinkUtility
             ) {
                 $linkNames[] = $element->textContent;
             } elseif (in_array(
-                    $element->textContent,
-                    $linkNames,
-                    true
-                ) && !isset($redundantLinks[$element->textContent])) {
+                $element->textContent,
+                $linkNames,
+                true
+            ) && !isset($redundantLinks[$element->textContent])) {
                 $redundantLinks[$element->textContent] = $element;
             }
         }
