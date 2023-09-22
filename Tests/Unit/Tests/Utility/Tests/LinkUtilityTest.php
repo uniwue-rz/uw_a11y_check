@@ -18,10 +18,7 @@ use UniWue\UwA11yCheck\Utility\Tests\LinkUtility;
  */
 class LinkUtilityTest extends BaseTestCase
 {
-    /**
-     * @return array
-     */
-    public function linkHasImageWithAltTestsDataProvider()
+    public function linkHasImageWithAltTestsDataProvider(): array
     {
         return [
             'link with no image' => [
@@ -50,10 +47,8 @@ class LinkUtilityTest extends BaseTestCase
     /**
      * @test
      * @dataProvider linkHasImageWithAltTestsDataProvider
-     * @param $html
-     * @param $expected
      */
-    public function linkHasImageWithAltTests($html, $expected)
+    public function linkHasImageWithAltTests(string $html, bool $expected): void
     {
         $doc = new DOMDocument();
         $doc->loadHTML($html);
@@ -65,10 +60,7 @@ class LinkUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @return array
-     */
-    public function linkTextNotBlacklistedTestsDataProvider()
+    public function linkTextNotBlacklistedTestsDataProvider(): array
     {
         return [
             'text not blacklisted' => [
@@ -107,11 +99,8 @@ class LinkUtilityTest extends BaseTestCase
     /**
      * @dataProvider linkTextNotBlacklistedTestsDataProvider
      * @test
-     * @param $html
-     * @param $blacklist
-     * @param $expected
      */
-    public function linkTextNotBlacklistedTests($html, $blacklist, $expected)
+    public function linkTextNotBlacklistedTests(string $html, array $blacklist, bool $expected)
     {
         $doc = new DOMDocument();
         $doc->loadHTML($html);
@@ -123,10 +112,7 @@ class LinkUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @return array
-     */
-    public function linkImageAttributeNotBlacklistedTestsDataProvider()
+    public function linkImageAttributeNotBlacklistedTestsDataProvider(): array
     {
         return [
             'no blacklist' => [
@@ -171,13 +157,13 @@ class LinkUtilityTest extends BaseTestCase
     /**
      * @test
      * @dataProvider linkImageAttributeNotBlacklistedTestsDataProvider
-     * @param $html
-     * @param $attribute
-     * @param $blacklist
-     * @param $expected
      */
-    public function linkImageAttributeNotBlacklistedTests($html, $attribute, $blacklist, $expected)
-    {
+    public function linkImageAttributeNotBlacklistedTests(
+        string $html,
+        string $attribute,
+        array $blacklist,
+        bool $expected
+    ): void {
         $doc = new DOMDocument();
         $doc->loadHTML($html);
 
@@ -188,10 +174,7 @@ class LinkUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @return array
-     */
-    public function hasRedundantLinkNamesTestsDataProvider()
+    public function hasRedundantLinkNamesTestsDataProvider(): array
     {
         return [
             'no links at all' => [
@@ -234,10 +217,8 @@ class LinkUtilityTest extends BaseTestCase
     /**
      * @test
      * @dataProvider hasRedundantLinkNamesTestsDataProvider
-     * @param $html
-     * @param $expected
      */
-    public function hasRedundantLinkNamesTests($htmlArray, $expected)
+    public function hasRedundantLinkNamesTests(array $htmlArray, int $expected): void
     {
         $elements = [];
 
@@ -251,6 +232,6 @@ class LinkUtilityTest extends BaseTestCase
         /** @var \DOMElement $element */
         $result = LinkUtility::getRedundantLinkNames($elements);
 
-        self::assertEquals($expected, count($result));
+        self::assertCount($expected, $result);
     }
 }

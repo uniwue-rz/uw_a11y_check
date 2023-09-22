@@ -13,12 +13,8 @@ class ContentElementUtility
 {
     /**
      * Returns an array of content element UIDs for the given page uid
-     *
-     * @param int $pageUid
-     * @param array $ignoredContentTypes
-     * @return array
      */
-    public static function getContentElementUidsByPage(int $pageUid, array $ignoredContentTypes = [])
+    public static function getContentElementUidsByPage(int $pageUid, array $ignoredContentTypes = []): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('tt_content');
@@ -51,7 +47,7 @@ class ContentElementUtility
 
         // @todo: Consider to define exclude colPos
 
-        $queryResult = $query->execute()->fetchAll();
+        $queryResult = $query->execute()->fetchAllAssociative();
 
         $uidList = [];
         foreach ($queryResult as $record) {

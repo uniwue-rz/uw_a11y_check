@@ -10,10 +10,12 @@ services:
     UniWue\UwA11yCheck\Command\PresetByPageUidCommand:
         tags:
             - name: 'console.command'
+              description: 'a11y check for the given preset and page uid (recursive by "levels" if set)'
               command: 'uw_a11y_check:check:presetByPageUid'
               schedulable: true
     UniWue\UwA11yCheck\Command\PresetByRecordUidsCommand:
         tags:
             - name: 'console.command'
+              description: 'a11y check for the given preset and list or record UIDs (Preset should contain checks for records)'
               command: 'uw_a11y_check:check:presetByRecordUids'
               schedulable: true

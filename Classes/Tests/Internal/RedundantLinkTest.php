@@ -13,22 +13,11 @@ use UniWue\UwA11yCheck\Utility\Tests\SharedUtility;
  */
 class RedundantLinkTest extends AbstractTest
 {
-    /**
-     * @var string
-     */
-    protected $id = 'redundant-link';
-
-    /**
-     * @var int
-     */
-    protected $impact = Result\Impact::MINOR;
+    protected string $id = 'redundant-link';
+    protected int $impact = Result\Impact::MINOR;
 
     /**
      * Runs the test
-     *
-     * @param string $html
-     * @param int $fallbackElementUid
-     * @return Result
      */
     public function run(string $html, int $fallbackElementUid): Result
     {
@@ -59,9 +48,6 @@ class RedundantLinkTest extends AbstractTest
 
     /**
      * Returns an array of all redundant links for the given object of elements
-     *
-     * @param Crawler $elements
-     * @return array
      */
     protected function getRedundantLinks(Crawler $elements): array
     {
@@ -80,9 +66,6 @@ class RedundantLinkTest extends AbstractTest
 
     /**
      * Returns an array of links grouped by its href
-     *
-     * @param Crawler $element
-     * @return array
      */
     protected function groupLinksByHref(Crawler $elements): array
     {

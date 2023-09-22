@@ -2,6 +2,7 @@
 
 namespace UniWue\UwA11yCheck\Tests;
 
+use TYPO3\CMS\Core\Localization\LanguageService;
 use UniWue\UwA11yCheck\Check\Result;
 use UniWue\UwA11yCheck\Utility\Tests\ElementUtility;
 
@@ -10,81 +11,38 @@ use UniWue\UwA11yCheck\Utility\Tests\ElementUtility;
  */
 abstract class AbstractTest implements TestInterface
 {
-    /**
-     * @var string
-     */
-    protected $id = '';
+    protected string $id = '';
+    protected string $description = '';
+    protected string $help = '';
+    protected string $helpUrl = '';
+    protected int $impact = 0;
+    protected array $configuration = [];
 
-    /**
-     * @var string
-     */
-    protected $description = '';
-
-    /**
-     * @var string
-     */
-    protected $help = '';
-
-    /**
-     * @var string
-     */
-    protected $helpUrl = '';
-
-    /**
-     * @var int
-     */
-    protected $impact = 0;
-
-    /**
-     * @var array
-     */
-    protected $configuration = [];
-
-    /**
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return htmlspecialchars($this->description);
     }
 
-    /**
-     * @return string
-     */
     public function getHelp(): string
     {
         return $this->help;
     }
 
-    /**
-     * @return string
-     */
     public function getHelpUrl(): string
     {
         return $this->helpUrl;
     }
 
-    /**
-     * @return int
-     */
     public function getImpact(): int
     {
         return $this->impact;
     }
 
-    /**
-     * AbstractTest constructor.
-     *
-     * @param array $configuration
-     */
     public function __construct(array $configuration = [])
     {
         $this->configuration = $configuration;
@@ -97,9 +55,6 @@ abstract class AbstractTest implements TestInterface
         }
     }
 
-    /**
-     * @return Result
-     */
     public function initResultWithMetaDataFromTest(): Result
     {
         $result = new Result();
@@ -115,10 +70,6 @@ abstract class AbstractTest implements TestInterface
 
     /**
      * Returns the element UID in the node. If no UID could be determined, the fallbackElementUid is returned
-     *
-     * @param \DOMElement $node
-     * @param int $fallbackElementUid
-     * @return int
      */
     public function getElementUid(\DOMElement $node, int $fallbackElementUid): int
     {
@@ -129,22 +80,13 @@ abstract class AbstractTest implements TestInterface
         return $elementUid;
     }
 
-    /**
-     * @param string $label
-     * @return string
-     */
     protected function translateLabel(string $label): string
     {
         $langId = 'LLL:EXT:uw_a11y_check/Resources/Private/Language/locallang.xlf:';
         return $this->getLanguageService()->sL($langId . $label);
     }
 
-    /**
-     * Returns LanguageService
-     *
-     * @return \TYPO3\CMS\Lang\LanguageService
-     */
-    protected function getLanguageService()
+    protected function getLanguageService(): LanguageService
     {
         return $GLOBALS['LANG'];
     }

@@ -16,15 +16,8 @@ use UniWue\UwA11yCheck\Service\SerializationService;
  */
 abstract class AbstractCheckCommand extends Command
 {
-    /**
-     * @var SerializationService
-     */
-    protected $serializationService;
+    protected SerializationService $serializationService;
 
-    /**
-     * AbstractCheckCommand constructor.
-     * @param string|null $name
-     */
     public function __construct(string $name = null)
     {
         parent::__construct($name);
@@ -34,9 +27,6 @@ abstract class AbstractCheckCommand extends Command
 
     /**
      * Saves the given results
-     *
-     * @param Preset $preset
-     * @param array $results
      */
     public function saveResults(Preset $preset, array $results): void
     {
@@ -49,9 +39,6 @@ abstract class AbstractCheckCommand extends Command
 
     /**
      * Saves a single result to the database
-     *
-     * @param Preset $preset
-     * @param ResultSet $resultSet
      */
     protected function saveResult(Preset $preset, ResultSet $resultSet): void
     {

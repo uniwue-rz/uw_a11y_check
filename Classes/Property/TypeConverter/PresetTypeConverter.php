@@ -2,6 +2,7 @@
 
 namespace UniWue\UwA11yCheck\Property\TypeConverter;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Error\Error;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
@@ -13,41 +14,19 @@ use UniWue\UwA11yCheck\Service\PresetService;
  */
 class PresetTypeConverter extends AbstractTypeConverter
 {
-    /**
-     * @var PresetService
-     */
-    protected $presetService;
+    protected PresetService $presetService;
 
-    /**
-     * @param PresetService $presetService
-     */
-    public function injectConfigurationService(PresetService $presetService)
+    public function injectConfigurationService(PresetService $presetService): void
     {
         $this->presetService = $presetService;
     }
 
-    /**
-     * @var array
-     */
     protected $sourceTypes = ['string'];
 
-    /**
-     * @var string
-     */
     protected $targetType = Preset::class;
 
-    /**
-     * @var int
-     */
     protected $priority = 1;
 
-    /**
-     * @param mixed $source
-     * @param string $targetType
-     * @param array $convertedChildProperties
-     * @param PropertyMappingConfigurationInterface|null $configuration
-     * @return mixed|object|Error|Preset
-     */
     public function convertFrom(
         $source,
         $targetType,
@@ -57,7 +36,7 @@ class PresetTypeConverter extends AbstractTypeConverter
         $preset = $this->presetService->getPresetById($source);
 
         if (!$preset) {
-            return $this->objectManager->get(Error::class, 'Preset not found', 1573053017102);
+            return GeneralUtility::makeInstance(Error::class, 'Preset not found', 1573053017);
         }
 
         return $preset;

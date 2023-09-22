@@ -11,20 +11,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class NewsDetail extends AbstractCheckUrlGenerator
 {
-    /**
-     * @var array
-     */
-    protected $requiredConfiguration = ['targetPid'];
-
-    /**
-     * @var int
-     */
-    protected $targetPid = 0;
+    protected array $requiredConfiguration = ['targetPid'];
+    protected int $targetPid = 0;
 
     /**
      * NewsDetail constructor.
-     *
-     * @param array $configuration
      */
     public function __construct(array $configuration)
     {
@@ -37,9 +28,6 @@ class NewsDetail extends AbstractCheckUrlGenerator
 
     /**
      * Returns the check URL
-     *
-     * @param int $newsUid
-     * @return string|void
      */
     public function getCheckUrl(int $newsUid): string
     {

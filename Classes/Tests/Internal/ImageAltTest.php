@@ -12,27 +12,12 @@ use UniWue\UwA11yCheck\Utility\Tests\SharedUtility;
  */
 class ImageAltTest extends AbstractTest
 {
-    /**
-     * @var string
-     */
-    protected $id = 'image-alt';
-
-    /**
-     * @var string
-     */
-    protected $helpUrl = 'https://dequeuniversity.com/rules/axe/3.4/image-alt';
-
-    /**
-     * @var int
-     */
-    protected $impact = Result\Impact::CRITICAL;
+    protected string $id = 'image-alt';
+    protected string $helpUrl = 'https://dequeuniversity.com/rules/axe/3.4/image-alt';
+    protected int $impact = Result\Impact::CRITICAL;
 
     /**
      * Runs the test
-     *
-     * @param string $html
-     * @param int $fallbackElementUid
-     * @return Result
      */
     public function run(string $html, int $fallbackElementUid): Result
     {

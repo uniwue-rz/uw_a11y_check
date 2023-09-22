@@ -9,9 +9,6 @@ class StringUtility
 {
     /**
      * Removes a fixed set of special chars from the given string
-     *
-     * @param string $string
-     * @return string
      */
     public static function clearString(string $string): string
     {
@@ -21,9 +18,6 @@ class StringUtility
 
     /**
      * Removes all new lines from the given string
-     *
-     * @param string|null $text
-     * @return string
      */
     public static function stripNewLines(?string $text): string
     {

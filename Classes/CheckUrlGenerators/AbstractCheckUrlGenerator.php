@@ -9,48 +9,28 @@ use UniWue\UwA11yCheck\Utility\Exception\MissingConfigurationException;
  */
 abstract class AbstractCheckUrlGenerator
 {
-    /**
-     * @var array
-     */
-    protected $requiredConfiguration = [];
-
-    /**
-     * @var string
-     */
-    protected $tableName = '';
-
-    /**
-     * @var string
-     */
-    protected $editRecordTable = '';
+    protected array $requiredConfiguration = [];
+    protected string $tableName = '';
+    protected string $editRecordTable = '';
 
     /**
      * AbstractCheckUrlGenerator constructor.
-     * @param array $configuration
      */
     public function __construct(array $configuration)
     {
         $this->checkRequiredConfiguration($configuration);
     }
 
-    /**
-     * @param int $pageUid
-     */
     public function getCheckUrl(int $pageUid): string
     {
+        return '';
     }
 
-    /**
-     * @return string
-     */
     public function getTableName(): string
     {
         return $this->tableName;
     }
 
-    /**
-     * @return string
-     */
     public function getEditRecordTable(): string
     {
         return $this->editRecordTable;
@@ -58,16 +38,14 @@ abstract class AbstractCheckUrlGenerator
 
     /**
      * Checks, if all required configuration settings are available and if not, throws an exception
-     *
-     * @param array $configuration
      */
-    protected function checkRequiredConfiguration(array $configuration)
+    protected function checkRequiredConfiguration(array $configuration): void
     {
         foreach ($this->requiredConfiguration as $configurationKey) {
             if (!isset($configuration[$configurationKey])) {
                 throw new MissingConfigurationException(
                     'Missing configuration key "' . $configurationKey . '" in ' . __CLASS__,
-                    1573565583355
+                    1573565583
                 );
             }
         }

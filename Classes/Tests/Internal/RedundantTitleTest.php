@@ -12,22 +12,11 @@ use UniWue\UwA11yCheck\Utility\Tests\SharedUtility;
  */
 class RedundantTitleTest extends AbstractTest
 {
-    /**
-     * @var string
-     */
-    protected $id = 'redundant-title';
-
-    /**
-     * @var int
-     */
-    protected $impact = Result\Impact::MINOR;
+    protected string $id = 'redundant-title';
+    protected int $impact = Result\Impact::MINOR;
 
     /**
      * Runs the test
-     *
-     * @param string $html
-     * @param int $fallbackElementUid
-     * @return Result
      */
     public function run(string $html, int $fallbackElementUid): Result
     {

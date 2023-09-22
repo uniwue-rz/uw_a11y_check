@@ -10,35 +10,12 @@ use UniWue\UwA11yCheck\CheckUrlGenerators\AbstractCheckUrlGenerator;
  */
 class Preset
 {
-    /**
-     * @var string
-     */
-    protected $id = '';
-
-    /**
-     * @var string
-     */
-    protected $name = '';
-
-    /**
-     * @var string
-     */
-    protected $description = '';
-
-    /**
-     * @var AbstractAnalyzer
-     */
-    protected $analyzer;
-
-    /**
-     * @var AbstractCheckUrlGenerator
-     */
-    protected $checkUrlGenerator;
-
-    /**
-     * @var TestSuite
-     */
-    protected $testSuite;
+    protected string $id = '';
+    protected string $name = '';
+    protected string $description = '';
+    protected AbstractAnalyzer $analyzer;
+    protected AbstractCheckUrlGenerator $checkUrlGenerator;
+    protected TestSuite $testSuite;
 
     /**
      * Preset constructor.
@@ -65,41 +42,26 @@ class Preset
         $this->testSuite = $testSuite;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @return string
-     */
     public function getCheckTableName(): string
     {
         return $this->checkUrlGenerator->getTableName();
     }
 
-    /**
-     * @return string
-     */
     public function getEditRecordTableName(): string
     {
         return $this->checkUrlGenerator->getEditRecordTable();
@@ -107,18 +69,12 @@ class Preset
 
     /**
      * Returns the check URL
-     *
-     * @param int $id
-     * @return string
      */
     public function getCheckUrl(int $id): string
     {
         return $this->checkUrlGenerator->getCheckUrl($id);
     }
 
-    /**
-     * @return TestSuite
-     */
     public function getTestSuite(): TestSuite
     {
         return $this->testSuite;
@@ -126,12 +82,8 @@ class Preset
 
     /**
      * Executes the testSuite configured in the preset by the given page UID and recursive levels
-     *
-     * @param int $pageUid
-     * @param int $levels
-     * @return array
      */
-    public function executeTestSuiteByPageUid(int $pageUid, int $levels)
+    public function executeTestSuiteByPageUid(int $pageUid, int $levels): array
     {
         $result = [];
         $this->analyzer->initializePageUids($pageUid, $levels);
@@ -145,9 +97,6 @@ class Preset
 
     /**
      * Executes the testSuite configured in the preset by the given array of record UIDs
-     *
-     * @param array $recordUids
-     * @return array
      */
     public function executeTestSuiteByRecordUids(array $recordUids): array
     {

@@ -19,10 +19,7 @@ use UniWue\UwA11yCheck\Utility\Tests\SharedUtility;
  */
 class SharedUtilityTest extends BaseTestCase
 {
-    /**
-     * @return array
-     */
-    public function elementHasRolePresentationTestsDataProvider()
+    public function elementHasRolePresentationTestsDataProvider(): array
     {
         return [
             'role presentation present' => [
@@ -39,10 +36,8 @@ class SharedUtilityTest extends BaseTestCase
     /**
      * @test
      * @dataProvider elementHasRolePresentationTestsDataProvider
-     * @param $role
-     * @param $expected
      */
-    public function elementHasRolePresentationTests($role, $expected)
+    public function elementHasRolePresentationTests(string $role, bool $expected): void
     {
         $html = '<div role="' . $role . '">Test</div>';
 
@@ -56,10 +51,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @return array
-     */
-    public function elementHasRoleNoneTestsDataProvider()
+    public function elementHasRoleNoneTestsDataProvider(): array
     {
         return [
             'role none present' => [
@@ -76,10 +68,8 @@ class SharedUtilityTest extends BaseTestCase
     /**
      * @test
      * @dataProvider elementHasRoleNoneTestsDataProvider
-     * @param $role
-     * @param $expected
      */
-    public function elementHasRoleNoneTests($role, $expected)
+    public function elementHasRoleNoneTests(string $role, bool $expected): void
     {
         $html = '<div role="' . $role . '">Test</div>';
 
@@ -93,10 +83,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @return array
-     */
-    public function elementHasAriaLabelValueDataProvider()
+    public function elementHasAriaLabelValueDataProvider(): array
     {
         return [
             'no aria label' => [
@@ -117,10 +104,8 @@ class SharedUtilityTest extends BaseTestCase
     /**
      * @test
      * @dataProvider elementHasAriaLabelValueDataProvider
-     * @param $html
-     * @param $expected
      */
-    public function elementHasAriaLabelTests($html, $expected)
+    public function elementHasAriaLabelTests(string $html, bool $expected)
     {
         $doc = new DOMDocument();
         $doc->loadHTML($html);
@@ -132,10 +117,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @return array
-     */
-    public function elementAriaLabelledByValueExistsAndNotEmptyTestsDataProvider()
+    public function elementAriaLabelledByValueExistsAndNotEmptyTestsDataProvider(): array
     {
         return [
             'labelledby element does not exist' => [
@@ -160,10 +142,8 @@ class SharedUtilityTest extends BaseTestCase
     /**
      * @test
      * @dataProvider elementAriaLabelledByValueExistsAndNotEmptyTestsDataProvider
-     * @param $html
-     * @param $expected
      */
-    public function elementAriaLabelledByValueExistsAndNotEmptyTests($html, $expected)
+    public function elementAriaLabelledByValueExistsAndNotEmptyTests(string $html, bool $expected): void
     {
         $crawler = new Crawler($html);
 
@@ -174,10 +154,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @return array
-     */
-    public function elementHasVisibleTextTestsDataProvider()
+    public function elementHasVisibleTextTestsDataProvider(): array
     {
         return [
             'no text in div' => [
@@ -206,10 +183,8 @@ class SharedUtilityTest extends BaseTestCase
     /**
      * @test
      * @dataProvider elementHasVisibleTextTestsDataProvider
-     * @param $html
-     * @param $expected
      */
-    public function elementHasVisibleTextTests($html, $expected)
+    public function elementHasVisibleTextTests(string $html, bool $expected): void
     {
         $doc = new DOMDocument();
         $doc->loadHTML($html);
@@ -221,10 +196,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @return array
-     */
-    public function elementHasNonEmptyTitleTestsDataProvider()
+    public function elementHasNonEmptyTitleTestsDataProvider(): array
     {
         return [
             'no title' => [
@@ -249,10 +221,8 @@ class SharedUtilityTest extends BaseTestCase
     /**
      * @test
      * @dataProvider elementHasNonEmptyTitleTestsDataProvider
-     * @param $html
-     * @param $expected
      */
-    public function elementHasNonEmptyTitleTests($html, $expected)
+    public function elementHasNonEmptyTitleTests(string $html, bool $expected): void
     {
         $doc = new DOMDocument();
         $doc->loadHTML($html);
@@ -264,10 +234,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @return array
-     */
-    public function elementHasAltTestsDataProvider()
+    public function elementHasAltTestsDataProvider(): array
     {
         return [
             'image with no alt' => [
@@ -288,10 +255,8 @@ class SharedUtilityTest extends BaseTestCase
     /**
      * @test
      * @dataProvider elementHasAltTestsDataProvider
-     * @param $html
-     * @param $expected
      */
-    public function elementHasAltTests($html, $expected)
+    public function elementHasAltTests(string $html, bool $expected): void
     {
         $doc = new DOMDocument();
         $doc->loadHTML($html);
@@ -303,10 +268,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @return array
-     */
-    public function elementTitleNotRedundantTestsDataProvider()
+    public function elementTitleNotRedundantTestsDataProvider(): array
     {
         return [
             'link has no title' => [
@@ -355,11 +317,8 @@ class SharedUtilityTest extends BaseTestCase
     /**
      * @test
      * @dataProvider elementTitleNotRedundantTestsDataProvider
-     * @param $html
-     * @param $elementTag
-     * @param $expected
      */
-    public function elementTitleNotRedundantTests($html, $elementTag, $expected)
+    public function elementTitleNotRedundantTests(string $html, string $elementTag, bool $expected)
     {
         $doc = new DOMDocument();
         $doc->loadHTML($html);
@@ -371,10 +330,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @return array
-     */
-    public function elementAttributeValueNotBlacklistedTestsDataProvider()
+    public function elementAttributeValueNotBlacklistedTestsDataProvider(): array
     {
         return [
             'attibute not found' => [
@@ -401,13 +357,13 @@ class SharedUtilityTest extends BaseTestCase
     /**
      * @dataProvider elementAttributeValueNotBlacklistedTestsDataProvider
      * @test
-     * @param $html
-     * @param $attribute
-     * @param $blacklist
-     * @param $expected
      */
-    public function elementAttributeValueNotBlacklistedTests($html, $attribute, $blacklist, $expected)
-    {
+    public function elementAttributeValueNotBlacklistedTests(
+        string $html,
+        string $attribute,
+        array $blacklist,
+        bool $expected
+    ): void {
         $doc = new DOMDocument();
         $doc->loadHTML($html);
 
@@ -418,10 +374,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @return array
-     */
-    public function elementIsLinkWithHrefTestsDataProvider()
+    public function elementIsLinkWithHrefTestsDataProvider(): array
     {
         return [
             'no link' => [
@@ -450,11 +403,8 @@ class SharedUtilityTest extends BaseTestCase
     /**
      * @dataProvider elementIsLinkWithHrefTestsDataProvider
      * @test
-     * @param $html
-     * @param $tag
-     * @param $expected
      */
-    public function elementIsLinkWithHrefTests($html, $tag, $expected)
+    public function elementIsLinkWithHrefTests(string $html, string $tag, bool $expected): void
     {
         $doc = new DOMDocument();
         $doc->loadHTML($html);

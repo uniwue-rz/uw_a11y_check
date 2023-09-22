@@ -7,7 +7,6 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use UniWue\UwA11yCheck\Analyzers\AbstractAnalyzer;
 use UniWue\UwA11yCheck\Check\Preset;
 use UniWue\UwA11yCheck\Check\TestSuite;
@@ -20,42 +19,20 @@ use UniWue\UwA11yCheck\Utility\Exception\ConfigurationFileNotFoundException;
  */
 class PresetService
 {
-    /**
-     * @var YamlFileLoader
-     */
-    protected $yamlFileLoader;
-
-    /**
-     * @var ObjectManager
-     */
-    protected $objectManager;
-
-    /**
-     * @var FlashMessageService
-     */
-    protected $flashMessageService;
+    protected YamlFileLoader $yamlFileLoader;
+    protected FlashMessageService $flashMessageService;
 
     /**
      * PresetService constructor.
      */
     public function __construct()
     {
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->flashMessageService = $this->objectManager->get(FlashMessageService::class);
-    }
-
-    /**
-     * @param YamlFileLoader $yamlFileLoader
-     */
-    public function injectYamlFileLoader(YamlFileLoader $yamlFileLoader)
-    {
-        $this->yamlFileLoader = $yamlFileLoader;
+        $this->flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
+        $this->yamlFileLoader = GeneralUtility::makeInstance(YamlFileLoader::class);
     }
 
     /**
      * Returns all presets
-     *
-     * @return array
      */
     public function getPresets(): array
     {
@@ -106,9 +83,6 @@ class PresetService
 
     /**
      * Returns a preset by the ID
-     *
-     * @param string $id
-     * @return Preset|null
      */
     public function getPresetById(string $id): ?Preset
     {
@@ -126,18 +100,13 @@ class PresetService
 
     /**
      * Returns an analyzer by the ID
-     *
-     * @param string $id
-     * @param array $yamlData
-     * @param array $configuration
-     * @return AbstractAnalyzer|null
      */
     protected function getAnalyzerById(string $id, array $yamlData, array $configuration): ?AbstractAnalyzer
     {
         $analyzer = null;
         foreach ($yamlData['analyzers'] as $analyzerId => $analyzerConfig) {
             if ($analyzerId === $id) {
-                $analyzer = $this->objectManager->get($analyzerConfig['className'], $configuration);
+                $analyzer = GeneralUtility::makeInstance($analyzerConfig['className'], $configuration);
                 break;
             }
         }
@@ -149,11 +118,6 @@ class PresetService
 
     /**
      * Returns a CheckUrlGenerator by ID
-     *
-     * @param string $id
-     * @param array $yamlData
-     * @param array $configuration
-     * @return AbstractCheckUrlGenerator|null
      */
     protected function getCheckUrlGeneratorById(
         string $id,
@@ -163,7 +127,7 @@ class PresetService
         $checkUrlGenerator = null;
         foreach ($yamlData['checkUrlGenerators'] as $checkUrlGeneratorId => $checkUrlGeneratorConfig) {
             if ($checkUrlGeneratorId === $id) {
-                $checkUrlGenerator = $this->objectManager->get(
+                $checkUrlGenerator = GeneralUtility::makeInstance(
                     $checkUrlGeneratorConfig['className'],
                     $configuration
                 );
@@ -178,15 +142,10 @@ class PresetService
 
     /**
      * Returns a testsuite by the ID
-     *
-     * @param string $id
-     * @param array $yamlData
-     * @param array $configuration
-     * @return TestSuite
      */
     protected function getTestSuiteById(string $id, array $yamlData, array $configuration): TestSuite
     {
-        $testSuite = $this->objectManager->get(TestSuite::class);
+        $testSuite = GeneralUtility::makeInstance(TestSuite::class);
         foreach ($yamlData['testSuites'] as $testSuiteId => $testSuiteTests) {
             if ($testSuiteId === $id) {
                 foreach ($testSuiteTests['tests'] as $testId => $test) {
@@ -195,7 +154,7 @@ class PresetService
                     ArrayUtility::mergeRecursiveWithOverrule($globalConfiguration, $localConfiguration);
 
                     /** @var TestInterface $test */
-                    $test = $this->objectManager->get($test['className'], $globalConfiguration);
+                    $test = GeneralUtility::makeInstance($test['className'], $globalConfiguration);
                     $testSuite->addTest($test);
                 }
                 break;
@@ -207,11 +166,6 @@ class PresetService
 
     /**
      * Merges local and global configuration and returns the result for the given type
-     *
-     * @param array $presetData
-     * @param string $type
-     * @param array $yamlData
-     * @return array
      */
     protected function getConfiguration(array $presetData, string $type, array $yamlData): array
     {
@@ -233,7 +187,7 @@ class PresetService
         if (!file_exists(GeneralUtility::getFileAbsFileName($file))) {
             throw new ConfigurationFileNotFoundException(
                 'Configured yaml "' . $file . '" configuration does not exist.',
-                1573216092216
+                1573216092
             );
         }
 

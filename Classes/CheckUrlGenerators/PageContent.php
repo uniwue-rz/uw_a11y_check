@@ -14,7 +14,7 @@ class PageContent extends AbstractCheckUrlGenerator
     /**
      * @var array
      */
-    protected $requiredConfiguration = ['targetPid'];
+    protected array $requiredConfiguration = ['targetPid'];
 
     /**
      * @var int

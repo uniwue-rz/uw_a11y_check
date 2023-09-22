@@ -13,27 +13,12 @@ use UniWue\UwA11yCheck\Utility\Tests\SharedUtility;
  */
 class LinkNameTest extends AbstractTest
 {
-    /**
-     * @var string
-     */
-    protected $id = 'link-name';
-
-    /**
-     * @var string
-     */
-    protected $helpUrl = 'https://dequeuniversity.com/rules/axe/3.4/link-name';
-
-    /**
-     * @var int
-     */
-    protected $impact = Result\Impact::SERIOUS;
+    protected string $id = 'link-name';
+    protected string $helpUrl = 'https://dequeuniversity.com/rules/axe/3.4/link-name';
+    protected int $impact = Result\Impact::SERIOUS;
 
     /**
      * Runs the test
-     *
-     * @param string $html
-     * @param int $fallbackElementUid
-     * @return Result
      */
     public function run(string $html, int $fallbackElementUid): Result
     {

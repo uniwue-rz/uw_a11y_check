@@ -13,10 +13,7 @@ use UniWue\UwA11yCheck\Component\PropertyInfo\Extractor\ResultSetExtractor;
  */
 class SerializationService
 {
-    /**
-     * @var Serializer
-     */
-    protected $serializer;
+    protected Serializer $serializer;
 
     /**
      * SerializationService constructor.
@@ -33,8 +30,6 @@ class SerializationService
 
     /**
      * Returns the serializer instance
-     *
-     * @return Serializer
      */
     public function getSerializer(): Serializer
     {

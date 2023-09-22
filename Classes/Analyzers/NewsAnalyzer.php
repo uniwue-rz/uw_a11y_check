@@ -16,13 +16,10 @@ class NewsAnalyzer extends AbstractAnalyzer
     /**
      * @var string
      */
-    protected $type = AbstractAnalyzer::TYPE_INTERNAL;
+    protected string $type = AbstractAnalyzer::TYPE_INTERNAL;
 
     /**
      * Return an aray of news record Uids to check
-     *
-     * @param Preset $preset
-     * @return array
      */
     public function getCheckRecordUids(Preset $preset): array
     {
@@ -43,11 +40,8 @@ class NewsAnalyzer extends AbstractAnalyzer
 
     /**
      * Returns all news UIDs matching the given demand
-     *
-     * @param SingleTableDemand $demand
-     * @return array
      */
-    protected function getNewsRecordUids(SingleTableDemand $demand)
+    protected function getNewsRecordUids(SingleTableDemand $demand): array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable($demand->getTableName());
@@ -84,7 +78,7 @@ class NewsAnalyzer extends AbstractAnalyzer
             $query->setMaxResults($demand->getMaxResults());
         }
 
-        $queryResult = $query->execute()->fetchAll();
+        $queryResult = $query->execute()->fetchAllAssociative();
 
         $uidList = [];
         foreach ($queryResult as $record) {

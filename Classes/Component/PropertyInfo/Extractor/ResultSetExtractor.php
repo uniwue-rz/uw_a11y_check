@@ -14,10 +14,7 @@ use UniWue\UwA11yCheck\Check\ResultSet;
  */
 class ResultSetExtractor implements PropertyTypeExtractorInterface
 {
-    /**
-     * @var ReflectionExtractor
-     */
-    private $reflectionExtractor;
+    private ReflectionExtractor $reflectionExtractor;
 
     /**
      * ResultSetExtractor constructor.
@@ -28,12 +25,9 @@ class ResultSetExtractor implements PropertyTypeExtractorInterface
     }
 
     /**
-     * @param string $class
-     * @param string $property
-     * @param array $context
      * @return array|Type[]|null
      */
-    public function getTypes($class, $property, array $context = [])
+    public function getTypes(string $class, string $property, array $context = [])
     {
         if (is_a($class, ResultSet::class, true) && $property === 'results') {
             return [

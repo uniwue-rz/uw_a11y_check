@@ -10,61 +10,36 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class SharedUtility
 {
-    /**
-     * @param \DOMElement $link
-     * @return bool
-     */
     public static function elementHasVisibleText(\DOMElement $link): bool
     {
         return StringUtility::stripNewLines($link->textContent);
     }
 
-    /**
-     * @param \DOMElement $element
-     * @return bool
-     */
     public static function elementIsLinkWithHref(\DOMElement $element): bool
     {
         return $element->tagName === 'a' &&  $element->hasAttribute('href');
     }
 
-    /**
-     * @param \DOMElement $element
-     * @return bool
-     */
     public static function elementHasRolePresentation(\DOMElement $element): bool
     {
         return $element->hasAttribute('role') && strtolower($element->getAttribute('role')) === 'presentation';
     }
 
-    /**
-     * @param \DOMElement $element
-     * @return bool
-     */
     public static function elementHasRoleNone(\DOMElement $element): bool
     {
         return $element->hasAttribute('role') && strtolower($element->getAttribute('role')) === 'none';
     }
 
-    /**
-     * @param \DOMElement $element
-     * @return bool
-     */
     public static function elementHasAriaLabelValue(\DOMElement $element): bool
     {
         return $element->hasAttribute('aria-label') && $element->getAttribute('aria-label') !== '';
     }
 
-    /**
-     * @param \DOMElement $element
-     * @param Crawler $crawler
-     * @return bool
-     */
     public static function elementAriaLabelledByValueExistsAndNotEmpty(\DOMElement $element, Crawler $crawler): bool
     {
         $result = false;
         if (!$element->hasAttribute('aria-labelledby')) {
-            return $result;
+            return false;
         }
 
         $labelledByValues = $element->getAttribute('aria-labelledby');
@@ -80,28 +55,16 @@ class SharedUtility
         return $result;
     }
 
-    /**
-     * @param \DOMElement $element
-     * @return bool
-     */
     public static function elementHasNonEmptyTitle(\DOMElement $element): bool
     {
         return $element->hasAttribute('title') && $element->getAttribute('title') !== '';
     }
 
-    /**
-     * @param \DOMElement $image
-     * @return bool
-     */
     public static function elementHasAlt(\DOMElement $image): bool
     {
         return $image->hasAttribute('alt');
     }
 
-    /**
-     * @param \DOMElement $element
-     * @return bool
-     */
     public static function elementTitleNotRedundant(\DOMElement $element): bool
     {
         if (($element->tagName === 'a' && $element->textContent === '') ||
@@ -121,17 +84,11 @@ class SharedUtility
         return mb_strtolower($content) !== mb_strtolower($element->getAttribute('title'));
     }
 
-    /**
-     * @param \DOMElement $element
-     * @param string $attribute
-     * @param array $blacklist
-     * @return bool
-     */
     public static function elementAttributeValueNotBlacklisted(
         \DOMElement $element,
         string $attribute,
         array $blacklist
-    ) {
+    ): bool {
         if (!$element->hasAttribute($attribute)) {
             return true;
         }

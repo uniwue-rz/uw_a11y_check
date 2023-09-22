@@ -17,13 +17,16 @@
                     <f:translate key="labels.preset" />
                 </label>
                 <div class="col-xs-9">
-                    <f:form.select id="preset" property="preset" options="{presets}" optionValueField="id" optionLabelField="name" additionalAttributes="{onChange : 'document.checkDemand.submit();'}" class="form-control"/>
+                    <f:form.select id="preset" property="preset" options="{presets}" optionValueField="id"
+                                   optionLabelField="name"
+                                   additionalAttributes="{onChange : 'document.checkDemand.submit();'}"
+                                   class="form-select"/>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-xs-offset-3 col-xs-9">
-                    <f:form.submit value="{f:translate(key: 'labels.start')}" property="analyze" class="btn btn-default" />
+                    <f:form.submit value="{f:translate(key: 'labels.start')}" property="analyze" class="btn btn-light"/>
                 </div>
             </div>
         </div>
@@ -33,7 +36,7 @@
                     <f:translate key="labels.level" />
                 </label>
                 <div class="col-xs-10">
-                    <f:form.select id="level" property="level" options="{levelSelectorOptions}" class="form-control"/>
+                    <f:form.select id="level" property="level" options="{levelSelectorOptions}" class="form-select"/>
                 </div>
             </div>
         </div>

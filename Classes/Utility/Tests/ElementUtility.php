@@ -9,9 +9,6 @@ class ElementUtility
 {
     /**
      * Returns the UID of the element provided by the data-attribute "data-uid"
-     *
-     * @param \DOMElement $element
-     * @return int
      */
     public static function determineElementUid(\DOMElement $element): int
     {
@@ -30,9 +27,6 @@ class ElementUtility
     /**
      * Returns the colPos of the element in the node by looking up for data-colPos.
      * If no colPos is found, null is returned
-     *
-     * @param \DOMElement $element
-     * @return int|null
      */
     public static function determineElementColPos(\DOMElement $element): ?int
     {

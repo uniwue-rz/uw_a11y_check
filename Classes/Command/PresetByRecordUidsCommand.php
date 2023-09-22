@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace UniWue\UwA11yCheck\Command;
 
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use UniWue\UwA11yCheck\Check\Result\Impact;
 use UniWue\UwA11yCheck\Check\ResultSet;
 use UniWue\UwA11yCheck\Service\PresetService;
@@ -24,15 +24,11 @@ class PresetByRecordUidsCommand extends AbstractCheckCommand
      */
     public function configure()
     {
-        $this
-            ->setDescription(
-                'a11y check for the given preset and list or record UIDs (Preset should contain checks for records)'
-            )
-            ->addArgument(
-                'preset',
-                InputArgument::REQUIRED,
-                'ID of the preset'
-            )
+        $this->addArgument(
+            'preset',
+            InputArgument::REQUIRED,
+            'ID of the preset'
+        )
             ->addArgument(
                 'uids',
                 InputArgument::REQUIRED,
@@ -42,15 +38,10 @@ class PresetByRecordUidsCommand extends AbstractCheckCommand
 
     /**
      * Execute the command
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int|void|null
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $presetService = $objectManager->get(PresetService::class);
+        $presetService = GeneralUtility::makeInstance(PresetService::class);
 
         $io = new SymfonyStyle($input, $output);
         $io->title($this->getDescription());
@@ -62,7 +53,7 @@ class PresetByRecordUidsCommand extends AbstractCheckCommand
         if (!$preset) {
             // @extensionScannerIgnoreLine False positive
             $io->error('Preset "' . $presetId . '" not found or contains errors (check classNames!).');
-            return 1;
+            return Command::FAILURE;
         }
 
         $results = $preset->executeTestSuiteByRecordUids($recordUids);
@@ -89,6 +80,6 @@ class PresetByRecordUidsCommand extends AbstractCheckCommand
         $this->saveResults($preset, $results);
 
         $io->success('All done!');
-        return 0;
+        return Command::SUCCESS;
     }
 }

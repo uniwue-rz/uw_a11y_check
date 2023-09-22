@@ -9,31 +9,19 @@ use UniWue\UwA11yCheck\Tests\TestInterface;
  */
 class TestSuite
 {
-    /**
-     * @var array
-     */
-    protected $tests = [];
+    protected array $tests = [];
 
-    /**
-     * @param TestInterface $test
-     */
-    public function addTest(TestInterface $test)
+    public function addTest(TestInterface $test): void
     {
         $this->tests[] = $test;
     }
 
-    /**
-     * @return array
-     */
-    public function getTests()
+    public function getTests(): array
     {
         return $this->tests;
     }
 
-    /**
-     * @param array $tests
-     */
-    public function setTests(array $tests)
+    public function setTests(array $tests): void
     {
         $this->tests = $tests;
     }

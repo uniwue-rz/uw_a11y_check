@@ -7,10 +7,6 @@ namespace UniWue\UwA11yCheck\Utility\Tests;
  */
 class LinkUtility
 {
-    /**
-     * @param \DOMElement $element
-     * @return bool
-     */
     public static function linkHasImageWithAlt(\DOMElement $element): bool
     {
         $result = false;
@@ -32,11 +28,6 @@ class LinkUtility
         return $result;
     }
 
-    /**
-     * @param \DOMElement $element
-     * @param array $blacklist
-     * @return bool
-     */
     public static function linkTextNotBlacklisted(\DOMElement $element, array $blacklist): bool
     {
         if (empty($blacklist) || StringUtility::stripNewLines($element->textContent) === '') {
@@ -47,12 +38,6 @@ class LinkUtility
         return in_array(strtolower($content), $blacklist, true) === false;
     }
 
-    /**
-     * @param \DOMElement $element
-     * @param string $attribute
-     * @param array $blacklist
-     * @return bool
-     */
     public static function linkImageAttributeNotBlacklisted(
         \DOMElement $element,
         string $attribute,
@@ -83,9 +68,6 @@ class LinkUtility
     /**
      * Checks, if the link name for the given array of link DOMElements is redundant and if so, returns an array
      * of link affected DOMElements
-     *
-     * @param array $elements
-     * @return array
      */
     public static function getRedundantLinkNames(array $elements): array
     {
@@ -99,10 +81,14 @@ class LinkUtility
             }
 
             if (StringUtility::stripNewLines($element->textContent) !== ''
-                && !in_array($element->textContent, $linkNames)
+                && !in_array($element->textContent, $linkNames, true)
             ) {
                 $linkNames[] = $element->textContent;
-            } elseif (in_array($element->textContent, $linkNames) && !isset($redundantLinks[$element->textContent])) {
+            } elseif (in_array(
+                    $element->textContent,
+                    $linkNames,
+                    true
+                ) && !isset($redundantLinks[$element->textContent])) {
                 $redundantLinks[$element->textContent] = $element;
             }
         }

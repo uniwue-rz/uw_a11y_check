@@ -13,25 +13,10 @@ use UniWue\UwA11yCheck\Utility\Tests\SharedUtility;
  */
 class LinkTextBlacklistedTest extends AbstractTest
 {
-    /**
-     * @var string
-     */
-    protected $id = 'link-name-blacklisted';
-
-    /**
-     * @var string
-     */
-    protected $helpUrl = '';
-
-    /**
-     * @var int
-     */
-    protected $impact = Result\Impact::MODERATE;
-
-    /**
-     * @var array
-     */
-    protected $blacklist = [];
+    protected string $id = 'link-name-blacklisted';
+    protected string $helpUrl = '';
+    protected int $impact = Result\Impact::MODERATE;
+    protected array $blacklist = [];
 
     /**
      * LinkTextBlacklistedTest constructor.
@@ -44,26 +29,19 @@ class LinkTextBlacklistedTest extends AbstractTest
         $blacklist = $configuration['blacklist'] ?? [];
         $this->blacklist = $this->initBlacklist($blacklist);
 
-        $this->help = $this->help . '"' . implode('", "', $this->blacklist) . '"';
+        $this->help .= '"' . implode('", "', $this->blacklist) . '"';
     }
 
     /**
      * Initializes the blacklist end ensures text is lowercase
-     *
-     * @param array $blacklist
-     * @return array
      */
-    protected function initBlacklist(array $blacklist)
+    protected function initBlacklist(array $blacklist): array
     {
         return array_map('mb_strtolower', $blacklist);
     }
 
     /**
      * Runs the test
-     *
-     * @param string $html
-     * @param int $fallbackElementUid
-     * @return Result
      */
     public function run(string $html, int $fallbackElementUid): Result
     {

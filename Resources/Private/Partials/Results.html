@@ -1,5 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       xmlns:be="http://typo3.org/ns/TYPO3/CMS/Backend/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
       xmlns:a11y="http://typo3.org/ns/UniWue/UwA11yCheck/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
@@ -11,7 +12,9 @@
     <div class="panel panel-default panel-a11y">
       <div class="panel-heading impact-{resultSet.impact}" role="tab" id="heading-{preset.id}-{i.index}">
         <h2 class="panel-title">
-          <a href="#resultset-{preset.id}-{i.index}" class="{f:if(condition: '{results -> f:count()} > 1', then: 'collapsed', else: '')}" data-toggle="collapse" aria-controls="#resultset-{i.index}">
+          <a href="#resultset-{preset.id}-{i.index}"
+             class="{f:if(condition: '{results -> f:count()} >= 1', then: 'collapsed', else: '')}"
+             data-bs-toggle="collapse" aria-controls="#resultset-{i.index}" aria-expanded="false">
             <span class="caret"></span>
             <strong>{resultSet.table} - {resultSet.uid}</strong>
           </a>

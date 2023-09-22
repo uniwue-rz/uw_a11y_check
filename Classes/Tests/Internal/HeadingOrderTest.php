@@ -13,32 +13,15 @@ use UniWue\UwA11yCheck\Utility\Tests\HeaderUtility;
  */
 class HeadingOrderTest extends AbstractTest
 {
-    /**
-     * @var string
-     */
-    protected $id = 'heading-order';
-
-    /**
-     * @var string
-     */
-    protected $helpUrl = 'https://dequeuniversity.com/rules/axe/3.4/heading-order';
-
-    /**
-     * @var int
-     */
-    protected $impact = Result\Impact::MODERATE;
+    protected string $id = 'heading-order';
+    protected string $helpUrl = 'https://dequeuniversity.com/rules/axe/3.4/heading-order';
+    protected int $impact = Result\Impact::MODERATE;
 
     /**
      * If set, the test only checks elements in the given array of colPos ids
-     *
-     * @var array
      */
-    protected $limitToColPos = [];
+    protected array $limitToColPos = [];
 
-    /**
-     * HeadingOrderTest constructor.
-     * @param array $configuration
-     */
     public function __construct(array $configuration)
     {
         parent::__construct($configuration);
@@ -48,10 +31,6 @@ class HeadingOrderTest extends AbstractTest
 
     /**
      * Runs the test
-     *
-     * @param string $html
-     * @param int $fallbackElementUid
-     * @return Result
      */
     public function run(string $html, int $fallbackElementUid): Result
     {

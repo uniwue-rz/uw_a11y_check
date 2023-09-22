@@ -11,28 +11,15 @@ use UniWue\UwA11yCheck\Check\ResultSet;
  */
 class ResultsService
 {
-    /**
-     * @var SerializationService
-     */
-    protected $serializationService;
+    protected SerializationService $serializationService;
+    protected PresetService $presetService;
 
-    /**
-     * @var PresetService
-     */
-    protected $presetService;
-
-    /**
-     * @param SerializationService $serializationService
-     */
-    public function injectSerializationService(\UniWue\UwA11yCheck\Service\SerializationService $serializationService)
+    public function injectSerializationService(SerializationService $serializationService): void
     {
         $this->serializationService = $serializationService;
     }
 
-    /**
-     * @param PresetService $presetService
-     */
-    public function injectPresetService(PresetService $presetService)
+    public function injectPresetService(PresetService $presetService): void
     {
         $this->presetService = $presetService;
     }
@@ -40,9 +27,6 @@ class ResultsService
     /**
      * Returns all saved results from the database. An array is returned containing both the presets and
      * the check results.
-     *
-     * @param int $pid
-     * @return array
      */
     public function getResultsArrayByPid(int $pid): array
     {
@@ -59,7 +43,7 @@ class ResultsService
                 )
             )->orderBy('preset_id', 'asc');
 
-        $queryResult = $query->execute()->fetchAll();
+        $queryResult = $query->execute()->fetchAllAssociative();
 
         $dbResults = [];
 
@@ -90,9 +74,6 @@ class ResultsService
 
     /**
      * Returns the amount of saved DB check results
-     *
-     * @param int $pid
-     * @return int
      */
     public function getSavedResultsCount(int $pid): int
     {
@@ -109,13 +90,11 @@ class ResultsService
                 )
             )->orderBy('preset_id', 'asc');
 
-        return $query->execute()->fetchColumn(0);
+        return $query->execute()->fetchOne();
     }
 
     /**
      * Deleted the saved result for the given PID
-     *
-     * @param int $pid
      */
     public function deleteSavedResults(int $pid): void
     {
