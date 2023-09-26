@@ -11,12 +11,12 @@ use UniWue\UwA11yCheck\Utility\Tests\SharedUtility;
 /**
  * Class LinkNameBlacklistedTest
  */
-class LinkTextBlacklistedTest extends AbstractTest
+class LinkTextDenylistTest extends AbstractTest
 {
-    protected string $id = 'link-name-blacklisted';
+    protected string $id = 'link-name-denylist';
     protected string $helpUrl = '';
     protected int $impact = Result\Impact::MODERATE;
-    protected array $blacklist = [];
+    protected array $denylist = [];
 
     /**
      * LinkTextBlacklistedTest constructor.
@@ -26,18 +26,18 @@ class LinkTextBlacklistedTest extends AbstractTest
     {
         parent::__construct($configuration);
 
-        $blacklist = $configuration['blacklist'] ?? [];
-        $this->blacklist = $this->initBlacklist($blacklist);
+        $denylist = $configuration['denylist'] ?? [];
+        $this->denylist = $this->initDenylist($denylist);
 
-        $this->help .= '"' . implode('", "', $this->blacklist) . '"';
+        $this->help .= '"' . implode('", "', $this->denylist) . '"';
     }
 
     /**
-     * Initializes the blacklist end ensures text is lowercase
+     * Initializes the denylist end ensures text is lowercase
      */
-    protected function initBlacklist(array $blacklist): array
+    protected function initDenylist(array $denylist): array
     {
-        return array_map('mb_strtolower', $blacklist);
+        return array_map('mb_strtolower', $denylist);
     }
 
     /**
@@ -52,11 +52,11 @@ class LinkTextBlacklistedTest extends AbstractTest
 
         /** @var \DOMElement $element */
         foreach ($elements as $element) {
-            $checkResult = (LinkUtility::linkTextNotBlacklisted($element, $this->blacklist) &&
-                SharedUtility::elementAttributeValueNotBlacklisted($element, 'title', $this->blacklist) &&
-                SharedUtility::elementAttributeValueNotBlacklisted($element, 'aria-label', $this->blacklist) &&
-                LinkUtility::linkImageAttributeNotBlacklisted($element, 'alt', $this->blacklist) &&
-                LinkUtility::linkImageAttributeNotBlacklisted($element, 'title', $this->blacklist)) ||
+            $checkResult = (LinkUtility::linkTextAllowed($element, $this->denylist) &&
+                SharedUtility::elementAttributeValueAllowed($element, 'title', $this->denylist) &&
+                SharedUtility::elementAttributeValueAllowed($element, 'aria-label', $this->denylist) &&
+                LinkUtility::linkImageAttributeAllowed($element, 'alt', $this->denylist) &&
+                LinkUtility::linkImageAttributeAllowed($element, 'title', $this->denylist)) ||
                 SharedUtility::elementHasRolePresentation($element) ||
                 SharedUtility::elementHasRoleNone($element);
 

@@ -28,22 +28,22 @@ class LinkUtility
         return $result;
     }
 
-    public static function linkTextNotBlacklisted(\DOMElement $element, array $blacklist): bool
+    public static function linkTextAllowed(\DOMElement $element, array $allowlist): bool
     {
-        if (empty($blacklist) || StringUtility::stripNewLines($element->textContent) === '') {
+        if (empty($allowlist) || StringUtility::stripNewLines($element->textContent) === '') {
             return true;
         }
         $content = StringUtility::clearString($element->textContent);
 
-        return in_array(strtolower($content), $blacklist, true) === false;
+        return in_array(strtolower($content), $allowlist, true) === false;
     }
 
-    public static function linkImageAttributeNotBlacklisted(
+    public static function linkImageAttributeAllowed(
         \DOMElement $element,
         string $attribute,
-        array $blacklist
+        array $allowlist
     ): bool {
-        if (empty($blacklist) || $attribute === '') {
+        if (empty($allowlist) || $attribute === '') {
             return true;
         }
 
@@ -56,7 +56,7 @@ class LinkUtility
 
         /** @var \DOMElement $image */
         foreach ($images as $image) {
-            if (!SharedUtility::elementAttributeValueNotBlacklisted($image, $attribute, $blacklist)) {
+            if (!SharedUtility::elementAttributeValueAllowed($image, $attribute, $allowlist)) {
                 return false;
                 break;
             }

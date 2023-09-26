@@ -107,7 +107,7 @@ class LinkUtilityTest extends BaseTestCase
 
         /** @var \DOMElement $element */
         $element = $doc->getElementsByTagName('a')->item(0);
-        $result = LinkUtility::linkTextNotBlacklisted($element, $blacklist);
+        $result = LinkUtility::linkTextAllowed($element, $blacklist);
 
         self::assertEquals($expected, $result);
     }
@@ -169,7 +169,7 @@ class LinkUtilityTest extends BaseTestCase
 
         /** @var \DOMElement $element */
         $element = $doc->getElementsByTagName('a')->item(0);
-        $result = LinkUtility::linkImageAttributeNotBlacklisted($element, $attribute, $blacklist);
+        $result = LinkUtility::linkImageAttributeAllowed($element, $attribute, $blacklist);
 
         self::assertEquals($expected, $result);
     }

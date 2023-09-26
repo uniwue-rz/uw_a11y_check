@@ -369,7 +369,7 @@ class SharedUtilityTest extends BaseTestCase
 
         /** @var \DOMElement $element */
         $element = $doc->getElementsByTagName('a')->item(0);
-        $result = SharedUtility::elementAttributeValueNotBlacklisted($element, $attribute, $blacklist);
+        $result = SharedUtility::elementAttributeValueAllowed($element, $attribute, $blacklist);
 
         self::assertEquals($expected, $result);
     }

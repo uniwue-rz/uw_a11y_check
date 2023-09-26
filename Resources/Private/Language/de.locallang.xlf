@@ -80,11 +80,11 @@
                 <target>Links müssen einen erkennbaren Text haben</target>
             </trans-unit>
 
-            <trans-unit id="link-name-blacklisted.description" xml:space="preserve">
+            <trans-unit id="link-name-denylist.description" xml:space="preserve">
                 <source>Ensures a link name or linked image alt/title attribute does not equal a blacklisted word</source>
                 <target>Stellt sicher, dass der Linkname, der Bild alternative Text oder der Bildtitel nicht zugelassen ist</target>
             </trans-unit>
-            <trans-unit id="link-name-blacklisted.help" xml:space="preserve">
+            <trans-unit id="link-name-denylist.help" xml:space="preserve">
                 <source>The link name or the title/alt of a linked image equals a blacklisted word. Current Blacklist: </source>
                 <target>Der Linkname, der Bild alternative Text oder der Bildtitel ist nicht zugelassen. Aktuell nicht zugelassene Wörter: </target>
             </trans-unit>

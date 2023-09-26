@@ -20,9 +20,9 @@ presets:
     testSuite:
       id: "internalTests"
       tests:
-        linkTextBlacklisted:
+        linkTextDenylist:
           configuration:
-            blacklist: ['mehr', 'details', 'hier']
+            denylist: ['mehr', 'details', 'hier']
         headingOrder:
           configuration:
             limitToColPos: [0]

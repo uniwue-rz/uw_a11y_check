@@ -84,10 +84,10 @@ class SharedUtility
         return mb_strtolower($content) !== mb_strtolower($element->getAttribute('title'));
     }
 
-    public static function elementAttributeValueNotBlacklisted(
+    public static function elementAttributeValueAllowed(
         \DOMElement $element,
         string $attribute,
-        array $blacklist
+        array $allowlist
     ): bool {
         if (!$element->hasAttribute($attribute)) {
             return true;
@@ -95,6 +95,6 @@ class SharedUtility
 
         $content = StringUtility::clearString($element->getAttribute($attribute));
 
-        return in_array(strtolower($content), $blacklist, true) === false;
+        return in_array(strtolower($content), $allowlist, true) === false;
     }
 }

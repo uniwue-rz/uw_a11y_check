@@ -5,5 +5,5 @@ testSuites:
       imageAltTest: { name: "Image-Alt", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\ImageAltTest", configuration: {} }
       redundantTitle: { name: "Redundant-Title", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\RedundantTitleTest", configuration: {} }
       redundantLink: { name: "Redundant-Link", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\RedundantLinkTest", configuration: {} }
-      linkTextBlacklisted: { name: "Link-Text-Blacklisted", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\LinkTextBlacklistedTest", configuration: {} }
+      linkTextDenylist: { name: "Link-Text-Denylist", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\LinkTextDenylistTest", configuration: {} }
       headingOrder: { name: "Heading-Order", className: "UniWue\\UwA11yCheck\\Tests\\Internal\\HeadingOrderTest", configuration: {} }

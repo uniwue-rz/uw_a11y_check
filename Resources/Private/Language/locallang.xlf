@@ -62,11 +62,11 @@
                 <source>Links must have discernible text</source>
             </trans-unit>
 
-            <trans-unit id="link-name-blacklisted.description" xml:space="preserve">
-                <source>Ensures a link name or linked image alt/title attribute does not equal a blacklisted word</source>
+            <trans-unit id="link-name-denylist.description" xml:space="preserve">
+                <source>Ensures a link name or linked image alt/title attribute does not equal a denied word</source>
             </trans-unit>
-            <trans-unit id="link-name-blacklisted.help" xml:space="preserve">
-                <source>The link name or the title/alt of a linked image equals a blacklisted word. Current Blacklist: </source>
+            <trans-unit id="link-name-denylist.help" xml:space="preserve">
+                <source>The link name or the title/alt of a linked image equals a blacklisted word. Current denylist: </source>
             </trans-unit>
 
             <trans-unit id="redundant-title.description" xml:space="preserve">
