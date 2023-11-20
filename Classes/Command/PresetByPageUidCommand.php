@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UniWue\UwA11yCheck\Check\Result\Impact;
 use UniWue\UwA11yCheck\Check\ResultSet;
@@ -25,11 +26,12 @@ class PresetByPageUidCommand extends AbstractCheckCommand
      */
     public function configure()
     {
-        $this->addArgument(
-            'preset',
-            InputArgument::REQUIRED,
-            'ID of the preset'
-        )
+        $this->
+            addArgument(
+                'preset',
+                InputArgument::REQUIRED,
+                'ID of the preset'
+            )
             ->addArgument(
                 'uid',
                 InputArgument::REQUIRED,
@@ -57,8 +59,14 @@ class PresetByPageUidCommand extends AbstractCheckCommand
         $pageUid = (int)$input->getArgument('uid');
         $levels = $input->hasOption('levels') ? (int)$input->getOption('levels') : 0;
 
-        $preset = $presetService->getPresetById($presetId);
+        try {
+            $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($pageUid);
+        } catch (\Exception $exception) {
+            $io->error('Given page UID ' . $pageUid . ' has no connection to a site.');
+            return Command::FAILURE;
+        }
 
+        $preset = $presetService->getPresetById($presetId, $site);
         if (!$preset) {
             // @extensionScannerIgnoreLine False positive
             $io->error('Preset "' . $presetId . '" not found or contains errors (check classNames!).');

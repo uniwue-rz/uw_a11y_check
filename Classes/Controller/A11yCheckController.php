@@ -16,6 +16,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use UniWue\UwA11yCheck\Domain\Model\Dto\CheckDemand;
+use UniWue\UwA11yCheck\Property\TypeConverter\PresetTypeConverter;
 use UniWue\UwA11yCheck\Service\PresetService;
 use UniWue\UwA11yCheck\Service\ResultsService;
 
@@ -105,9 +106,10 @@ class A11yCheckController extends ActionController
             );
         }
 
+        $site = $this->request->getAttribute('site');
         $this->view->assignMultiple([
             'checkDemand' => $checkDemand,
-            'presets' => $this->presetService->getPresets(),
+            'presets' => $this->presetService->getPresets($site),
             'levelSelectorOptions' => $this->getLevelSelectorOptions(),
             'savedResultsCount' => $this->resultsService->getSavedResultsCount($this->pid),
         ]);
@@ -118,7 +120,20 @@ class A11yCheckController extends ActionController
     /**
      * Ensure checkDemand array will be converted to an object
      */
-    public function initializeCheckAction(): void
+    protected function initializeIndexAction(): void
+    {
+        $this->initializeTypeConverterForArgument();
+    }
+
+    /**
+     * Ensure checkDemand array will be converted to an object
+     */
+    protected function initializeCheckAction(): void
+    {
+        $this->initializeTypeConverterForArgument();
+    }
+
+    private function initializeTypeConverterForArgument(): void
     {
         if ($this->arguments->hasArgument('checkDemand')) {
             $propertyMappingConfiguration = $this->arguments->getArgument('checkDemand')
@@ -129,8 +144,17 @@ class A11yCheckController extends ActionController
                 PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
                 true
             );
+
+            $propertyMappingConfiguration->forProperty('preset')->setTypeConverterOption(
+                PresetTypeConverter::class,
+                PresetTypeConverter::CONFIGURATION_REQUEST,
+                $this->request
+            );
+            $presetTypeConverter = GeneralUtility::makeInstance(PresetTypeConverter::class);
+            $propertyMappingConfiguration->forProperty('preset')->setTypeConverter($presetTypeConverter);
         }
     }
+
 
     /**
      * Check action

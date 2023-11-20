@@ -3,6 +3,7 @@
 namespace UniWue\UwA11yCheck\Service;
 
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UniWue\UwA11yCheck\Check\ResultSet;
 
@@ -45,6 +46,7 @@ class ResultsService
 
         $queryResult = $query->execute()->fetchAllAssociative();
 
+        $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($pid);
         $dbResults = [];
 
         foreach ($queryResult as $result) {
@@ -60,7 +62,7 @@ class ResultsService
                 $checkDate = new \DateTime();
                 $checkDate->setTimestamp($result['check_date']);
                 $dbResults[$presetId] = [
-                    'preset' => $this->presetService->getPresetById($presetId) ?? 'Unknown',
+                    'preset' => $this->presetService->getPresetById($presetId, $site) ?? 'Unknown',
                     'results' => [$unserializedData],
                     'date' => $checkDate,
                 ];

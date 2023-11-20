@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UniWue\UwA11yCheck\Check\Result\Impact;
 use UniWue\UwA11yCheck\Check\ResultSet;
@@ -24,15 +25,21 @@ class PresetByRecordUidsCommand extends AbstractCheckCommand
      */
     public function configure()
     {
-        $this->addArgument(
-            'preset',
-            InputArgument::REQUIRED,
-            'ID of the preset'
-        )
+        $this
+            ->addArgument(
+                'preset',
+                InputArgument::REQUIRED,
+                'ID of the preset'
+            )
             ->addArgument(
                 'uids',
                 InputArgument::REQUIRED,
-                'On or multiple record UIDs'
+                'One or multiple record UIDs'
+            )
+            ->addArgument(
+                'rootPageUid',
+                InputArgument::REQUIRED,
+                'UID of root page where records are stored'
             );
     }
 
@@ -48,7 +55,10 @@ class PresetByRecordUidsCommand extends AbstractCheckCommand
 
         $presetId = $input->getArgument('preset');
         $recordUids = GeneralUtility::intExplode(',', $input->getArgument('uids'), true);
-        $preset = $presetService->getPresetById($presetId);
+        $rootPageUid = (int)$input->getArgument('rootPageUid');
+
+        $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($rootPageUid);
+        $preset = $presetService->getPresetById($presetId, $site);
 
         if (!$preset) {
             // @extensionScannerIgnoreLine False positive

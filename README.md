@@ -60,10 +60,37 @@ an existing extension (e.g. website site package).
 
 1. Overwrite default configuration
 
+It is possible to overwrite the default configuration by eigher a custom YAML configuration file or by
+using TYPO3 site settings, which are available since TYPO3 10.4
+
+1.1 Overwrite configuration by custom YAML configuration file
+
+This is recommended, if you want to overwrite or create a completely new configuration for the extension.
+
 ```
 $GLOBALS['TYPO3_CONF_VARS']['UwA11yCheck']['Configuration'] = 'EXT:your_sitepackage/Configuration/A11y/Default.yaml';
 ```
- 
+
+1.2 Overwrite configuration by TYPO3 site settings
+
+If you just want to override single configuration values from the default configuration, it is possible to use TYPO3
+site configuration as shown below:
+
+```
+settings:
+  uw_a11y_check:
+    presets:
+      pageContent:
+        checkUrlGenerator:
+          configuration:
+            targetPid: 71
+      extNews:
+        checkUrlGenerator:
+          configuration:
+            targetPid: 73
+```
+
+
 Next you should copy the contents of the default configuration to your configuration file.
 
 2. Create pages with plugins for page content and ext:news (if installed)

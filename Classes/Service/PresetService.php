@@ -5,6 +5,8 @@ namespace UniWue\UwA11yCheck\Service;
 use TYPO3\CMS\Core\Configuration\Loader\YamlFileLoader;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
+use TYPO3\CMS\Core\Site\Entity\Site;
+use TYPO3\CMS\Core\Site\Entity\SiteInterface;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UniWue\UwA11yCheck\Analyzers\AbstractAnalyzer;
@@ -34,10 +36,11 @@ class PresetService
     /**
      * Returns all presets
      */
-    public function getPresets(): array
+    public function getPresets(SiteInterface $site): array
     {
         $yamlFile = $this->getConfigurationFile();
         $yamlData = $this->yamlFileLoader->load($yamlFile);
+        $yamlData = $this->overrideFromSiteConfiguration($yamlData, $site);
 
         $presets = [];
 
@@ -84,11 +87,11 @@ class PresetService
     /**
      * Returns a preset by the ID
      */
-    public function getPresetById(string $id): ?Preset
+    public function getPresetById(string $id, SiteInterface $site): ?Preset
     {
         $result = null;
 
-        $presets = $this->getPresets();
+        $presets = $this->getPresets($site);
         foreach ($presets as $preset) {
             if ($preset->getId() === $id) {
                 $result = $preset;
@@ -192,5 +195,20 @@ class PresetService
         }
 
         return $file;
+    }
+
+    /**
+     * Overrides the given YAML data with the site configuration.
+     */
+    private function overrideFromSiteConfiguration($yamlData, SiteInterface $site): array
+    {
+        if (!$site instanceof Site) {
+            return $yamlData;
+        }
+
+        $siteConfiguration = $site->getConfiguration()['settings']['uw_a11y_check'] ?? [];
+        ArrayUtility::mergeRecursiveWithOverrule($yamlData, $siteConfiguration);
+
+        return $yamlData;
     }
 }
