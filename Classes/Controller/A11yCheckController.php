@@ -155,7 +155,6 @@ class A11yCheckController extends ActionController
         }
     }
 
-
     /**
      * Check action
      *

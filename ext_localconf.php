@@ -6,7 +6,6 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use UniWue\UwA11yCheck\Controller\ContentElementsController;
-use UniWue\UwA11yCheck\Property\TypeConverter\PresetTypeConverter;
 
 call_user_func(function () {
     ExtensionUtility::configurePlugin(
