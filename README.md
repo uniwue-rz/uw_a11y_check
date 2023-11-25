@@ -106,7 +106,8 @@ Example screenshot of the page structure.
 
 3. Add the page uids to configuration
 
-In your configuration file, you must add the page UIDs in the `checkUrlGenerator` configuration for each preset.
+In your configuration (eiter YAML file or TYPO3 site settings), you must add the page UIDs in the `checkUrlGenerator` 
+configuration for each preset.
 
 Example (shortened):
 
