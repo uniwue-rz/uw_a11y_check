@@ -209,4 +209,4 @@ configuration for all included testsuites. Note, that all testsuites will be exe
 | Version | TYPO3 | PHP       | Support/Development                  |
 |---------|-------|-----------|--------------------------------------|
 | 4.x     | 11.5  | 7.4 - 8.2 | Features, Bugfixes, Security Updates |
-| 3.x     | 11.4  | 7.2 - 7.4 | Bugfixes, Security Updates           |
+| 3.x     | 10.4  | 7.2 - 7.4 | Bugfixes, Security Updates           |
