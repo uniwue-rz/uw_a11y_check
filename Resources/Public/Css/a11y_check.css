@@ -31,14 +31,6 @@
     transform: rotate(-90deg);
 }
 
-.panel-a11y .settings {
-    background-color: #EDEDED;
-    border-top: 1px solid #CDCDCD;
-    border-bottom: 1px solid #CDCDCD;
-    padding: 12px;
-    margin-bottom: 24px;
-}
-
 .panel-group-a11y pre {
     margin-bottom: 5px;
 }
