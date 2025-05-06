@@ -206,8 +206,9 @@ configuration for all included testsuites. Note, that all testsuites will be exe
 
 ## Versions
 
-| Version | TYPO3 | PHP       | Support/Development                  |
-|---------|-------|-----------|--------------------------------------|
-| 5.x     | 12.4  | 8.1 - 8.4 | Features, Bugfixes, Security Updates |
-| 4.x     | 11.5  | 7.4 - 8.4 | Bugfixes, Security Updates           |
-| 3.x     | 10.4  | 7.2 - 7.4 | Security Updates                     |
+| Version  | TYPO3 | PHP       | Support/Development                  |
+|----------|-------|-----------|--------------------------------------|
+| 6.x      | 13.4  | 8.2 - 8.4 | Features, Bugfixes, Security Updates |
+| 5.x      | 12.4  | 8.1 - 8.4 | Features, Bugfixes, Security Updates |
+| 4.x      | 11.5  | 7.4 - 8.4 | Bugfixes, Security Updates           |
+| 3.x      | 10.4  | 7.2 - 7.4 | Security Updates                     |
