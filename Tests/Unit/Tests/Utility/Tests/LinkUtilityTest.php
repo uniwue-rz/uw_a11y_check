@@ -10,6 +10,8 @@ namespace UniWue\UwA11yCheck\Tests\Unit\Tests\Internal;
  */
 
 use DOMDocument;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\TestingFramework\Core\BaseTestCase;
 use UniWue\UwA11yCheck\Utility\Tests\LinkUtility;
 
@@ -44,10 +46,8 @@ class LinkUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider linkHasImageWithAltTestsDataProvider
-     */
+    #[DataProvider('linkHasImageWithAltTestsDataProvider')]
+    #[Test]
     public function linkHasImageWithAltTests(string $html, bool $expected): void
     {
         $doc = new DOMDocument();
@@ -96,10 +96,8 @@ class LinkUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider linkTextNotBlacklistedTestsDataProvider
-     * @test
-     */
+    #[DataProvider('linkTextNotBlacklistedTestsDataProvider')]
+    #[Test]
     public function linkTextNotBlacklistedTests(string $html, array $blacklist, bool $expected): void
     {
         $doc = new DOMDocument();
@@ -154,10 +152,8 @@ class LinkUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider linkImageAttributeNotBlacklistedTestsDataProvider
-     */
+    #[DataProvider('linkImageAttributeNotBlacklistedTestsDataProvider')]
+    #[Test]
     public function linkImageAttributeNotBlacklistedTests(
         string $html,
         string $attribute,
@@ -214,10 +210,8 @@ class LinkUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider hasRedundantLinkNamesTestsDataProvider
-     */
+    #[DataProvider('hasRedundantLinkNamesTestsDataProvider')]
+    #[Test]
     public function hasRedundantLinkNamesTests(array $htmlArray, int $expected): void
     {
         $elements = [];

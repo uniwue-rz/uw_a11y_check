@@ -38,7 +38,7 @@ class LoaderChain implements LoaderInterface
     {
         foreach ($loaders as $loader) {
             if (!$loader instanceof LoaderInterface) {
-                throw new MappingException(sprintf('Class "%s" is expected to implement LoaderInterface.', get_debug_type($loader)), 8857036490);
+                throw new MappingException(\sprintf('Class "%s" is expected to implement LoaderInterface.', get_debug_type($loader)));
             }
         }
     }

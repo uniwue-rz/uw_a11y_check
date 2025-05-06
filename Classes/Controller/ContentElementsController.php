@@ -4,6 +4,7 @@ namespace UniWue\UwA11yCheck\Controller;
 
 use Exception;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -17,7 +18,7 @@ class ContentElementsController extends ActionController
     public function showAction(int $pageUid, string $ignoreContentTypes, string $hmac): ResponseInterface
     {
         $hmacString = $pageUid . $ignoreContentTypes;
-        $expectedHmac = GeneralUtility::hmac($hmacString, 'page_content');
+        $expectedHmac = GeneralUtility::makeInstance(HashService::class)->hmac($hmacString, 'page_content');
 
         if ($expectedHmac !== $hmac) {
             throw new Exception('HMAC does not match', 1572608738);

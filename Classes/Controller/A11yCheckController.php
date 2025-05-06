@@ -8,8 +8,8 @@ use TYPO3\CMS\Backend\Template\Components\Menu\Menu;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
-use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Imaging\IconSize;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -30,19 +30,14 @@ class A11yCheckController extends ActionController
     public const LANG_LOCAL = 'LLL:EXT:uw_a11y_check/Resources/Private/Language/locallang.xlf:';
 
     protected int $pid = 0;
-    protected ModuleTemplateFactory $moduleTemplateFactory;
-    protected PresetService $presetService;
-    protected PageRenderer $pageRenderer;
-    protected IconFactory $iconFactory;
-    protected ResultsService $resultsService;
 
-    public function __construct(ModuleTemplateFactory $moduleTemplateFactory, PresetService $presetService, PageRenderer $pageRenderer, IconFactory $iconFactory, ResultsService $resultsService)
-    {
-        $this->moduleTemplateFactory = $moduleTemplateFactory;
-        $this->presetService = $presetService;
-        $this->pageRenderer = $pageRenderer;
-        $this->iconFactory = $iconFactory;
-        $this->resultsService = $resultsService;
+    public function __construct(
+        protected readonly ModuleTemplateFactory $moduleTemplateFactory,
+        protected readonly PresetService $presetService,
+        protected readonly PageRenderer $pageRenderer,
+        protected readonly IconFactory $iconFactory,
+        protected readonly ResultsService $resultsService
+    ) {
     }
 
     /**
@@ -202,7 +197,7 @@ class A11yCheckController extends ActionController
 
         foreach ($buttons as $tableConfiguration) {
             $title = $this->getLanguageService()->sL(self::LANG_LOCAL . $tableConfiguration['label']);
-            $icon = $this->iconFactory->getIcon($tableConfiguration['icon'], Icon::SIZE_SMALL);
+            $icon = $this->iconFactory->getIcon($tableConfiguration['icon'], IconSize::SMALL);
             $viewButton = $buttonBar->makeLinkButton()
                 ->setHref($tableConfiguration['link'])
                 ->setDataAttributes([

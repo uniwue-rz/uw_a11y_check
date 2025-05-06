@@ -31,14 +31,6 @@
     transform: rotate(-90deg);
 }
 
-.panel-a11y .settings {
-    background-color: #EDEDED;
-    border-top: 1px solid #CDCDCD;
-    border-bottom: 1px solid #CDCDCD;
-    padding: 12px;
-    margin-bottom: 24px;
-}
-
 .panel-group-a11y pre {
     margin-bottom: 5px;
 }
@@ -50,22 +42,22 @@
 }
 
 .panel-a11y .impact-1 {
-    background-color: #ddeacf;
-    border-color: #79a548;
-    color: #000000;
+    --typo3-panel-header-color: var(--typo3-panel-success-header-color);
+    --typo3-panel-header-bg: var(--typo3-panel-success-header-bg);
+    --typo3-panel-border-color: var(--typo3-panel-success-border-color);
 }
 
 .panel-a11y .impact-2,
 .panel-a11y .impact-3 {
-    background-color: #f8e4c6;
-    border-color: #e8a33d;
-    color: #000000;
+    --typo3-panel-header-color: var(--typo3-panel-warning-header-color);
+    --typo3-panel-header-bg: var(--typo3-panel-warning-header-bg);
+    --typo3-panel-border-color: var(--typo3-panel-warning-border-color);
 }
 
 .panel-a11y .impact-4,
 .panel-a11y .impact-5 {
-    background-color: #efc7c7;
-    border-color: #c83c3c;
-    color: #000000;
+    --typo3-panel-header-color: var(--typo3-panel-danger-header-color);
+    --typo3-panel-header-bg: var(--typo3-panel-danger-header-bg);
+    --typo3-panel-border-color: var(--typo3-panel-danger-border-color);
 }
 

@@ -38,7 +38,7 @@ class UriResolver
         }
 
         if (null === $baseUri) {
-            throw new \InvalidArgumentException('The URI is relative, so you must define its base URI passing an absolute URL.', 9411588924);
+            throw new \InvalidArgumentException('The URI is relative, so you must define its base URI passing an absolute URL.');
         }
 
         // empty URI

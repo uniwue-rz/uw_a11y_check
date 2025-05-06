@@ -50,7 +50,7 @@ class FunctionExtension extends AbstractExtension
         try {
             [$a, $b] = Parser::parseSeries($function->getArguments());
         } catch (SyntaxErrorException $e) {
-            throw new ExpressionErrorException(sprintf('Invalid series: "%s".', implode('", "', $function->getArguments())), 0, $e);
+            throw new ExpressionErrorException(\sprintf('Invalid series: "%s".', implode('", "', $function->getArguments())), 0, $e);
         }
 
         $xpath->addStarPrefix();
@@ -83,10 +83,10 @@ class FunctionExtension extends AbstractExtension
             $expr .= ' - '.$b;
         }
 
-        $conditions = [sprintf('%s %s 0', $expr, $sign)];
+        $conditions = [\sprintf('%s %s 0', $expr, $sign)];
 
         if (1 !== $a && -1 !== $a) {
-            $conditions[] = sprintf('(%s) mod %d = 0', $expr, $a);
+            $conditions[] = \sprintf('(%s) mod %d = 0', $expr, $a);
         }
 
         return $xpath->addCondition(implode(' and ', $conditions));
@@ -116,7 +116,7 @@ class FunctionExtension extends AbstractExtension
     public function translateNthLastOfType(XPathExpr $xpath, FunctionNode $function): XPathExpr
     {
         if ('*' === $xpath->getElement()) {
-            throw new ExpressionErrorException('"*:nth-of-type()" is not implemented.', 3681385384);
+            throw new ExpressionErrorException('"*:nth-of-type()" is not implemented.');
         }
 
         return $this->translateNthChild($xpath, $function, true, false);
@@ -130,11 +130,11 @@ class FunctionExtension extends AbstractExtension
         $arguments = $function->getArguments();
         foreach ($arguments as $token) {
             if (!($token->isString() || $token->isIdentifier())) {
-                throw new ExpressionErrorException('Expected a single string or identifier for :contains(), got '.implode(', ', $arguments), 2939003194);
+                throw new ExpressionErrorException('Expected a single string or identifier for :contains(), got '.implode(', ', $arguments));
             }
         }
 
-        return $xpath->addCondition(sprintf(
+        return $xpath->addCondition(\sprintf(
             'contains(string(.), %s)',
             Translator::getXpathLiteral($arguments[0]->getValue())
         ));
@@ -148,11 +148,11 @@ class FunctionExtension extends AbstractExtension
         $arguments = $function->getArguments();
         foreach ($arguments as $token) {
             if (!($token->isString() || $token->isIdentifier())) {
-                throw new ExpressionErrorException('Expected a single string or identifier for :lang(), got '.implode(', ', $arguments), 2984611370);
+                throw new ExpressionErrorException('Expected a single string or identifier for :lang(), got '.implode(', ', $arguments));
             }
         }
 
-        return $xpath->addCondition(sprintf(
+        return $xpath->addCondition(\sprintf(
             'lang(%s)',
             Translator::getXpathLiteral($arguments[0]->getValue())
         ));

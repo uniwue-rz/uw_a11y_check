@@ -27,7 +27,7 @@ class ResultSetExtractor implements PropertyTypeExtractorInterface
     /**
      * @return array|Type[]|null
      */
-    public function getTypes(string $class, string $property, array $context = [])
+    public function getTypes(string $class, string $property, array $context = []): array|null
     {
         if (is_a($class, ResultSet::class, true) && $property === 'results') {
             return [

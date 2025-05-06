@@ -49,7 +49,7 @@ class JsonEncode implements EncoderInterface
         }
 
         if (\JSON_ERROR_NONE !== json_last_error() && (false === $encodedJson || !($options & \JSON_PARTIAL_OUTPUT_ON_ERROR))) {
-            throw new NotEncodableValueException(json_last_error_msg(), 8823101051);
+            throw new NotEncodableValueException(json_last_error_msg());
         }
 
         return $encodedJson;

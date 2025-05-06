@@ -2,6 +2,7 @@
 
 namespace UniWue\UwA11yCheck\CheckUrlGenerators;
 
+use TYPO3\CMS\Core\Crypto\HashService;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -35,7 +36,7 @@ class PageContent extends AbstractCheckUrlGenerator
     {
         $ignoreContentTypes = implode(',', $this->ignoredContentTypes);
         $hmacString = $pageUid . $ignoreContentTypes;
-        $hmac = GeneralUtility::hmac($hmacString, 'page_content');
+        $hmac = GeneralUtility::makeInstance(HashService::class)->hmac($hmacString, 'page_content');
 
         $arguments = [
             'tx_uwa11ycheck_pi1[action]' => 'show',

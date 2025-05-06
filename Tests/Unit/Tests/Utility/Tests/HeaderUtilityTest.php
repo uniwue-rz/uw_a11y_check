@@ -11,6 +11,8 @@ namespace UniWue\UwA11yCheck\Tests\Unit\Tests\Internal;
 
 use DOMDocument;
 use DOMXPath;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\TestingFramework\Core\BaseTestCase;
 use UniWue\UwA11yCheck\Utility\Tests\HeaderUtility;
 
@@ -45,10 +47,8 @@ class HeaderUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider headersSequentiallyDescendingTestsDataProvider
-     */
+    #[DataProvider('headersSequentiallyDescendingTestsDataProvider')]
+    #[Test]
     public function headersSequentiallyDescendingTests(string $htmlHeader1, string $htmlHeader2, bool $expected): void
     {
         $previousDocument = new DOMDocument();

@@ -138,11 +138,11 @@ class HtmlExtension extends AbstractExtension
         $arguments = $function->getArguments();
         foreach ($arguments as $token) {
             if (!($token->isString() || $token->isIdentifier())) {
-                throw new ExpressionErrorException('Expected a single string or identifier for :lang(), got '.implode(', ', $arguments), 9514637947);
+                throw new ExpressionErrorException('Expected a single string or identifier for :lang(), got '.implode(', ', $arguments));
             }
         }
 
-        return $xpath->addCondition(sprintf(
+        return $xpath->addCondition(\sprintf(
             'ancestor-or-self::*[@lang][1][starts-with(concat('
             ."translate(@%s, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '-')"
             .', %s)]',

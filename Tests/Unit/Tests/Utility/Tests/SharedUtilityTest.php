@@ -10,6 +10,8 @@ namespace UniWue\UwA11yCheck\Tests\Unit\Tests\Internal;
  */
 
 use DOMDocument;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\DomCrawler\Crawler;
 use TYPO3\TestingFramework\Core\BaseTestCase;
 use UniWue\UwA11yCheck\Utility\Tests\SharedUtility;
@@ -33,10 +35,8 @@ class SharedUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider elementHasRolePresentationTestsDataProvider
-     */
+    #[DataProvider('elementHasRolePresentationTestsDataProvider')]
+    #[Test]
     public function elementHasRolePresentationTests(string $role, bool $expected): void
     {
         $html = '<div role="' . $role . '">Test</div>';
@@ -65,10 +65,8 @@ class SharedUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider elementHasRoleNoneTestsDataProvider
-     */
+    #[DataProvider('elementHasRoleNoneTestsDataProvider')]
+    #[Test]
     public function elementHasRoleNoneTests(string $role, bool $expected): void
     {
         $html = '<div role="' . $role . '">Test</div>';
@@ -101,10 +99,8 @@ class SharedUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider elementHasAriaLabelValueDataProvider
-     */
+    #[DataProvider('elementHasAriaLabelValueDataProvider')]
+    #[Test]
     public function elementHasAriaLabelTests(string $html, bool $expected): void
     {
         $doc = new DOMDocument();
@@ -139,10 +135,8 @@ class SharedUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider elementAriaLabelledByValueExistsAndNotEmptyTestsDataProvider
-     */
+    #[DataProvider('elementAriaLabelledByValueExistsAndNotEmptyTestsDataProvider')]
+    #[Test]
     public function elementAriaLabelledByValueExistsAndNotEmptyTests(string $html, bool $expected): void
     {
         $crawler = new Crawler($html);
@@ -180,10 +174,8 @@ class SharedUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider elementHasVisibleTextTestsDataProvider
-     */
+    #[DataProvider('elementHasVisibleTextTestsDataProvider')]
+    #[Test]
     public function elementHasVisibleTextTests(string $html, bool $expected): void
     {
         $doc = new DOMDocument();
@@ -218,10 +210,8 @@ class SharedUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider elementHasNonEmptyTitleTestsDataProvider
-     */
+    #[DataProvider('elementHasNonEmptyTitleTestsDataProvider')]
+    #[Test]
     public function elementHasNonEmptyTitleTests(string $html, bool $expected): void
     {
         $doc = new DOMDocument();
@@ -252,10 +242,8 @@ class SharedUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider elementHasAltTestsDataProvider
-     */
+    #[DataProvider('elementHasAltTestsDataProvider')]
+    #[Test]
     public function elementHasAltTests(string $html, bool $expected): void
     {
         $doc = new DOMDocument();
@@ -314,10 +302,8 @@ class SharedUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @test
-     * @dataProvider elementTitleNotRedundantTestsDataProvider
-     */
+    #[DataProvider('elementTitleNotRedundantTestsDataProvider')]
+    #[Test]
     public function elementTitleNotRedundantTests(string $html, string $elementTag, bool $expected): void
     {
         $doc = new DOMDocument();
@@ -354,10 +340,8 @@ class SharedUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider elementAttributeValueNotBlacklistedTestsDataProvider
-     * @test
-     */
+    #[DataProvider('elementAttributeValueNotBlacklistedTestsDataProvider')]
+    #[Test]
     public function elementAttributeValueNotBlacklistedTests(
         string $html,
         string $attribute,
@@ -400,10 +384,8 @@ class SharedUtilityTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider elementIsLinkWithHrefTestsDataProvider
-     * @test
-     */
+    #[DataProvider('elementIsLinkWithHrefTestsDataProvider')]
+    #[Test]
     public function elementIsLinkWithHrefTests(string $html, string $tag, bool $expected): void
     {
         $doc = new DOMDocument();

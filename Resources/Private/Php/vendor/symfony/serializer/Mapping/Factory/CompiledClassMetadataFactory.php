@@ -30,12 +30,12 @@ final class CompiledClassMetadataFactory implements ClassMetadataFactoryInterfac
         private readonly ClassMetadataFactoryInterface $classMetadataFactory,
     ) {
         if (!file_exists($compiledClassMetadataFile)) {
-            throw new \RuntimeException("File \"{$compiledClassMetadataFile}\" could not be found.", 5152948595);
+            throw new \RuntimeException("File \"{$compiledClassMetadataFile}\" could not be found.");
         }
 
         $compiledClassMetadata = require $compiledClassMetadataFile;
         if (!\is_array($compiledClassMetadata)) {
-            throw new \RuntimeException(sprintf('Compiled metadata must be of the type array, %s given.', \gettype($compiledClassMetadata)), 7410449855);
+            throw new \RuntimeException(\sprintf('Compiled metadata must be of the type array, %s given.', \gettype($compiledClassMetadata)));
         }
 
         $this->compiledClassMetadata = $compiledClassMetadata;

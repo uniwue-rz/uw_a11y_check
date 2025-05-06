@@ -14,7 +14,7 @@ presets:
     checkUrlGenerator:
       id: "pageContent"
       configuration:
-        targetPid: 104
+        targetPid: 106
         ignoreContentTypes:
           - list
     testSuite:
@@ -35,7 +35,7 @@ presets:
     checkUrlGenerator:
       id: "newsDetail"
       configuration:
-        targetPid: 105
+        targetPid: 108
     testSuite:
       id: "internalTests"
       configuration: {}

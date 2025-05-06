@@ -77,7 +77,7 @@ class TokenStream
         }
 
         if (!isset($this->tokens[$this->cursor])) {
-            throw new InternalErrorException('Unexpected token stream end.', 8889717825);
+            throw new InternalErrorException('Unexpected token stream end.');
         }
 
         return $this->tokens[$this->cursor++];

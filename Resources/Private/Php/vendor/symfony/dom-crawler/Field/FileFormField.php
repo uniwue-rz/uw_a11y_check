@@ -23,15 +23,13 @@ class FileFormField extends FormField
      *
      * @param int $error The error code (one of UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE, UPLOAD_ERR_PARTIAL, UPLOAD_ERR_NO_FILE, UPLOAD_ERR_NO_TMP_DIR, UPLOAD_ERR_CANT_WRITE, or UPLOAD_ERR_EXTENSION)
      *
-     * @return void
-     *
      * @throws \InvalidArgumentException When error code doesn't exist
      */
     public function setErrorCode(int $error): void
     {
         $codes = [\UPLOAD_ERR_INI_SIZE, \UPLOAD_ERR_FORM_SIZE, \UPLOAD_ERR_PARTIAL, \UPLOAD_ERR_NO_FILE, \UPLOAD_ERR_NO_TMP_DIR, \UPLOAD_ERR_CANT_WRITE, \UPLOAD_ERR_EXTENSION];
         if (!\in_array($error, $codes)) {
-            throw new \InvalidArgumentException(sprintf('The error code "%s" is not valid.', $error), 8564982722);
+            throw new \InvalidArgumentException(\sprintf('The error code "%s" is not valid.', $error));
         }
 
         $this->value = ['name' => '', 'type' => '', 'tmp_name' => '', 'error' => $error, 'size' => 0];
@@ -39,8 +37,6 @@ class FileFormField extends FormField
 
     /**
      * Sets the value of the field.
-     *
-     * @return void
      */
     public function upload(?string $value): void
     {
@@ -49,10 +45,8 @@ class FileFormField extends FormField
 
     /**
      * Sets the value of the field.
-     *
-     * @return void
      */
-    public function setValue(?string $value)
+    public function setValue(?string $value): void
     {
         if (null !== $value && is_readable($value)) {
             $error = \UPLOAD_ERR_OK;
@@ -61,8 +55,9 @@ class FileFormField extends FormField
             $name = $info['basename'];
 
             // copy to a tmp location
-            $tmp = sys_get_temp_dir().'/'.strtr(substr(base64_encode(hash('sha256', uniqid(mt_rand(), true), true)), 0, 7), '/', '_');
+            $tmp = tempnam(sys_get_temp_dir(), $name);
             if (\array_key_exists('extension', $info)) {
+                unlink($tmp);
                 $tmp .= '.'.$info['extension'];
             }
             if (is_file($tmp)) {
@@ -82,8 +77,6 @@ class FileFormField extends FormField
 
     /**
      * Sets path to the file as string for simulating HTTP request.
-     *
-     * @return void
      */
     public function setFilePath(string $path): void
     {
@@ -93,18 +86,16 @@ class FileFormField extends FormField
     /**
      * Initializes the form field.
      *
-     * @return void
-     *
      * @throws \LogicException When node type is incorrect
      */
-    protected function initialize()
+    protected function initialize(): void
     {
         if ('input' !== $this->node->nodeName) {
-            throw new \LogicException(sprintf('A FileFormField can only be created from an input tag (%s given).', $this->node->nodeName), 1149577841);
+            throw new \LogicException(\sprintf('A FileFormField can only be created from an input tag (%s given).', $this->node->nodeName));
         }
 
         if ('file' !== strtolower($this->node->getAttribute('type'))) {
-            throw new \LogicException(sprintf('A FileFormField can only be created from an input tag with a type of file (given type is "%s").', $this->node->getAttribute('type')), 7087991149);
+            throw new \LogicException(\sprintf('A FileFormField can only be created from an input tag with a type of file (given type is "%s").', $this->node->getAttribute('type')));
         }
 
         $this->setValue(null);

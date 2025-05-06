@@ -16,7 +16,8 @@ ExtensionUtility::configurePlugin(
     // non-cacheable actions
     [
         ContentElementsController::class => 'show',
-    ]
+    ],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 
 // Register configuration yaml file
