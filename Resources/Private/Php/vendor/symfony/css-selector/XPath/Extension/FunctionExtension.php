@@ -30,18 +30,15 @@ use Symfony\Component\CssSelector\XPath\XPathExpr;
  */
 class FunctionExtension extends AbstractExtension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getFunctionTranslators(): array
     {
         return [
-            'nth-child' => [$this, 'translateNthChild'],
-            'nth-last-child' => [$this, 'translateNthLastChild'],
-            'nth-of-type' => [$this, 'translateNthOfType'],
-            'nth-last-of-type' => [$this, 'translateNthLastOfType'],
-            'contains' => [$this, 'translateContains'],
-            'lang' => [$this, 'translateLang'],
+            'nth-child' => $this->translateNthChild(...),
+            'nth-last-child' => $this->translateNthLastChild(...),
+            'nth-of-type' => $this->translateNthOfType(...),
+            'nth-last-of-type' => $this->translateNthLastOfType(...),
+            'contains' => $this->translateContains(...),
+            'lang' => $this->translateLang(...),
         ];
     }
 
@@ -119,7 +116,7 @@ class FunctionExtension extends AbstractExtension
     public function translateNthLastOfType(XPathExpr $xpath, FunctionNode $function): XPathExpr
     {
         if ('*' === $xpath->getElement()) {
-            throw new ExpressionErrorException('"*:nth-of-type()" is not implemented.');
+            throw new ExpressionErrorException('"*:nth-of-type()" is not implemented.', 3681385384);
         }
 
         return $this->translateNthChild($xpath, $function, true, false);
@@ -133,7 +130,7 @@ class FunctionExtension extends AbstractExtension
         $arguments = $function->getArguments();
         foreach ($arguments as $token) {
             if (!($token->isString() || $token->isIdentifier())) {
-                throw new ExpressionErrorException('Expected a single string or identifier for :contains(), got '.implode(', ', $arguments));
+                throw new ExpressionErrorException('Expected a single string or identifier for :contains(), got '.implode(', ', $arguments), 2939003194);
             }
         }
 
@@ -151,7 +148,7 @@ class FunctionExtension extends AbstractExtension
         $arguments = $function->getArguments();
         foreach ($arguments as $token) {
             if (!($token->isString() || $token->isIdentifier())) {
-                throw new ExpressionErrorException('Expected a single string or identifier for :lang(), got '.implode(', ', $arguments));
+                throw new ExpressionErrorException('Expected a single string or identifier for :lang(), got '.implode(', ', $arguments), 2984611370);
             }
         }
 
@@ -161,9 +158,6 @@ class FunctionExtension extends AbstractExtension
         ));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName(): string
     {
         return 'function';

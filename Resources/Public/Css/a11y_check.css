@@ -23,6 +23,10 @@
     border-bottom: 1px solid #cccccc;
 }
 
+.panel-a11y .panel-body a {
+    text-decoration: none;
+}
+
 .a11y-check .check-date {
     float: right;
     font-size: 0.7em;

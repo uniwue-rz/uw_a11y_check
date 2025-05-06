@@ -44,23 +44,32 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
     public const FORMAT_OUTPUT = 'xml_format_output';
 
     /**
-     * A bit field of LIBXML_* constants.
+     * A bit field of LIBXML_* constants for loading XML documents.
      */
     public const LOAD_OPTIONS = 'load_options';
+
+    /**
+     * A bit field of LIBXML_* constants for saving XML documents.
+     */
+    public const SAVE_OPTIONS = 'save_options';
+
     public const REMOVE_EMPTY_TAGS = 'remove_empty_tags';
     public const ROOT_NODE_NAME = 'xml_root_node_name';
     public const STANDALONE = 'xml_standalone';
     public const TYPE_CAST_ATTRIBUTES = 'xml_type_cast_attributes';
     public const VERSION = 'xml_version';
+    public const CDATA_WRAPPING = 'cdata_wrapping';
 
-    private $defaultContext = [
+    private array $defaultContext = [
         self::AS_COLLECTION => false,
         self::DECODER_IGNORED_NODE_TYPES => [\XML_PI_NODE, \XML_COMMENT_NODE],
         self::ENCODER_IGNORED_NODE_TYPES => [],
         self::LOAD_OPTIONS => \LIBXML_NONET | \LIBXML_NOBLANKS,
+        self::SAVE_OPTIONS => 0,
         self::REMOVE_EMPTY_TAGS => false,
         self::ROOT_NODE_NAME => 'response',
         self::TYPE_CAST_ATTRIBUTES => true,
+        self::CDATA_WRAPPING => true,
     ];
 
     public function __construct(array $defaultContext = [])
@@ -68,10 +77,7 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
         $this->defaultContext = array_merge($this->defaultContext, $defaultContext);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function encode($data, string $format, array $context = [])
+    public function encode(mixed $data, string $format, array $context = []): string
     {
         $encoderIgnoredNodeTypes = $context[self::ENCODER_IGNORED_NODE_TYPES] ?? $this->defaultContext[self::ENCODER_IGNORED_NODE_TYPES];
         $ignorePiNode = \in_array(\XML_PI_NODE, $encoderIgnoredNodeTypes, true);
@@ -91,36 +97,27 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
             $this->appendNode($dom, $data, $format, $context, $xmlRootNodeName);
         }
 
-        return $dom->saveXML($ignorePiNode ? $dom->documentElement : null);
+        return $dom->saveXML($ignorePiNode ? $dom->documentElement : null, $context[self::SAVE_OPTIONS] ?? $this->defaultContext[self::SAVE_OPTIONS]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function decode(string $data, string $format, array $context = [])
+    public function decode(string $data, string $format, array $context = []): mixed
     {
         if ('' === trim($data)) {
-            throw new NotEncodableValueException('Invalid XML data, it cannot be empty.');
+            throw new NotEncodableValueException('Invalid XML data, it cannot be empty.', 4521411620);
         }
 
         $internalErrors = libxml_use_internal_errors(true);
-        if (\LIBXML_VERSION < 20900) {
-            $disableEntities = libxml_disable_entity_loader(true);
-        }
         libxml_clear_errors();
 
         $dom = new \DOMDocument();
         $dom->loadXML($data, $context[self::LOAD_OPTIONS] ?? $this->defaultContext[self::LOAD_OPTIONS]);
 
         libxml_use_internal_errors($internalErrors);
-        if (\LIBXML_VERSION < 20900) {
-            libxml_disable_entity_loader($disableEntities);
-        }
 
         if ($error = libxml_get_last_error()) {
             libxml_clear_errors();
 
-            throw new NotEncodableValueException($error->message);
+            throw new NotEncodableValueException($error->message, 7731378146);
         }
 
         $rootNode = null;
@@ -130,7 +127,7 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
                 continue;
             }
             if (\XML_DOCUMENT_TYPE_NODE === $child->nodeType) {
-                throw new NotEncodableValueException('Document types are not allowed.');
+                throw new NotEncodableValueException('Document types are not allowed.', 8540414587);
             }
             if (!$rootNode) {
                 $rootNode = $child;
@@ -140,48 +137,30 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
         // todo: throw an exception if the root node name is not correctly configured (bc)
 
         if ($rootNode->hasChildNodes()) {
-            $xpath = new \DOMXPath($dom);
-            $data = [];
-            foreach ($xpath->query('namespace::*', $dom->documentElement) as $nsNode) {
-                $data['@'.$nsNode->nodeName] = $nsNode->nodeValue;
+            $data = $this->parseXml($rootNode, $context);
+            if (\is_array($data)) {
+                $data = $this->addXmlNamespaces($data, $rootNode, $dom);
             }
 
-            unset($data['@xmlns:xml']);
-
-            if (empty($data)) {
-                return $this->parseXml($rootNode, $context);
-            }
-
-            return array_merge($data, (array) $this->parseXml($rootNode, $context));
+            return $data;
         }
 
         if (!$rootNode->hasAttributes()) {
             return $rootNode->nodeValue;
         }
 
-        $data = [];
-
-        foreach ($rootNode->attributes as $attrKey => $attr) {
-            $data['@'.$attrKey] = $attr->nodeValue;
-        }
-
-        $data['#'] = $rootNode->nodeValue;
+        $data = array_merge($this->parseXmlAttributes($rootNode, $context), ['#' => $rootNode->nodeValue]);
+        $data = $this->addXmlNamespaces($data, $rootNode, $dom);
 
         return $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supportsEncoding(string $format)
+    public function supportsEncoding(string $format): bool
     {
         return self::FORMAT === $format;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supportsDecoding(string $format)
+    public function supportsDecoding(string $format): bool
     {
         return self::FORMAT === $format;
     }
@@ -215,10 +194,7 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
         return true;
     }
 
-    /**
-     * @param \DOMDocumentFragment $fragment
-     */
-    final protected function appendDocumentFragment(\DOMNode $node, $fragment): bool
+    final protected function appendDocumentFragment(\DOMNode $node, \DOMDocumentFragment $fragment): bool
     {
         if ($fragment instanceof \DOMDocumentFragment) {
             $node->appendChild($fragment);
@@ -241,17 +217,15 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
      */
     final protected function isElementNameValid(string $name): bool
     {
-        return $name &&
-            !str_contains($name, ' ') &&
-            preg_match('#^[\pL_][\pL0-9._:-]*$#ui', $name);
+        return $name
+            && !str_contains($name, ' ')
+            && preg_match('#^[\pL_][\pL0-9._:-]*$#ui', $name);
     }
 
     /**
      * Parse the input DOMNode into an array or a string.
-     *
-     * @return array|string
      */
-    private function parseXml(\DOMNode $node, array $context = [])
+    private function parseXml(\DOMNode $node, array $context = []): array|string
     {
         $data = $this->parseXmlAttributes($node, $context);
 
@@ -313,10 +287,8 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
 
     /**
      * Parse the input DOMNode value (content and children) into an array or a string.
-     *
-     * @return array|string
      */
-    private function parseXmlValue(\DOMNode $node, array $context = [])
+    private function parseXmlValue(\DOMNode $node, array $context = []): array|string
     {
         if (!$node->hasChildNodes()) {
             return $node->nodeValue;
@@ -352,14 +324,25 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
         return $value;
     }
 
+    private function addXmlNamespaces(array $data, \DOMNode $node, \DOMDocument $document): array
+    {
+        $xpath = new \DOMXPath($document);
+
+        foreach ($xpath->query('namespace::*', $node) as $nsNode) {
+            $data['@'.$nsNode->nodeName] = $nsNode->nodeValue;
+        }
+
+        unset($data['@xmlns:xml']);
+
+        return $data;
+    }
+
     /**
      * Parse the data and convert it to DOMElements.
      *
-     * @param array|object $data
-     *
      * @throws NotEncodableValueException
      */
-    private function buildXml(\DOMNode $parentNode, $data, string $format, array $context, string $xmlRootNodeName = null): bool
+    private function buildXml(\DOMNode $parentNode, mixed $data, string $format, array $context, ?string $xmlRootNodeName = null): bool
     {
         $append = true;
         $removeEmptyTags = $context[self::REMOVE_EMPTY_TAGS] ?? $this->defaultContext[self::REMOVE_EMPTY_TAGS] ?? false;
@@ -408,7 +391,7 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
 
         if (\is_object($data)) {
             if (null === $this->serializer) {
-                throw new BadMethodCallException(sprintf('The serializer needs to be set to allow "%s()" to be used with object data.', __METHOD__));
+                throw new BadMethodCallException(sprintf('The serializer needs to be set to allow "%s()" to be used with object data.', __METHOD__), 5440916510);
             }
 
             $data = $this->serializer->normalize($data, $format, $context);
@@ -427,15 +410,13 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
             return $this->appendNode($parentNode, $data, $format, $context, 'data');
         }
 
-        throw new NotEncodableValueException('An unexpected value could not be serialized: '.(!\is_resource($data) ? var_export($data, true) : sprintf('%s resource', get_resource_type($data))));
+        throw new NotEncodableValueException('An unexpected value could not be serialized: '.(!\is_resource($data) ? var_export($data, true) : sprintf('%s resource', get_resource_type($data))), 6494121310);
     }
 
     /**
      * Selects the type of node to create and appends it to the parent.
-     *
-     * @param array|object $data
      */
-    private function appendNode(\DOMNode $parentNode, $data, string $format, array $context, string $nodeName, string $key = null): bool
+    private function appendNode(\DOMNode $parentNode, mixed $data, string $format, array $context, string $nodeName, ?string $key = null): bool
     {
         $dom = $parentNode instanceof \DOMDocument ? $parentNode : $parentNode->ownerDocument;
         $node = $dom->createElement($nodeName);
@@ -454,9 +435,9 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
     /**
      * Checks if a value contains any characters which would require CDATA wrapping.
      */
-    private function needsCdataWrapping(string $val): bool
+    private function needsCdataWrapping(string $val, array $context): bool
     {
-        return preg_match('/[<>&]/', $val);
+        return ($context[self::CDATA_WRAPPING] ?? $this->defaultContext[self::CDATA_WRAPPING]) && preg_match('/[<>&]/', $val);
     }
 
     /**
@@ -464,7 +445,7 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
      *
      * @throws NotEncodableValueException
      */
-    private function selectNodeType(\DOMNode $node, $val, string $format, array $context): bool
+    private function selectNodeType(\DOMNode $node, mixed $val, string $format, array $context): bool
     {
         if (\is_array($val)) {
             return $this->buildXml($node, $val, $format, $context);
@@ -478,13 +459,13 @@ class XmlEncoder implements EncoderInterface, DecoderInterface, NormalizationAwa
             $node->appendChild($child);
         } elseif (\is_object($val)) {
             if (null === $this->serializer) {
-                throw new BadMethodCallException(sprintf('The serializer needs to be set to allow "%s()" to be used with object data.', __METHOD__));
+                throw new BadMethodCallException(sprintf('The serializer needs to be set to allow "%s()" to be used with object data.', __METHOD__), 2249735219);
             }
 
             return $this->selectNodeType($node, $this->serializer->normalize($val, $format, $context), $format, $context);
         } elseif (is_numeric($val)) {
             return $this->appendText($node, (string) $val);
-        } elseif (\is_string($val) && $this->needsCdataWrapping($val)) {
+        } elseif (\is_string($val) && $this->needsCdataWrapping($val, $context)) {
             return $this->appendCData($node, $val);
         } elseif (\is_string($val)) {
             return $this->appendText($node, $val);

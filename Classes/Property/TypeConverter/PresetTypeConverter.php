@@ -19,7 +19,7 @@ class PresetTypeConverter extends AbstractTypeConverter
 
     protected PresetService $presetService;
 
-    public function injectConfigurationService(PresetService $presetService): void
+    public function __construct(PresetService $presetService)
     {
         $this->presetService = $presetService;
     }

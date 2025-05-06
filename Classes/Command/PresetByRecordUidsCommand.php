@@ -23,7 +23,7 @@ class PresetByRecordUidsCommand extends AbstractCheckCommand
     /**
      * Configuring the command options
      */
-    public function configure()
+    public function configure(): void
     {
         $this
             ->addArgument(

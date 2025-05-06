@@ -30,11 +30,11 @@ abstract class FileLoader implements LoaderInterface
     public function __construct(string $file)
     {
         if (!is_file($file)) {
-            throw new MappingException(sprintf('The mapping file "%s" does not exist.', $file));
+            throw new MappingException(sprintf('The mapping file "%s" does not exist.', $file), 2122166955);
         }
 
         if (!is_readable($file)) {
-            throw new MappingException(sprintf('The mapping file "%s" is not readable.', $file));
+            throw new MappingException(sprintf('The mapping file "%s" is not readable.', $file), 8370305595);
         }
 
         $this->file = $file;

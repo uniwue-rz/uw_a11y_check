@@ -19,7 +19,7 @@ use UniWue\UwA11yCheck\Utility\Tests\SharedUtility;
  */
 class SharedUtilityTest extends BaseTestCase
 {
-    public function elementHasRolePresentationTestsDataProvider(): array
+    public static function elementHasRolePresentationTestsDataProvider(): array
     {
         return [
             'role presentation present' => [
@@ -51,7 +51,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function elementHasRoleNoneTestsDataProvider(): array
+    public static function elementHasRoleNoneTestsDataProvider(): array
     {
         return [
             'role none present' => [
@@ -83,7 +83,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function elementHasAriaLabelValueDataProvider(): array
+    public static function elementHasAriaLabelValueDataProvider(): array
     {
         return [
             'no aria label' => [
@@ -105,7 +105,7 @@ class SharedUtilityTest extends BaseTestCase
      * @test
      * @dataProvider elementHasAriaLabelValueDataProvider
      */
-    public function elementHasAriaLabelTests(string $html, bool $expected)
+    public function elementHasAriaLabelTests(string $html, bool $expected): void
     {
         $doc = new DOMDocument();
         $doc->loadHTML($html);
@@ -117,7 +117,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function elementAriaLabelledByValueExistsAndNotEmptyTestsDataProvider(): array
+    public static function elementAriaLabelledByValueExistsAndNotEmptyTestsDataProvider(): array
     {
         return [
             'labelledby element does not exist' => [
@@ -154,7 +154,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function elementHasVisibleTextTestsDataProvider(): array
+    public static function elementHasVisibleTextTestsDataProvider(): array
     {
         return [
             'no text in div' => [
@@ -196,7 +196,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function elementHasNonEmptyTitleTestsDataProvider(): array
+    public static function elementHasNonEmptyTitleTestsDataProvider(): array
     {
         return [
             'no title' => [
@@ -234,7 +234,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function elementHasAltTestsDataProvider(): array
+    public static function elementHasAltTestsDataProvider(): array
     {
         return [
             'image with no alt' => [
@@ -268,7 +268,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function elementTitleNotRedundantTestsDataProvider(): array
+    public static function elementTitleNotRedundantTestsDataProvider(): array
     {
         return [
             'link has no title' => [
@@ -318,7 +318,7 @@ class SharedUtilityTest extends BaseTestCase
      * @test
      * @dataProvider elementTitleNotRedundantTestsDataProvider
      */
-    public function elementTitleNotRedundantTests(string $html, string $elementTag, bool $expected)
+    public function elementTitleNotRedundantTests(string $html, string $elementTag, bool $expected): void
     {
         $doc = new DOMDocument();
         $doc->loadHTML($html);
@@ -330,7 +330,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function elementAttributeValueNotBlacklistedTestsDataProvider(): array
+    public static function elementAttributeValueNotBlacklistedTestsDataProvider(): array
     {
         return [
             'attibute not found' => [
@@ -374,7 +374,7 @@ class SharedUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function elementIsLinkWithHrefTestsDataProvider(): array
+    public static function elementIsLinkWithHrefTestsDataProvider(): array
     {
         return [
             'no link' => [

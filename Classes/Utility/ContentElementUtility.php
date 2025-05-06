@@ -47,7 +47,7 @@ class ContentElementUtility
 
         // @todo: Consider to define exclude colPos
 
-        $queryResult = $query->execute()->fetchAllAssociative();
+        $queryResult = $query->executeQuery()->fetchAllAssociative();
 
         $uidList = [];
         foreach ($queryResult as $record) {

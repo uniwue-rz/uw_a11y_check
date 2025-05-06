@@ -2,6 +2,7 @@
 
 namespace UniWue\UwA11yCheck\Service;
 
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -15,13 +16,9 @@ class ResultsService
     protected SerializationService $serializationService;
     protected PresetService $presetService;
 
-    public function injectSerializationService(SerializationService $serializationService): void
+    public function __construct(SerializationService $serializationService, PresetService $presetService)
     {
         $this->serializationService = $serializationService;
-    }
-
-    public function injectPresetService(PresetService $presetService): void
-    {
         $this->presetService = $presetService;
     }
 
@@ -40,11 +37,11 @@ class ResultsService
             ->where(
                 $queryBuilder->expr()->eq(
                     'pid',
-                    $queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($pid, Connection::PARAM_INT)
                 )
             )->orderBy('preset_id', 'asc');
 
-        $queryResult = $query->execute()->fetchAllAssociative();
+        $queryResult = $query->executeQuery()->fetchAllAssociative();
 
         $site = GeneralUtility::makeInstance(SiteFinder::class)->getSiteByPageId($pid);
         $dbResults = [];
@@ -88,11 +85,11 @@ class ResultsService
             ->where(
                 $queryBuilder->expr()->eq(
                     'pid',
-                    $queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($pid, Connection::PARAM_INT)
                 )
             )->orderBy('preset_id', 'asc');
 
-        return $query->execute()->fetchOne();
+        return $query->executeQuery()->fetchOne();
     }
 
     /**
@@ -108,10 +105,10 @@ class ResultsService
             ->where(
                 $queryBuilder->expr()->eq(
                     'pid',
-                    $queryBuilder->createNamedParameter($pid, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($pid, Connection::PARAM_INT)
                 )
             );
 
-        $query->execute();
+        $query->executeStatement();
     }
 }

@@ -21,7 +21,10 @@ trait SerializerAwareTrait
      */
     protected $serializer;
 
-    public function setSerializer(SerializerInterface $serializer)
+    /**
+     * @return void
+     */
+    public function setSerializer(SerializerInterface $serializer): void
     {
         $this->serializer = $serializer;
     }

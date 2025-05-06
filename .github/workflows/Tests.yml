@@ -10,10 +10,9 @@ jobs:
     strategy:
       matrix:
         env:
-          - { php: 7.4 }
-          - { php: 8.0 }
           - { php: 8.1 }
           - { php: 8.2 }
+          - { php: 8.3 }
 
     env: ${{ matrix.env }}
 
@@ -36,7 +35,7 @@ jobs:
         run: composer validate
 
       - name: Cache dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: ~/.composer/cache
           key: dependencies-composer-${{ hashFiles('composer.json') }}
@@ -48,4 +47,4 @@ jobs:
       - name: Unit tests
         run: |
           echo "Running unit tests";
-          .Build/bin/phpunit --colors -c Tests/Build/UnitTests.xml
+          .Build/bin/phpunit -c Tests/Build/UnitTests.xml

@@ -18,7 +18,7 @@ use UniWue\UwA11yCheck\Utility\Tests\LinkUtility;
  */
 class LinkUtilityTest extends BaseTestCase
 {
-    public function linkHasImageWithAltTestsDataProvider(): array
+    public static function linkHasImageWithAltTestsDataProvider(): array
     {
         return [
             'link with no image' => [
@@ -60,7 +60,7 @@ class LinkUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function linkTextNotBlacklistedTestsDataProvider(): array
+    public static function linkTextNotBlacklistedTestsDataProvider(): array
     {
         return [
             'text not blacklisted' => [
@@ -100,7 +100,7 @@ class LinkUtilityTest extends BaseTestCase
      * @dataProvider linkTextNotBlacklistedTestsDataProvider
      * @test
      */
-    public function linkTextNotBlacklistedTests(string $html, array $blacklist, bool $expected)
+    public function linkTextNotBlacklistedTests(string $html, array $blacklist, bool $expected): void
     {
         $doc = new DOMDocument();
         $doc->loadHTML($html);
@@ -112,7 +112,7 @@ class LinkUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function linkImageAttributeNotBlacklistedTestsDataProvider(): array
+    public static function linkImageAttributeNotBlacklistedTestsDataProvider(): array
     {
         return [
             'no blacklist' => [
@@ -174,7 +174,7 @@ class LinkUtilityTest extends BaseTestCase
         self::assertEquals($expected, $result);
     }
 
-    public function hasRedundantLinkNamesTestsDataProvider(): array
+    public static function hasRedundantLinkNamesTestsDataProvider(): array
     {
         return [
             'no links at all' => [

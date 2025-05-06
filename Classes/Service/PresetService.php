@@ -7,6 +7,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Site\Entity\Site;
 use TYPO3\CMS\Core\Site\Entity\SiteInterface;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UniWue\UwA11yCheck\Analyzers\AbstractAnalyzer;
@@ -71,7 +72,7 @@ class PresetService
                 $message = new FlashMessage(
                     $exception->getMessage(),
                     'Class not found in preset "' . $name . '"',
-                    FlashMessage::ERROR,
+                    ContextualFeedbackSeverity::ERROR,
                     true
                 );
                 // @extensionScannerIgnoreLine False positive

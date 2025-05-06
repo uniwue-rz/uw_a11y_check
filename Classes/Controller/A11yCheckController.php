@@ -13,6 +13,7 @@ use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use UniWue\UwA11yCheck\Domain\Model\Dto\CheckDemand;
@@ -35,28 +36,12 @@ class A11yCheckController extends ActionController
     protected IconFactory $iconFactory;
     protected ResultsService $resultsService;
 
-    public function injectModuleTemplateFactory(ModuleTemplateFactory $moduleTemplateFactory): void
+    public function __construct(ModuleTemplateFactory $moduleTemplateFactory, PresetService $presetService, PageRenderer $pageRenderer, IconFactory $iconFactory, ResultsService $resultsService)
     {
         $this->moduleTemplateFactory = $moduleTemplateFactory;
-    }
-
-    public function injectPresetService(PresetService $presetService): void
-    {
         $this->presetService = $presetService;
-    }
-
-    public function injectPageRenderer(PageRenderer $pageRenderer): void
-    {
         $this->pageRenderer = $pageRenderer;
-    }
-
-    public function injectIconFactory(IconFactory $iconFactory): void
-    {
         $this->iconFactory = $iconFactory;
-    }
-
-    public function injectResultService(ResultsService $resultsService): void
-    {
         $this->resultsService = $resultsService;
     }
 
@@ -64,7 +49,7 @@ class A11yCheckController extends ActionController
      * Initializes module template and returns a response which must be used as response for any extbase action
      * that should render a view.
      */
-    protected function initModuleTemplateAndReturnResponse(): ResponseInterface
+    protected function initModuleTemplateAndReturnResponse(string $templateFileName, array $variables = []): ResponseInterface
     {
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->pageRenderer->addCssFile('EXT:uw_a11y_check/Resources/Public/Css/a11y_check.css');
@@ -73,21 +58,22 @@ class A11yCheckController extends ActionController
         $this->createMenu($moduleTemplate);
 
         $moduleTemplate->setFlashMessageQueue($this->getFlashMessageQueue());
-        $moduleTemplate->setContent($this->view->render());
 
-        return $this->htmlResponse($moduleTemplate->renderContent());
+        $variables['settings'] = $this->settings;
+        $moduleTemplate->assignMultiple($variables);
+
+        return $moduleTemplate->renderResponse($templateFileName);
     }
 
     public function initializeAction(): void
     {
-        $this->pid = (int)GeneralUtility::_GET('id');
+        $this->pid = (int)($this->request->getQueryParams()['id'] ?? null);
     }
 
     /**
      * Index action
-     *
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("checkDemand")
      */
+    #[IgnoreValidation(['argumentName' => 'checkDemand'])]
     public function indexAction(?CheckDemand $checkDemand = null): ResponseInterface
     {
         if (!$checkDemand) {
@@ -96,7 +82,7 @@ class A11yCheckController extends ActionController
 
         // If form has been submitted, redirect to check action
         if ($checkDemand->getAnalyze() !== '') {
-            $this->redirect(
+            return $this->redirect(
                 'check',
                 null,
                 null,
@@ -107,14 +93,14 @@ class A11yCheckController extends ActionController
         }
 
         $site = $this->request->getAttribute('site');
-        $this->view->assignMultiple([
+        $variables = [
             'checkDemand' => $checkDemand,
             'presets' => $this->presetService->getPresets($site),
             'levelSelectorOptions' => $this->getLevelSelectorOptions(),
             'savedResultsCount' => $this->resultsService->getSavedResultsCount($this->pid),
-        ]);
+        ];
 
-        return $this->initModuleTemplateAndReturnResponse();
+        return $this->initModuleTemplateAndReturnResponse('A11yCheck/Index', $variables);
     }
 
     /**
@@ -157,21 +143,20 @@ class A11yCheckController extends ActionController
 
     /**
      * Check action
-     *
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("checkDemand")
      */
+    #[IgnoreValidation(['argumentName' => 'checkDemand'])]
     public function checkAction(CheckDemand $checkDemand): ResponseInterface
     {
         $preset = $checkDemand->getPreset();
         $results = $preset->executeTestSuiteByPageUid($this->pid, $checkDemand->getLevel());
 
-        $this->view->assignMultiple([
+        $variables = [
             'checkDemand' => $checkDemand,
             'results' => $results,
             'date' => new \DateTime(),
-        ]);
+        ];
 
-        return $this->initModuleTemplateAndReturnResponse();
+        return $this->initModuleTemplateAndReturnResponse('A11yCheck/Check', $variables);
     }
 
     /**
@@ -181,20 +166,20 @@ class A11yCheckController extends ActionController
     {
         $resultsArray = $this->resultsService->getResultsArrayByPid($this->pid);
 
-        $this->view->assignMultiple([
+        $variables = [
             'resultsArray' => $resultsArray,
-        ]);
+        ];
 
-        return $this->initModuleTemplateAndReturnResponse();
+        return $this->initModuleTemplateAndReturnResponse('A11yCheck/Results', $variables);
     }
 
     /**
      * AcknowledgeResult Action
      */
-    public function acknowledgeResultAction(int $pageUid): void
+    public function acknowledgeResultAction(int $pageUid): ResponseInterface
     {
         $this->resultsService->deleteSavedResults($pageUid);
-        $this->redirect('index');
+        return $this->redirect('index');
     }
 
     /**
@@ -232,7 +217,8 @@ class A11yCheckController extends ActionController
 
         $shortcutButton = $buttonBar->makeShortcutButton()
             ->setRouteIdentifier('web_UwA11yCheckTxUwa11ycheckM1')
-            ->setDisplayName('A11Y Check');
+            ->setDisplayName('A11Y Check')
+            ->setArguments(['id' => $this->pid]);
         $buttonBar->addButton($shortcutButton, ButtonBar::BUTTON_POSITION_RIGHT);
     }
 

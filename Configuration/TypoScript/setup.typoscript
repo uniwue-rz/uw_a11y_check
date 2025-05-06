@@ -1,4 +1,4 @@
-<INCLUDE_TYPOSCRIPT: source="FILE:EXT:uw_a11y_check/Configuration/TypoScript/ContentElement/Helper/DynamicA11yContent.typoscript">
+@import 'EXT:uw_a11y_check/Configuration/TypoScript/ContentElement/Helper/DynamicA11yContent.typoscript'
 
 #==============================================
 # BE-module configuration for EXT:uw_a11y_check

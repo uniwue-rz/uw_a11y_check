@@ -78,7 +78,7 @@ class NewsAnalyzer extends AbstractAnalyzer
             $query->setMaxResults($demand->getMaxResults());
         }
 
-        $queryResult = $query->execute()->fetchAllAssociative();
+        $queryResult = $query->executeQuery()->fetchAllAssociative();
 
         $uidList = [];
         foreach ($queryResult as $record) {

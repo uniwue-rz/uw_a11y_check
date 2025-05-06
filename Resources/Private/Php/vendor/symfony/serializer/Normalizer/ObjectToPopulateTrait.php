@@ -21,9 +21,9 @@ trait ObjectToPopulateTrait
      * @param string|null $key   They in which to look for the object to populate.
      *                           Keeps backwards compatibility with `AbstractNormalizer`.
      */
-    protected function extractObjectToPopulate(string $class, array $context, string $key = null): ?object
+    protected function extractObjectToPopulate(string $class, array $context, ?string $key = null): ?object
     {
-        $key = $key ?? AbstractNormalizer::OBJECT_TO_POPULATE;
+        $key ??= AbstractNormalizer::OBJECT_TO_POPULATE;
 
         if (isset($context[$key]) && \is_object($context[$key]) && $context[$key] instanceof $class) {
             return $context[$key];

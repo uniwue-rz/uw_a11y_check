@@ -74,7 +74,7 @@ class Normalizer
                     return false;
                 }
 
-                throw new \ValueError('normalizer_normalize(): Argument #2 ($form) must be a a valid normalization form');
+                throw new \ValueError('normalizer_normalize(): Argument #2 ($form) must be a a valid normalization form', 1390833853);
         }
 
         if ('' === $s) {

@@ -17,16 +17,6 @@ class Preset
     protected AbstractCheckUrlGenerator $checkUrlGenerator;
     protected TestSuite $testSuite;
 
-    /**
-     * Preset constructor.
-     *
-     * @param string $id
-     * @param string $name
-     * @param AbstractAnalyzer $analyzer
-     * @param AbstractCheckUrlGenerator $checkUrlGenerator
-     * @param TestSuite $testSuite
-     * @param array $configuration
-     */
     public function __construct(
         string $id,
         string $name,

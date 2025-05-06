@@ -19,7 +19,7 @@ use UniWue\UwA11yCheck\Utility\Tests\HeaderUtility;
  */
 class HeaderUtilityTest extends BaseTestCase
 {
-    public function headersSequentiallyDescendingTestsDataProvider(): array
+    public static function headersSequentiallyDescendingTestsDataProvider(): array
     {
         return [
             'h1 followed by h2' => [
@@ -49,7 +49,7 @@ class HeaderUtilityTest extends BaseTestCase
      * @test
      * @dataProvider headersSequentiallyDescendingTestsDataProvider
      */
-    public function headersSequentiallyDescendingTests(string $htmlHeader1, string $htmlHeader2, bool $expected)
+    public function headersSequentiallyDescendingTests(string $htmlHeader1, string $htmlHeader2, bool $expected): void
     {
         $previousDocument = new DOMDocument();
         $previousDocument->loadHTML($htmlHeader1);

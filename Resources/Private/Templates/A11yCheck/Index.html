@@ -1,54 +1,46 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<f:layout name="Backend" />
+<f:layout name="Module" />
 
-<f:section name="headline">
+<f:section name="Content">
     <h1>
         <f:translate key="title.index" />
     </h1>
-</f:section>
 
-<f:section name="content">
-    <f:form action="index" name="checkDemand" object="{checkDemand}" class="form-horizontal settings">
-        <div class="col-xs-6">
+    <f:form action="index" name="checkDemand" object="{checkDemand}" class="settings">
+        <div class="form-row">
             <div class="form-group">
-                <label for="preset" class="control-label col-xs-3">
+                <label for="preset" class="form-label col-xs-3">
                     <f:translate key="labels.preset" />
                 </label>
-                <div class="col-xs-9">
-                    <f:form.select id="preset" property="preset" options="{presets}" optionValueField="id"
-                                   optionLabelField="name"
-                                   additionalAttributes="{onChange : 'document.checkDemand.submit();'}"
-                                   class="form-select"/>
-                </div>
+                <f:form.select id="preset" property="preset" options="{presets}" optionValueField="id"
+                               optionLabelField="name"
+                               additionalAttributes="{onChange : 'document.checkDemand.submit();'}"
+                               class="form-select"/>
             </div>
 
             <div class="form-group">
-                <div class="col-xs-offset-3 col-xs-9">
-                    <f:form.submit value="{f:translate(key: 'labels.start')}" property="analyze" class="btn btn-light"/>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-6">
-            <div class="form-group">
-                <label for="preset" class="control-label col-xs-2">
+                <label for="preset" class="form-label col-xs-2">
                     <f:translate key="labels.level" />
                 </label>
-                <div class="col-xs-10">
-                    <f:form.select id="level" property="level" options="{levelSelectorOptions}" class="form-select"/>
-                </div>
+                <f:form.select id="level" property="level" options="{levelSelectorOptions}" class="form-select"/>
+            </div>
+
+            <div class="form-group align-self-end">
+                <f:form.submit value="{f:translate(key: 'labels.start')}" property="analyze" class="btn btn-default"/>
             </div>
         </div>
-        <div class="clear"></div>
     </f:form>
 
     <f:if condition="{savedResultsCount} > 0">
         <div class="callout callout-info">
             <div class="media">
                 <div class="media-left">
-                    <span class="fa-stack fa-lg callout-icon"> <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-info fa-stack-1x"></i> </span>
+                    <span class="icon-emphasized">
+                        <core:icon identifier="actions-info" />
+                    </span>
                 </div>
                 <div class="media-body">
                     <h4 class="callout-title">{f:translate(key: 'savedResults.title')}</h4>

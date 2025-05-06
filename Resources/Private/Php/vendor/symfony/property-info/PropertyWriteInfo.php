@@ -15,8 +15,6 @@ namespace Symfony\Component\PropertyInfo;
  * The write mutator defines how a property can be written.
  *
  * @author Joel Wurtz <jwurtz@jolicode.com>
- *
- * @internal
  */
 final class PropertyWriteInfo
 {
@@ -30,20 +28,16 @@ final class PropertyWriteInfo
     public const VISIBILITY_PROTECTED = 'protected';
     public const VISIBILITY_PRIVATE = 'private';
 
-    private $type;
-    private $name;
-    private $visibility;
-    private $static;
-    private $adderInfo;
-    private $removerInfo;
-    private $errors = [];
+    private ?self $adderInfo = null;
+    private ?self $removerInfo = null;
+    private array $errors = [];
 
-    public function __construct(string $type = self::TYPE_NONE, string $name = null, string $visibility = null, bool $static = null)
-    {
-        $this->type = $type;
-        $this->name = $name;
-        $this->visibility = $visibility;
-        $this->static = $static;
+    public function __construct(
+        private readonly string $type = self::TYPE_NONE,
+        private readonly ?string $name = null,
+        private readonly ?string $visibility = null,
+        private readonly ?bool $static = null,
+    ) {
     }
 
     public function getType(): string
@@ -54,7 +48,7 @@ final class PropertyWriteInfo
     public function getName(): string
     {
         if (null === $this->name) {
-            throw new \LogicException("Calling getName() when having a mutator of type {$this->type} is not tolerated.");
+            throw new \LogicException("Calling getName() when having a mutator of type {$this->type} is not tolerated.", 2411197641);
         }
 
         return $this->name;
@@ -68,7 +62,7 @@ final class PropertyWriteInfo
     public function getAdderInfo(): self
     {
         if (null === $this->adderInfo) {
-            throw new \LogicException("Calling getAdderInfo() when having a mutator of type {$this->type} is not tolerated.");
+            throw new \LogicException("Calling getAdderInfo() when having a mutator of type {$this->type} is not tolerated.", 9628650551);
         }
 
         return $this->adderInfo;
@@ -82,7 +76,7 @@ final class PropertyWriteInfo
     public function getRemoverInfo(): self
     {
         if (null === $this->removerInfo) {
-            throw new \LogicException("Calling getRemoverInfo() when having a mutator of type {$this->type} is not tolerated.");
+            throw new \LogicException("Calling getRemoverInfo() when having a mutator of type {$this->type} is not tolerated.", 4794365489);
         }
 
         return $this->removerInfo;
@@ -91,7 +85,7 @@ final class PropertyWriteInfo
     public function getVisibility(): string
     {
         if (null === $this->visibility) {
-            throw new \LogicException("Calling getVisibility() when having a mutator of type {$this->type} is not tolerated.");
+            throw new \LogicException("Calling getVisibility() when having a mutator of type {$this->type} is not tolerated.", 2325929902);
         }
 
         return $this->visibility;
@@ -100,7 +94,7 @@ final class PropertyWriteInfo
     public function isStatic(): bool
     {
         if (null === $this->static) {
-            throw new \LogicException("Calling isStatic() when having a mutator of type {$this->type} is not tolerated.");
+            throw new \LogicException("Calling isStatic() when having a mutator of type {$this->type} is not tolerated.", 2115088198);
         }
 
         return $this->static;

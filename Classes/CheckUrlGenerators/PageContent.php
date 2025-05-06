@@ -11,26 +11,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class PageContent extends AbstractCheckUrlGenerator
 {
-    /**
-     * @var array
-     */
     protected array $requiredConfiguration = ['targetPid'];
+    protected int $targetPid = 0;
+    protected array $ignoredContentTypes = [];
 
-    /**
-     * @var int
-     */
-    protected $targetPid = 0;
-
-    /**
-     * @var array
-     */
-    protected $ignoredContentTypes = [];
-
-    /**
-     * PageContent constructor.
-     *
-     * @param array $configuration
-     */
     public function __construct(array $configuration)
     {
         parent::__construct($configuration);
@@ -46,9 +30,6 @@ class PageContent extends AbstractCheckUrlGenerator
 
     /**
      * Returns the check URL
-     *
-     * @param int $pageUid
-     * @return string|void
      */
     public function getCheckUrl(int $pageUid): string
     {

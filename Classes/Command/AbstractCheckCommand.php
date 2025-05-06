@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace UniWue\UwA11yCheck\Command;
 
 use Symfony\Component\Console\Command\Command;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use UniWue\UwA11yCheck\Check\Preset;
@@ -47,23 +48,18 @@ abstract class AbstractCheckCommand extends Command
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('tx_a11ycheck_result');
         $queryBuilder
-            ->insert('tx_a11ycheck_result')
-            ->values([
+            ->insert('tx_a11ycheck_result')->values([
                 'pid' => $resultSet->getPid(),
                 'check_date' => time(),
                 'preset_id' => $preset->getId(),
                 'record_uid' => $resultSet->getUid(),
                 'table_name' => $preset->getCheckTableName(),
                 'resultset' => $serializedData,
-            ])
-            ->execute();
+            ])->executeStatement();
     }
 
     /**
      * Cleans up old check results in the database
-     *
-     * @param Preset $preset
-     * @param ResultSet $resultSet
      */
     protected function cleanupOldResults(Preset $preset, ResultSet $resultSet): void
     {
@@ -71,21 +67,15 @@ abstract class AbstractCheckCommand extends Command
             ->getQueryBuilderForTable('tx_a11ycheck_result');
         $queryBuilder->getRestrictions()->removeAll();
         $queryBuilder
-            ->delete('tx_a11ycheck_result')
-            ->where(
-                $queryBuilder->expr()->eq(
-                    'pid',
-                    $queryBuilder->createNamedParameter($resultSet->getPid(), \PDO::PARAM_INT)
-                ),
-                $queryBuilder->expr()->eq(
-                    'record_uid',
-                    $queryBuilder->createNamedParameter($resultSet->getUid(), \PDO::PARAM_INT)
-                ),
-                $queryBuilder->expr()->eq(
-                    'preset_id',
-                    $queryBuilder->createNamedParameter($preset->getId())
-                )
-            )
-            ->execute();
+            ->delete('tx_a11ycheck_result')->where($queryBuilder->expr()->eq(
+                'pid',
+                $queryBuilder->createNamedParameter($resultSet->getPid(), Connection::PARAM_INT)
+            ), $queryBuilder->expr()->eq(
+                'record_uid',
+                $queryBuilder->createNamedParameter($resultSet->getUid(), Connection::PARAM_INT)
+            ), $queryBuilder->expr()->eq(
+                'preset_id',
+                $queryBuilder->createNamedParameter($preset->getId())
+            ))->executeStatement();
     }
 }

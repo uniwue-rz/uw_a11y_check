@@ -33,12 +33,12 @@ class UriResolver
         $uri = trim($uri);
 
         // absolute URL?
-        if (null !== parse_url($uri, \PHP_URL_SCHEME)) {
+        if (null !== parse_url(\strlen($uri) !== strcspn($uri, '?#') ? $uri : $uri.'#', \PHP_URL_SCHEME)) {
             return $uri;
         }
 
         if (null === $baseUri) {
-            throw new \InvalidArgumentException('The URI is relative, so you must define its base URI passing an absolute URL.');
+            throw new \InvalidArgumentException('The URI is relative, so you must define its base URI passing an absolute URL.', 9411588924);
         }
 
         // empty URI
@@ -58,7 +58,7 @@ class UriResolver
         }
 
         // absolute URL with relative schema
-        if (0 === strpos($uri, '//')) {
+        if (str_starts_with($uri, '//')) {
             return preg_replace('#^([^/]*)//.*$#', '$1', $baseUriCleaned).$uri;
         }
 
@@ -85,7 +85,7 @@ class UriResolver
             return $path;
         }
 
-        if ('.' === substr($path, -1)) {
+        if (str_ends_with($path, '.')) {
             $path .= '/';
         }
 
