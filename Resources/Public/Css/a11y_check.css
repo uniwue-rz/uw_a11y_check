@@ -1,14 +1,10 @@
-.a11y-check .clear {
-    clear: both;
-}
-
-.a11y-check .panel {
+.panel.panel-a11y {
     border-radius: 0;
     box-shadow: none;
     border: none;
 }
 
-.a11y-check .panel-title a {
+.panel-a11y .panel-title a {
     display: block;
     padding: 2px 0;
 }
@@ -27,20 +23,15 @@
     text-decoration: none;
 }
 
-.a11y-check .check-date {
-    float: right;
-    font-size: 0.7em;
-}
-
 .panel-a11y .panel-group .panel-heading + .panel-collapse > .list-group, .panel-group .panel-heading + .panel-collapse > .panel-body {
     border-top: none;
 }
 
-.a11y-check .panel-title .collapsed .caret {
+.panel-a11y .panel-title .collapsed .caret {
     transform: rotate(-90deg);
 }
 
-.a11y-check .settings {
+.panel-a11y .settings {
     background-color: #EDEDED;
     border-top: 1px solid #CDCDCD;
     border-bottom: 1px solid #CDCDCD;
@@ -52,27 +43,27 @@
     margin-bottom: 5px;
 }
 
-.a11y-check .impact-0 {
+.panel-a11y .impact-0 {
     background-color: #c83c3c;
     border-color: #c83c3c;
     color: #ffffff;
 }
 
-.a11y-check .impact-1 {
+.panel-a11y .impact-1 {
     background-color: #ddeacf;
     border-color: #79a548;
     color: #000000;
 }
 
-.a11y-check .impact-2,
-.a11y-check .impact-3 {
+.panel-a11y .impact-2,
+.panel-a11y .impact-3 {
     background-color: #f8e4c6;
     border-color: #e8a33d;
     color: #000000;
 }
 
-.a11y-check .impact-4,
-.a11y-check .impact-5 {
+.panel-a11y .impact-4,
+.panel-a11y .impact-5 {
     background-color: #efc7c7;
     border-color: #c83c3c;
     color: #000000;
