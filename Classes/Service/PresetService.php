@@ -45,7 +45,7 @@ class PresetService
 
         $presets = [];
 
-        foreach ($yamlData['presets'] as $id => $presetData) {
+        foreach (($yamlData['presets'] ?? []) as $id => $presetData) {
             $name = $presetData['name'] ?? 'No name given';
 
             try {
