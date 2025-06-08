@@ -34,7 +34,7 @@ class PresetTypeConverter extends AbstractTypeConverter
         $source,
         $targetType,
         array $convertedChildProperties = [],
-        PropertyMappingConfigurationInterface $configuration = null
+        ?PropertyMappingConfigurationInterface $configuration = null
     ) {
         if (!$configuration) {
             throw new \Exception('PresetTypeConverter has not configuration', 1700322071);
